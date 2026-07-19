@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>صدرا - سامانه مدیریت آموزشی</title>
     <style>
-        /* ---------- استایل عمومی ---------- */
         * {
             margin: 0;
             padding: 0;
@@ -359,7 +358,7 @@
                     <button onclick="loginStudent()">ورود</button>
                     <div id="loginError" class="login-error"></div>
                 </div>
-                <!-- فرم کارکنان (مدیر، معاون، معلم) -->
+                <!-- فرم کارکنان -->
                 <div id="adminForm" class="login-form">
                     <input type="text" id="loginUsername" placeholder="نام کاربری">
                     <input type="password" id="loginPassword" placeholder="رمز عبور">
@@ -505,7 +504,7 @@
                             <button onclick="hideSection('addStudentSection')">لغو</button>
                         </div>
 
-                        <!-- بخش افزودن کارکنان (مدیر، معاون، معلم) -->
+                        <!-- بخش افزودن کارکنان -->
                         <div id="addStaffSection" class="hidden card" style="border-right-color:#2e7d32;">
                             <h4>افزودن کارمند جدید</h4>
                             <input type="text" id="newStaffUsername" placeholder="نام کاربری">
@@ -524,7 +523,7 @@
                             <button onclick="hideSection('addStaffSection')">لغو</button>
                         </div>
 
-                        <!-- بخش افزودن نمره (مدیر/معاون/معلم) -->
+                        <!-- بخش افزودن نمره -->
                         <div id="addGradeSection" class="hidden card" style="border-right-color:#2e7d32;">
                             <h4>افزودن نمره</h4>
                             <select id="newGradeStudentSelect"><option value="">انتخاب دانش‌آموز...</option></select>
@@ -535,7 +534,7 @@
                             <button onclick="hideSection('addGradeSection')">لغو</button>
                         </div>
 
-                        <!-- بخش مدیریت دسترسی‌ها (فقط برای مدیر اصلی) -->
+                        <!-- بخش مدیریت دسترسی‌ها -->
                         <div id="managePermissionsSection" class="hidden card" style="border-right-color:#b8860b;">
                             <h4>مدیریت دسترسی‌ها</h4>
                             <p style="color:#aaa;">انتخاب معاون و تنظیم دسترسی‌های او</p>
@@ -561,77 +560,60 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         // ============================================================
-        // 1.  تنظیمات اولیه و متغیرهای عمومی
+        // 1.  تنظیمات Supabase
         // ============================================================
-        const SHEET_ID = '11A3dCAJrRgsBFoPPK1Af-SgbyHeGk1hpXvlWlMtd3fk';
-        const API_KEY = 'AIzaSyDKhk7v92KTQ6a7RR4NECVxbih5dJep6Kk';
+        const SUPABASE_URL = 'https://cyyfagessadtzzqcgero.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN5eWZhZ2Vzc2FkdHp6cWNnZXJvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ0MzY4NTYsImV4cCI6MjEwMDAxMjg1Nn0.ryER3Az8letoQDAoJhqAoYylRjgXrIBX0tKFMCLFLJ8';
+        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        let usersData = [];
-        let gradesData = [];
-        let disciplineData = [];
-        let lessonsData = [];
+        // ============================================================
+        // 2.  متغیرهای عمومی
+        // ============================================================
         let currentUser = null;
         let userRole = null; // 'student', 'manager', 'deputy', 'teacher', 'owner'
-
-        // داده‌های کارکنان (مدیران، معاونان، معلمان)
-        let staffData = JSON.parse(localStorage.getItem('sadra_staff')) || [];
-        // داده‌های انضباطی
-        let disciplineRecords = JSON.parse(localStorage.getItem('sadra_discipline')) || [];
-        // داده‌های درس‌ها
-        let lessonsList = JSON.parse(localStorage.getItem('sadra_lessons')) || [];
-
-        // دسترسی‌های پیش‌فرض برای معاونان
-        const defaultPermissions = {
-            viewStudents: false,
-            viewGrades: false,
-            manageGrades: false,
-            manageTasks: false,
-            manageDiscipline: false,
-            manageUsers: false,
-            manageStaff: false
-        };
+        let usersData = [];
+        let gradesData = [];
+        let disciplineRecords = [];
+        let tasksData = [];
 
         // ============================================================
-        // 2.  توابع خواندن از گوگل شیت
+        // 3.  توابع اصلی (خواندن از Supabase)
         // ============================================================
-        async function fetchSheetData(sheetName) {
-            try {
-                const response = await fetch(
-                    `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${sheetName}?key=${API_KEY}`);
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                const data = await response.json();
-                return data.values || [];
-            } catch (error) {
-                console.error(`خطا در خواندن برگه ${sheetName}:`, error);
-                return [];
-            }
-        }
-
         async function loadAllData() {
-            const usersRows = await fetchSheetData('Users');
-            if (usersRows.length > 1) {
-                usersData = usersRows.slice(1).map(row => ({
-                    nationalId: row[0]?.trim() || '',
-                    mobile: row[1]?.trim() || '',
-                    name: row[2]?.trim() || ''
-                })).filter(u => u.nationalId && u.mobile);
-            }
+            // خواندن کاربران
+            const { data: users, error: usersError } = await supabase
+                .from('users')
+                .select('*');
+            if (usersError) console.error('خطا در خواندن کاربران:', usersError);
+            else usersData = users || [];
 
-            const gradesRows = await fetchSheetData('Grades');
-            if (gradesRows.length > 1) {
-                gradesData = gradesRows.slice(1).map(row => ({
-                    nationalId: row[0]?.trim() || '',
-                    lesson: row[1]?.trim() || '',
-                    score: parseFloat(row[2]) || 0,
-                    date: row[3]?.trim() || ''
-                })).filter(g => g.nationalId);
-            }
+            // خواندن نمرات
+            const { data: grades, error: gradesError } = await supabase
+                .from('grades')
+                .select('*');
+            if (gradesError) console.error('خطا در خواندن نمرات:', gradesError);
+            else gradesData = grades || [];
+
+            // خواندن انضباطی
+            const { data: disciplines, error: discError } = await supabase
+                .from('disciplines')
+                .select('*');
+            if (discError) console.error('خطا در خواندن انضباطی:', discError);
+            else disciplineRecords = disciplines || [];
+
+            // خواندن تمرین‌ها
+            const { data: tasks, error: tasksError } = await supabase
+                .from('tasks')
+                .select('*');
+            if (tasksError) console.error('خطا در خواندن تمرین‌ها:', tasksError);
+            else tasksData = tasks || [];
         }
 
         // ============================================================
-        // 3.  مدیریت ورود و خروج
+        // 4.  ورود و خروج
         // ============================================================
         document.querySelectorAll('.login-tab').forEach(tab => {
             tab.addEventListener('click', function() {
@@ -657,7 +639,7 @@
 
             if (usersData.length === 0) await loadAllData();
 
-            const user = usersData.find(u => u.nationalId === nationalId && u.mobile === mobile);
+            const user = usersData.find(u => u.id == nationalId && u.mobile === mobile);
             if (!user) {
                 errorEl.textContent = 'کد ملی یا شماره موبایل اشتباه است.';
                 return;
@@ -676,13 +658,13 @@
             // بررسی مدیر اصلی (اونر)
             if (username === 'Mreza0098' && password === '54215421') {
                 userRole = 'owner';
-                currentUser = { name: 'مدیر اصلی', nationalId: 'owner' };
+                currentUser = { id: 'owner', name: 'مدیر اصلی', username: 'Mreza0098' };
                 enterApp();
                 return;
             }
 
             // بررسی کارکنان
-            const staff = staffData.find(s => s.username === username && s.password === password);
+            const staff = usersData.find(u => u.username === username && u.password === password);
             if (!staff) {
                 errorEl.textContent = 'نام کاربری یا رمز عبور اشتباه است.';
                 return;
@@ -712,39 +694,30 @@
             const taskStudentSelect = document.getElementById('taskStudentSelect');
             const disciplineStudentSelect = document.getElementById('disciplineStudentSelect');
 
-            // پنل مدیریت: فقط owner, manager و deputy با دسترسی manageStaff
             const hasAdminAccess = (userRole === 'owner' || userRole === 'manager' ||
                 (userRole === 'deputy' && currentUser.permissions?.manageStaff));
             adminTab.style.display = hasAdminAccess ? 'block' : 'none';
 
-            // تب انضباطی: فقط teacher و deputy با دسترسی manageDiscipline و manager/owner
             const hasDisciplineAccess = (userRole === 'teacher' ||
                 userRole === 'manager' ||
                 userRole === 'owner' ||
                 (userRole === 'deputy' && currentUser.permissions?.manageDiscipline));
             disciplineTab.style.display = hasDisciplineAccess ? 'block' : 'none';
 
-            // نمایش انتخاب دانش‌آموز در تمرین و انضباطی برای معلم و معاون/مدیر
             const showStudentSelect = (userRole === 'teacher' || userRole === 'manager' || userRole === 'owner' ||
                 (userRole === 'deputy' && currentUser.permissions?.manageTasks));
             taskStudentSelect.style.display = showStudentSelect ? 'block' : 'none';
             disciplineStudentSelect.style.display = (userRole === 'teacher' || userRole === 'manager' || userRole === 'owner' ||
                 (userRole === 'deputy' && currentUser.permissions?.manageDiscipline)) ? 'block' : 'none';
 
-            // پر کردن لیست دانش‌آموزان در بخش‌های تمرین و انضباطی
             populateStudentSelects();
-
-            // نمایش ویژگی‌های خانه
             updateHomeFeatures();
-
-            // بارگذاری داده‌ها
             renderUserData();
             if (hasAdminAccess) renderAdminPanel();
             if (hasDisciplineAccess) renderDisciplineList();
 
-            // نمایش درس‌های معلم در بخش نمرات
             if (userRole === 'teacher') {
-                const teacherLessons = getTeacherLessons(currentUser.username);
+                const teacherLessons = currentUser.lessons || [];
                 if (teacherLessons.length > 0) {
                     document.getElementById('newGradeLesson').placeholder = `درس‌های شما: ${teacherLessons.join(', ')}`;
                 }
@@ -765,16 +738,11 @@
         }
 
         // ============================================================
-        // 4.  توابع کمکی
+        // 5.  توابع کمکی
         // ============================================================
-        function getTeacherLessons(username) {
-            const teacher = staffData.find(s => s.username === username && s.role === 'teacher');
-            return teacher ? teacher.lessons || [] : [];
-        }
-
-        function getUserName(nationalId) {
-            const user = usersData.find(u => u.nationalId === nationalId);
-            return user ? user.name : nationalId;
+        function getUserName(id) {
+            const user = usersData.find(u => u.id == id);
+            return user ? user.name : id;
         }
 
         function populateStudentSelects() {
@@ -784,10 +752,10 @@
                 if (!select) return;
                 const currentVal = select.value;
                 select.innerHTML = '<option value="">انتخاب دانش‌آموز...</option>';
-                usersData.forEach(u => {
+                usersData.filter(u => u.role === 'student').forEach(u => {
                     const option = document.createElement('option');
-                    option.value = u.nationalId;
-                    option.textContent = `${u.name} (${u.nationalId})`;
+                    option.value = u.id;
+                    option.textContent = `${u.name} (${u.id})`;
                     select.appendChild(option);
                 });
                 if (currentVal) select.value = currentVal;
@@ -799,38 +767,37 @@
             let html = '';
             if (userRole === 'student') {
                 html = `
-                        <li style="margin:8px 0;">📊 مشاهده نمرات</li>
-                        <li style="margin:8px 0;">🗓️ زمانبندی درسی هفتگی</li>
-                        <li style="margin:8px 0;">📝 یادداشت‌های مهم</li>
-                        <li style="margin:8px 0;">✅ مدیریت تکالیف</li>
-                    `;
+                            <li style="margin:8px 0;">📊 مشاهده نمرات</li>
+                            <li style="margin:8px 0;">🗓️ زمانبندی درسی هفتگی</li>
+                            <li style="margin:8px 0;">📝 یادداشت‌های مهم</li>
+                            <li style="margin:8px 0;">✅ مدیریت تکالیف</li>
+                        `;
             } else if (userRole === 'teacher') {
                 html = `
-                        <li style="margin:8px 0;">📊 ثبت و مدیریت نمرات درس‌های خود</li>
-                        <li style="margin:8px 0;">✅ ثبت تمرین برای دانش‌آموزان</li>
-                        <li style="margin:8px 0;">⚖️ ثبت منفی انضباطی</li>
-                    `;
+                            <li style="margin:8px 0;">📊 ثبت و مدیریت نمرات درس‌های خود</li>
+                            <li style="margin:8px 0;">✅ ثبت تمرین برای دانش‌آموزان</li>
+                            <li style="margin:8px 0;">⚖️ ثبت منفی انضباطی</li>
+                        `;
             } else if (userRole === 'deputy') {
-                const perms = currentUser.permissions || defaultPermissions;
+                const perms = currentUser.permissions || {};
                 html = `
-                        <li style="margin:8px 0;">📊 ${perms.manageGrades ? 'مدیریت نمرات' : 'مشاهده نمرات'}</li>
-                        <li style="margin:8px 0;">✅ ${perms.manageTasks ? 'مدیریت تمرین‌ها' : 'مشاهده تمرین‌ها'}</li>
-                        <li style="margin:8px 0;">⚖️ ${perms.manageDiscipline ? 'مدیریت انضباطی' : 'مشاهده انضباطی'}</li>
-                        ${perms.manageUsers ? '<li style="margin:8px 0;">👥 مدیریت کاربران</li>' : ''}
-                        ${perms.manageStaff ? '<li style="margin:8px 0;">🔧 مدیریت کارکنان</li>' : ''}
-                    `;
+                            <li style="margin:8px 0;">📊 ${perms.manageGrades ? 'مدیریت نمرات' : 'مشاهده نمرات'}</li>
+                            <li style="margin:8px 0;">✅ ${perms.manageTasks ? 'مدیریت تمرین‌ها' : 'مشاهده تمرین‌ها'}</li>
+                            <li style="margin:8px 0;">⚖️ ${perms.manageDiscipline ? 'مدیریت انضباطی' : 'مشاهده انضباطی'}</li>
+                            ${perms.manageUsers ? '<li style="margin:8px 0;">👥 مدیریت کاربران</li>' : ''}
+                            ${perms.manageStaff ? '<li style="margin:8px 0;">🔧 مدیریت کارکنان</li>' : ''}
+                        `;
             } else {
                 html = `
-                        <li style="margin:8px 0;">📊 مدیریت نمرات</li>
-                        <li style="margin:8px 0;">✅ مدیریت تمرین‌ها</li>
-                        <li style="margin:8px 0;">⚖️ مدیریت انضباطی</li>
-                        <li style="margin:8px 0;">👥 مدیریت کاربران</li>
-                        <li style="margin:8px 0;">🔧 مدیریت کارکنان</li>
-                    `;
+                            <li style="margin:8px 0;">📊 مدیریت نمرات</li>
+                            <li style="margin:8px 0;">✅ مدیریت تمرین‌ها</li>
+                            <li style="margin:8px 0;">⚖️ مدیریت انضباطی</li>
+                            <li style="margin:8px 0;">👥 مدیریت کاربران</li>
+                            <li style="margin:8px 0;">🔧 مدیریت کارکنان</li>
+                        `;
             }
             features.innerHTML = html;
 
-            // پیام خوشامدگویی
             const welcome = document.getElementById('homeWelcome');
             if (userRole === 'student') welcome.textContent = 'به پنل دانش‌آموزی خوش آمدی.';
             else if (userRole === 'teacher') welcome.textContent = 'به پنل معلمی خوش آمدید.';
@@ -840,7 +807,7 @@
         }
 
         // ============================================================
-        // 5.  نمایش داده‌ها
+        // 6.  نمایش داده‌ها
         // ============================================================
         function renderUserData() {
             if (!currentUser) return;
@@ -848,10 +815,9 @@
             if (userRole === 'student') {
                 renderStudentGrades();
             } else {
-                // برای کارکنان، نمایش همه نمرات یا نمرات درس‌های خود
                 let filteredGrades = [];
                 if (userRole === 'teacher') {
-                    const teacherLessons = getTeacherLessons(currentUser.username);
+                    const teacherLessons = currentUser.lessons || [];
                     filteredGrades = gradesData.filter(g => teacherLessons.includes(g.lesson));
                 } else {
                     filteredGrades = gradesData;
@@ -866,7 +832,7 @@
                         sum = 0;
                     filteredGrades.forEach(g => {
                         sum += g.score;
-                        const name = getUserName(g.nationalId);
+                        const name = getUserName(g.student_id);
                         html += `<div class="item-row">
                                     <div class="info">
                                         <strong>${name}</strong> — <strong>${g.lesson}</strong>: <span style="color:#8B0000;">${g.score}</span>
@@ -886,7 +852,7 @@
         }
 
         function renderStudentGrades() {
-            const userGrades = gradesData.filter(g => g.nationalId === currentUser.nationalId);
+            const userGrades = gradesData.filter(g => g.student_id == currentUser.id);
             const list = document.getElementById('gradeList');
             if (userGrades.length === 0) {
                 list.innerHTML = '<p style="color:#666; text-align:center;">نمره‌ای ثبت نشده است.</p>';
@@ -910,51 +876,55 @@
         }
 
         // ============================================================
-        // 6.  مدیریت نمرات (برای کارکنان)
+        // 7.  مدیریت نمرات (با Supabase)
         // ============================================================
-        function addGrade() {
+        async function addGrade() {
             if (!hasGradePermission()) {
                 alert('شما مجوز افزودن نمره را ندارید.');
                 return;
             }
 
-            const nationalId = document.getElementById('newGradeStudentSelect').value;
+            const student_id = document.getElementById('newGradeStudentSelect').value;
             const lesson = document.getElementById('newGradeLesson').value.trim();
             const score = parseFloat(document.getElementById('newGradeScore').value);
             const date = document.getElementById('newGradeDate').value || new Date().toISOString().split('T')[0];
 
-            if (!nationalId || !lesson || isNaN(score) || score < 0 || score > 20) {
+            if (!student_id || !lesson || isNaN(score) || score < 0 || score > 20) {
                 alert('لطفاً اطلاعات را به درستی وارد کنید.');
                 return;
             }
 
-            // اگر معلم است، بررسی درس
             if (userRole === 'teacher') {
-                const teacherLessons = getTeacherLessons(currentUser.username);
+                const teacherLessons = currentUser.lessons || [];
                 if (!teacherLessons.includes(lesson)) {
                     alert(`شما فقط می‌توانید برای درس‌های خود (${teacherLessons.join(', ')}) نمره ثبت کنید.`);
                     return;
                 }
             }
 
-            gradesData.push({ nationalId, lesson, score, date });
-            saveGradesToSheet();
+            const { data, error } = await supabase
+                .from('grades')
+                .insert([{ student_id, lesson, score, date, teacher_id: currentUser.id }]);
+
+            if (error) {
+                alert('خطا در ثبت نمره: ' + error.message);
+                return;
+            }
+
+            await loadAllData();
             document.getElementById('newGradeLesson').value = '';
             document.getElementById('newGradeScore').value = '';
             document.getElementById('newGradeDate').value = '';
             document.getElementById('newGradeStudentSelect').value = '';
             renderUserData();
-            if (userRole === 'manager' || userRole === 'owner' ||
-                (userRole === 'deputy' && currentUser.permissions?.manageStaff)) {
-                renderAdminPanel();
-            }
+            if (hasAdminAccess()) renderAdminPanel();
             alert('نمره با موفقیت ثبت شد.');
         }
 
         function hasGradePermission() {
             if (userRole === 'owner' || userRole === 'manager') return true;
             if (userRole === 'teacher') {
-                const teacherLessons = getTeacherLessons(currentUser.username);
+                const teacherLessons = currentUser.lessons || [];
                 return teacherLessons.length > 0;
             }
             if (userRole === 'deputy') {
@@ -963,80 +933,55 @@
             return false;
         }
 
-        // ============================================================
-        // 7.  مدیریت تمرین‌ها (برای کارکنان)
-        // ============================================================
-        function addTask() {
-            if (!hasTaskPermission()) {
-                alert('شما مجوز افزودن تمرین را ندارید.');
-                return;
-            }
-
-            const title = document.getElementById('taskTitle').value.trim();
-            const due = document.getElementById('taskDue').value || '۱۴۰۴/۰۱/۰۱';
-            let targetStudent = document.getElementById('taskStudentSelect').value;
-
-            if (!title) { alert('عنوان تمرین را بنویس.'); return; }
-
-            // اگر دانش‌آموزی انتخاب شده، برای همان ثبت شود
-            // اگر نه، برای همه (فقط مدیر/معاون/معلم می‌تواند)
-            if (targetStudent) {
-                // ثبت برای یک دانش‌آموز خاص
-                tasksData.push({ title, due, done: false, studentId: targetStudent, creator: currentUser.username });
-            } else {
-                // ثبت برای همه دانش‌آموزان (فقط manager/owner)
-                if (userRole !== 'manager' && userRole !== 'owner') {
-                    alert('برای ثبت تمرین عمومی، به مجوز مدیریت نیاز دارید.');
+        async function deleteGrade(id) {
+            if (!hasGradePermission()) return;
+            if (confirm('آیا از حذف این نمره اطمینان دارید؟')) {
+                const { error } = await supabase
+                    .from('grades')
+                    .delete()
+                    .eq('id', id);
+                if (error) {
+                    alert('خطا در حذف نمره: ' + error.message);
                     return;
                 }
-                tasksData.push({ title, due, done: false, studentId: 'all', creator: currentUser.username });
+                await loadAllData();
+                renderUserData();
+                if (hasAdminAccess()) renderAdminPanel();
             }
-
-            document.getElementById('taskTitle').value = '';
-            document.getElementById('taskDue').value = '';
-            document.getElementById('taskStudentSelect').value = '';
-            saveTasksToLocal();
-            renderTasks();
-            alert('تمرین با موفقیت ثبت شد.');
-        }
-
-        function hasTaskPermission() {
-            if (userRole === 'owner' || userRole === 'manager') return true;
-            if (userRole === 'teacher') return true;
-            if (userRole === 'deputy') return currentUser.permissions?.manageTasks || false;
-            return false;
         }
 
         // ============================================================
-        // 8.  مدیریت انضباطی (برای کارکنان)
+        // 8.  مدیریت انضباطی (با Supabase)
         // ============================================================
-        function addDiscipline() {
+        async function addDiscipline() {
             if (!hasDisciplinePermission()) {
                 alert('شما مجوز ثبت منفی انضباطی را ندارید.');
                 return;
             }
 
-            const nationalId = document.getElementById('disciplineStudentSelect').value;
+            const student_id = document.getElementById('disciplineStudentSelect').value;
             const value = parseInt(document.getElementById('disciplineValue').value);
             const reason = document.getElementById('disciplineReason').value.trim() || 'بدون توضیح';
 
-            if (!nationalId || isNaN(value) || value < 1 || value > 10) {
+            if (!student_id || isNaN(value) || value < 1 || value > 10) {
                 alert('لطفاً دانش‌آموز و مقدار منفی (۱ تا ۱۰) را انتخاب کنید.');
                 return;
             }
 
-            disciplineRecords.push({
-                nationalId,
-                value,
-                reason,
-                date: new Date().toISOString().split('T')[0],
-                teacher: currentUser.username
-            });
+            const { data, error } = await supabase
+                .from('disciplines')
+                .insert([{ student_id, value, reason, date: new Date().toISOString().split('T')[0], teacher_id: currentUser
+                        .id }]);
 
+            if (error) {
+                alert('خطا در ثبت انضباطی: ' + error.message);
+                return;
+            }
+
+            await loadAllData();
             document.getElementById('disciplineStudentSelect').value = '';
             document.getElementById('disciplineValue').value = '';
             document.getElementById('disciplineReason').value = '';
-            saveDisciplineToLocal();
             renderDisciplineList();
             alert('منفی انضباطی با موفقیت ثبت شد.');
         }
@@ -1056,57 +1001,165 @@
             }
 
             let html = '';
-            // فیلتر بر اساس نقش
             let filtered = disciplineRecords;
             if (userRole === 'student') {
-                filtered = disciplineRecords.filter(d => d.nationalId === currentUser.nationalId);
+                filtered = disciplineRecords.filter(d => d.student_id == currentUser.id);
             } else if (userRole === 'teacher') {
-                // معلم فقط رکوردهای خود را می‌بیند
-                filtered = disciplineRecords.filter(d => d.teacher === currentUser.username);
+                filtered = disciplineRecords.filter(d => d.teacher_id === currentUser.id);
             }
 
-            filtered.forEach((d, i) => {
-                const name = getUserName(d.nationalId);
+            filtered.forEach(d => {
+                const name = getUserName(d.student_id);
                 html += `<div class="item-row">
                             <div class="info">
                                 <strong>${name}</strong> — <span class="badge-red">-${d.value}</span>
                                 ${d.reason ? `— ${d.reason}` : ''}
                                 <span style="color:#666; font-size:0.8rem;">(${d.date})</span>
-                                ${userRole !== 'student' ? `<span style="color:#666; font-size:0.8rem;">ثبت: ${d.teacher}</span>` : ''}
+                                ${userRole !== 'student' ? `<span style="color:#666; font-size:0.8rem;">ثبت: ${getUserName(d.teacher_id)}</span>` : ''}
                             </div>
-                            ${userRole !== 'student' ? `<div class="actions"><button onclick="deleteDiscipline(${i})" class="danger">🗑️</button></div>` : ''}
+                            ${userRole !== 'student' ? `<div class="actions"><button onclick="deleteDiscipline(${d.id})" class="danger">🗑️</button></div>` : ''}
                         </div>`;
             });
             list.innerHTML = html;
         }
 
-        function deleteDiscipline(index) {
+        async function deleteDiscipline(id) {
             if (confirm('آیا از حذف این رکورد انضباطی اطمینان دارید؟')) {
-                disciplineRecords.splice(index, 1);
-                saveDisciplineToLocal();
+                const { error } = await supabase
+                    .from('disciplines')
+                    .delete()
+                    .eq('id', id);
+                if (error) {
+                    alert('خطا در حذف: ' + error.message);
+                    return;
+                }
+                await loadAllData();
                 renderDisciplineList();
             }
         }
 
         // ============================================================
-        // 9.  پنل مدیریت
+        // 9.  مدیریت تمرین‌ها (با Supabase)
+        // ============================================================
+        async function addTask() {
+            if (!hasTaskPermission()) {
+                alert('شما مجوز افزودن تمرین را ندارید.');
+                return;
+            }
+
+            const title = document.getElementById('taskTitle').value.trim();
+            const due = document.getElementById('taskDue').value || '۱۴۰۴/۰۱/۰۱';
+            let student_id = document.getElementById('taskStudentSelect').value;
+
+            if (!title) { alert('عنوان تمرین را بنویس.'); return; }
+
+            if (!student_id) student_id = 'all';
+
+            const { data, error } = await supabase
+                .from('tasks')
+                .insert([{ title, due, done: false, student_id, creator_id: currentUser.id }]);
+
+            if (error) {
+                alert('خطا در ثبت تمرین: ' + error.message);
+                return;
+            }
+
+            await loadAllData();
+            document.getElementById('taskTitle').value = '';
+            document.getElementById('taskDue').value = '';
+            document.getElementById('taskStudentSelect').value = '';
+            renderTasks();
+            alert('تمرین با موفقیت ثبت شد.');
+        }
+
+        function hasTaskPermission() {
+            if (userRole === 'owner' || userRole === 'manager') return true;
+            if (userRole === 'teacher') return true;
+            if (userRole === 'deputy') return currentUser.permissions?.manageTasks || false;
+            return false;
+        }
+
+        function renderTasks() {
+            const list = document.getElementById('taskList');
+            if (tasksData.length === 0) {
+                list.innerHTML = '<p style="color:#666; text-align:center;">هیچ تمرینی ثبت نشده است.</p>';
+                return;
+            }
+
+            let filtered = tasksData;
+            if (userRole === 'student') {
+                filtered = tasksData.filter(t => t.student_id === currentUser.id || t.student_id === 'all');
+            } else if (userRole === 'teacher') {
+                filtered = tasksData.filter(t => t.creator_id === currentUser.id);
+            }
+
+            let html = '';
+            filtered.forEach(t => {
+                const target = t.student_id === 'all' ? 'همه دانش‌آموزان' : getUserName(t.student_id);
+                html += `<div class="item-row">
+                            <div class="info">
+                                <strong>${t.title}</strong> — ${t.due || 'بدون تاریخ'}
+                                ${t.student_id !== 'all' ? `<span style="color:#666; font-size:0.8rem;">برای: ${target}</span>` : ''}
+                                <span class="badge">${t.done ? '✅ انجام شده' : '⏳ در انتظار'}</span>
+                                <span style="color:#666; font-size:0.8rem;">ثبت: ${getUserName(t.creator_id)}</span>
+                            </div>
+                            <div class="actions">
+                                ${userRole !== 'student' ? `<button onclick="toggleTask(${t.id})">✔️</button>` : ''}
+                                ${userRole !== 'student' ? `<button onclick="deleteTask(${t.id})" class="danger">🗑️</button>` : ''}
+                            </div>
+                        </div>`;
+            });
+            list.innerHTML = html;
+        }
+
+        async function toggleTask(id) {
+            const task = tasksData.find(t => t.id === id);
+            if (!task) return;
+            const { error } = await supabase
+                .from('tasks')
+                .update({ done: !task.done })
+                .eq('id', id);
+            if (error) {
+                alert('خطا در تغییر وضعیت: ' + error.message);
+                return;
+            }
+            await loadAllData();
+            renderTasks();
+        }
+
+        async function deleteTask(id) {
+            if (confirm('این تمرین حذف شود؟')) {
+                const { error } = await supabase
+                    .from('tasks')
+                    .delete()
+                    .eq('id', id);
+                if (error) {
+                    alert('خطا در حذف: ' + error.message);
+                    return;
+                }
+                await loadAllData();
+                renderTasks();
+            }
+        }
+
+        // ============================================================
+        // 10. پنل مدیریت (با Supabase)
         // ============================================================
         function renderAdminPanel() {
             if (!hasAdminAccess()) return;
 
-            // نمایش نمرات همه
+            // نمایش نمرات
             const gradeList = document.getElementById('adminGradeList');
             if (gradesData.length === 0) {
                 gradeList.innerHTML = '<p style="color:#666;">هیچ نمره‌ای ثبت نشده است.</p>';
             } else {
                 let html = '<h4>📋 لیست نمرات</h4>';
-                gradesData.forEach((g, index) => {
-                    const name = getUserName(g.nationalId);
+                gradesData.forEach(g => {
+                    const name = getUserName(g.student_id);
                     html += `<div class="item-row">
-                                <div class="info"><strong>${name}</strong> (${g.nationalId}) — <strong>${g.lesson}</strong>: <span style="color:#8B0000;">${g.score}</span> (${g.date || 'بدون تاریخ'})</div>
+                                <div class="info"><strong>${name}</strong> (${g.student_id}) — <strong>${g.lesson}</strong>: <span style="color:#8B0000;">${g.score}</span> (${g.date || 'بدون تاریخ'})</div>
                                 <div class="actions">
-                                    <button onclick="editGrade(${index})" style="background:#555;">✏️</button>
-                                    <button onclick="deleteGrade(${index})" class="danger">🗑️</button>
+                                    <button onclick="deleteGrade(${g.id})" class="danger">🗑️</button>
                                 </div>
                             </div>`;
                 });
@@ -1115,16 +1168,16 @@
 
             // نمایش دانش‌آموزان
             const userList = document.getElementById('adminUserList');
-            if (usersData.length === 0) {
+            const students = usersData.filter(u => u.role === 'student');
+            if (students.length === 0) {
                 userList.innerHTML = '<p style="color:#666;">هیچ دانش‌آموزی ثبت نشده است.</p>';
             } else {
                 let html = '<h4>📋 لیست دانش‌آموزان</h4>';
-                usersData.forEach((u, index) => {
+                students.forEach(u => {
                     html += `<div class="item-row">
-                                <div class="info"><strong>${u.name}</strong> — کد: ${u.nationalId} — موبایل: ${u.mobile}</div>
+                                <div class="info"><strong>${u.name}</strong> — کد: ${u.id} — موبایل: ${u.mobile}</div>
                                 <div class="actions">
-                                    <button onclick="editStudent(${index})" style="background:#555;">✏️</button>
-                                    <button onclick="deleteStudent(${index})" class="danger">🗑️</button>
+                                    <button onclick="deleteStudent(${u.id})" class="danger">🗑️</button>
                                 </div>
                             </div>`;
                 });
@@ -1133,21 +1186,18 @@
 
             // نمایش کارکنان
             const staffList = document.getElementById('adminStaffList');
-            if (staffData.length === 0) {
+            const staff = usersData.filter(u => u.role !== 'student');
+            if (staff.length === 0) {
                 staffList.innerHTML = '<p style="color:#666;">هیچ کارکنی ثبت نشده است.</p>';
             } else {
                 let html = '<h4>👥 لیست کارکنان</h4>';
-                staffData.forEach((s, index) => {
-                    const roleMap = {
-                        manager: 'مدیر',
-                        deputy: 'معاون',
-                        teacher: 'معلم'
-                    };
+                staff.forEach(s => {
+                    const roleMap = { manager: 'مدیر', deputy: 'معاون', teacher: 'معلم' };
                     const roleName = roleMap[s.role] || s.role;
                     let extraInfo = '';
                     if (s.role === 'teacher') extraInfo = ` — درس‌ها: ${(s.lessons || []).join(', ')}`;
                     if (s.role === 'deputy') {
-                        const perms = s.permissions || defaultPermissions;
+                        const perms = s.permissions || {};
                         const activePerms = Object.keys(perms).filter(k => perms[k]);
                         extraInfo = ` — دسترسی‌ها: ${activePerms.length > 0 ? activePerms.join(', ') : 'هیچ'}`;
                     }
@@ -1155,8 +1205,7 @@
                                 <div class="info"><strong>${s.name}</strong> (${s.username}) — ${roleName} ${extraInfo}</div>
                                 <div class="actions">
                                     ${userRole === 'owner' || (userRole === 'manager' && s.role !== 'manager') ? 
-                                    `<button onclick="editStaff(${index})" style="background:#555;">✏️</button>
-                                     <button onclick="deleteStaff(${index})" class="danger">🗑️</button>` : ''}
+                                    `<button onclick="deleteStaff(${s.id})" class="danger">🗑️</button>` : ''}
                                 </div>
                             </div>`;
                 });
@@ -1169,19 +1218,18 @@
                 disciplineList.innerHTML = '<p style="color:#666;">هیچ رکورد انضباطی ثبت نشده است.</p>';
             } else {
                 let html = '<h4>⚖️ لیست انضباطی</h4>';
-                disciplineRecords.forEach((d, index) => {
-                    const name = getUserName(d.nationalId);
+                disciplineRecords.forEach(d => {
+                    const name = getUserName(d.student_id);
                     html += `<div class="item-row">
-                                <div class="info"><strong>${name}</strong> (${d.nationalId}) — <span class="badge-red">-${d.value}</span> ${d.reason ? `— ${d.reason}` : ''} (${d.date}) — ثبت: ${d.teacher}</div>
+                                <div class="info"><strong>${name}</strong> (${d.student_id}) — <span class="badge-red">-${d.value}</span> ${d.reason ? `— ${d.reason}` : ''} (${d.date}) — ثبت: ${getUserName(d.teacher_id)}</div>
                                 <div class="actions">
-                                    <button onclick="deleteDiscipline(${index})" class="danger">🗑️</button>
+                                    <button onclick="deleteDiscipline(${d.id})" class="danger">🗑️</button>
                                 </div>
                             </div>`;
                 });
                 disciplineList.innerHTML = html;
             }
 
-            // پر کردن لیست معاونان برای بخش دسترسی‌ها
             populatePermissionSelect();
         }
 
@@ -1192,30 +1240,38 @@
         }
 
         // ============================================================
-        // 10. مدیریت دانش‌آموزان (CRUD)
+        // 11. مدیریت دانش‌آموزان (با Supabase)
         // ============================================================
-        function addStudent() {
+        async function addStudent() {
             if (!hasManageUsersPermission()) {
                 alert('شما مجوز مدیریت کاربران را ندارید.');
                 return;
             }
 
-            const nationalId = document.getElementById('newStudentNationalId').value.trim();
+            const id = document.getElementById('newStudentNationalId').value.trim();
             const mobile = document.getElementById('newStudentMobile').value.trim();
             const name = document.getElementById('newStudentName').value.trim();
 
-            if (!nationalId || !mobile || !name) {
+            if (!id || !mobile || !name) {
                 alert('لطفاً همه فیلدها را پر کنید.');
                 return;
             }
 
-            if (usersData.find(u => u.nationalId === nationalId)) {
+            if (usersData.find(u => u.id == id)) {
                 alert('این کد ملی قبلاً ثبت شده است.');
                 return;
             }
 
-            usersData.push({ nationalId, mobile, name });
-            saveUsersToSheet();
+            const { error } = await supabase
+                .from('users')
+                .insert([{ id, mobile, name, role: 'student' }]);
+
+            if (error) {
+                alert('خطا در افزودن دانش‌آموز: ' + error.message);
+                return;
+            }
+
+            await loadAllData();
             document.getElementById('newStudentNationalId').value = '';
             document.getElementById('newStudentMobile').value = '';
             document.getElementById('newStudentName').value = '';
@@ -1225,23 +1281,18 @@
             alert('دانش‌آموز با موفقیت افزوده شد.');
         }
 
-        function editStudent(index) {
-            if (!hasManageUsersPermission()) return;
-            const user = usersData[index];
-            const newName = prompt('نام جدید:', user.name);
-            if (newName && newName.trim()) {
-                user.name = newName.trim();
-                saveUsersToSheet();
-                renderAdminPanel();
-                populateStudentSelects();
-            }
-        }
-
-        function deleteStudent(index) {
+        async function deleteStudent(id) {
             if (!hasManageUsersPermission()) return;
             if (confirm('آیا از حذف این دانش‌آموز اطمینان دارید؟')) {
-                usersData.splice(index, 1);
-                saveUsersToSheet();
+                const { error } = await supabase
+                    .from('users')
+                    .delete()
+                    .eq('id', id);
+                if (error) {
+                    alert('خطا در حذف: ' + error.message);
+                    return;
+                }
+                await loadAllData();
                 renderAdminPanel();
                 populateStudentSelects();
             }
@@ -1254,9 +1305,9 @@
         }
 
         // ============================================================
-        // 11. مدیریت کارکنان (CRUD)
+        // 12. مدیریت کارکنان (با Supabase)
         // ============================================================
-        function addStaff() {
+        async function addStaff() {
             if (!hasManageStaffPermission()) {
                 alert('شما مجوز مدیریت کارکنان را ندارید.');
                 return;
@@ -1272,14 +1323,13 @@
                 return;
             }
 
-            if (username === 'Mreza0098' || staffData.find(s => s.username === username)) {
+            if (username === 'Mreza0098' || usersData.find(u => u.username === username)) {
                 alert('این نام کاربری قبلاً ثبت شده است.');
                 return;
             }
 
             const newStaff = { username, password, name, role };
             if (role === 'teacher') {
-                // انتخاب درس‌ها
                 const selectedLessons = [];
                 document.querySelectorAll('#teacherLessonCheckboxes input:checked').forEach(cb => {
                     selectedLessons.push(cb.value);
@@ -1291,12 +1341,19 @@
                 newStaff.lessons = selectedLessons;
             }
             if (role === 'deputy') {
-                newStaff.permissions = { ...defaultPermissions };
+                newStaff.permissions = {};
             }
 
-            staffData.push(newStaff);
-            localStorage.setItem('sadra_staff', JSON.stringify(staffData));
+            const { error } = await supabase
+                .from('users')
+                .insert([newStaff]);
 
+            if (error) {
+                alert('خطا در افزودن کارمند: ' + error.message);
+                return;
+            }
+
+            await loadAllData();
             document.getElementById('newStaffUsername').value = '';
             document.getElementById('newStaffPassword').value = '';
             document.getElementById('newStaffName').value = '';
@@ -1307,27 +1364,23 @@
             alert('کارمند با موفقیت افزوده شد.');
         }
 
-        function editStaff(index) {
+        async function deleteStaff(id) {
             if (!hasManageStaffPermission()) return;
-            const staff = staffData[index];
-            const newName = prompt('نام جدید:', staff.name);
-            if (newName && newName.trim()) {
-                staff.name = newName.trim();
-                localStorage.setItem('sadra_staff', JSON.stringify(staffData));
-                renderAdminPanel();
-            }
-        }
-
-        function deleteStaff(index) {
-            if (!hasManageStaffPermission()) return;
-            const staff = staffData[index];
+            const staff = usersData.find(u => u.id === id);
             if (staff.username === 'Mreza0098') {
                 alert('نمی‌توانید مدیر اصلی را حذف کنید.');
                 return;
             }
             if (confirm(`آیا از حذف ${staff.name} اطمینان دارید؟`)) {
-                staffData.splice(index, 1);
-                localStorage.setItem('sadra_staff', JSON.stringify(staffData));
+                const { error } = await supabase
+                    .from('users')
+                    .delete()
+                    .eq('id', id);
+                if (error) {
+                    alert('خطا در حذف: ' + error.message);
+                    return;
+                }
+                await loadAllData();
                 renderAdminPanel();
             }
         }
@@ -1340,44 +1393,16 @@
         }
 
         // ============================================================
-        // 12. مدیریت درس‌ها و معلمان
-        // ============================================================
-        function updateTeacherLessonCheckboxes() {
-            const section = document.getElementById('teacherLessonSection');
-            const container = document.getElementById('teacherLessonCheckboxes');
-            const role = document.getElementById('newStaffRole').value;
-
-            if (role === 'teacher') {
-                section.classList.remove('hidden');
-                // لیست درس‌ها را از lessonsList بگیر
-                if (lessonsList.length === 0) {
-                    container.innerHTML = '<p style="color:#aaa;">هنوز درسی تعریف نشده است. لطفاً ابتدا در پنل مدیریت درس اضافه کنید.</p>';
-                    return;
-                }
-                let html = '';
-                lessonsList.forEach(lesson => {
-                    html += `<div class="permission-item">
-                                <input type="checkbox" value="${lesson}" id="lesson_${lesson}">
-                                <label for="lesson_${lesson}">${lesson}</label>
-                            </div>`;
-                });
-                container.innerHTML = html;
-            } else {
-                section.classList.add('hidden');
-            }
-        }
-
-        // ============================================================
-        // 13. مدیریت دسترسی‌ها (فقط برای مدیر اصلی)
+        // 13. مدیریت دسترسی‌ها (با Supabase)
         // ============================================================
         function populatePermissionSelect() {
             const select = document.getElementById('permissionTargetSelect');
             if (!select) return;
             const currentVal = select.value;
             select.innerHTML = '<option value="">انتخاب معاون...</option>';
-            staffData.filter(s => s.role === 'deputy').forEach(s => {
+            usersData.filter(s => s.role === 'deputy').forEach(s => {
                 const option = document.createElement('option');
-                option.value = s.username;
+                option.value = s.id;
                 option.textContent = `${s.name} (${s.username})`;
                 select.appendChild(option);
             });
@@ -1385,15 +1410,15 @@
             if (select.value) loadPermissions(select.value);
         }
 
-        function loadPermissions(username) {
+        function loadPermissions(id) {
             const grid = document.getElementById('permissionGrid');
-            const staff = staffData.find(s => s.username === username);
+            const staff = usersData.find(s => s.id === id);
             if (!staff || staff.role !== 'deputy') {
                 grid.innerHTML = '<p style="color:#aaa;">معاون انتخاب شده معتبر نیست.</p>';
                 return;
             }
 
-            const perms = staff.permissions || { ...defaultPermissions };
+            const perms = staff.permissions || {};
             const permLabels = {
                 viewStudents: 'مشاهده دانش‌آموزان',
                 viewGrades: 'مشاهده نمرات',
@@ -1414,90 +1439,43 @@
             grid.innerHTML = html;
         }
 
-        function savePermissions() {
+        async function savePermissions() {
             if (userRole !== 'owner') {
                 alert('فقط مدیر اصلی می‌تواند دسترسی‌ها را تنظیم کند.');
                 return;
             }
 
-            const username = document.getElementById('permissionTargetSelect').value;
-            if (!username) {
+            const id = document.getElementById('permissionTargetSelect').value;
+            if (!id) {
                 alert('لطفاً یک معاون انتخاب کنید.');
                 return;
             }
 
-            const staff = staffData.find(s => s.username === username);
-            if (!staff) {
-                alert('معاون انتخاب شده معتبر نیست.');
-                return;
-            }
-
-            const perms = { ...defaultPermissions };
+            const perms = {};
             document.querySelectorAll('#permissionGrid input[type="checkbox"]').forEach(cb => {
                 const key = cb.id.replace('perm_', '');
                 perms[key] = cb.checked;
             });
 
-            staff.permissions = perms;
-            localStorage.setItem('sadra_staff', JSON.stringify(staffData));
-            alert(`دسترسی‌های ${staff.name} با موفقیت ذخیره شد.`);
+            const { error } = await supabase
+                .from('users')
+                .update({ permissions: perms })
+                .eq('id', id);
+
+            if (error) {
+                alert('خطا در ذخیره دسترسی‌ها: ' + error.message);
+                return;
+            }
+
+            await loadAllData();
+            alert('دسترسی‌ها با موفقیت ذخیره شد.');
             renderAdminPanel();
         }
 
         // ============================================================
-        // 14. مدیریت نمرات (برای مدیر/معاون)
-        // ============================================================
-        function editGrade(index) {
-            if (!hasGradePermission()) return;
-            const grade = gradesData[index];
-            const newScore = prompt('نمره جدید:', grade.score);
-            if (newScore !== null && !isNaN(parseFloat(newScore)) && parseFloat(newScore) >= 0 && parseFloat(newScore) <=
-                20) {
-                grade.score = parseFloat(newScore);
-                saveGradesToSheet();
-                renderUserData();
-                if (hasAdminAccess()) renderAdminPanel();
-            } else {
-                alert('نمره باید بین ۰ تا ۲۰ باشد.');
-            }
-        }
-
-        function deleteGrade(index) {
-            if (!hasGradePermission()) return;
-            if (confirm('آیا از حذف این نمره اطمینان دارید؟')) {
-                gradesData.splice(index, 1);
-                saveGradesToSheet();
-                renderUserData();
-                if (hasAdminAccess()) renderAdminPanel();
-            }
-        }
-
-        // ============================================================
-        // 15. توابع ذخیره‌سازی (محلی و گوگل شیت)
-        // ============================================================
-        function saveUsersToSheet() {
-            localStorage.setItem('sadra_users_backup', JSON.stringify(usersData));
-            console.log('Users saved locally:', usersData);
-        }
-
-        function saveGradesToSheet() {
-            localStorage.setItem('sadra_grades_backup', JSON.stringify(gradesData));
-            console.log('Grades saved locally:', gradesData);
-        }
-
-        function saveDisciplineToLocal() {
-            localStorage.setItem('sadra_discipline', JSON.stringify(disciplineRecords));
-        }
-
-        function saveTasksToLocal() {
-            localStorage.setItem('sadra_tasks', JSON.stringify(tasksData));
-        }
-
-        // ============================================================
-        // 16. توابع کمکی UI
+        // 14. توابع کمکی UI
         // ============================================================
         function showSection(sectionId) {
-            // مخفی کردن همه بخش‌ها
             document.querySelectorAll('#adminDashboard .card:not(.card:first-child)').forEach(c => {
                 if (c.id !== sectionId && !c.classList.contains('hidden')) {
                     c.classList.add('hidden');
@@ -1506,17 +1484,14 @@
             const section = document.getElementById(sectionId);
             if (section) {
                 section.classList.toggle('hidden');
-                // اگر بخش مدیریت دسترسی‌هاست، بارگذاری کند
                 if (sectionId === 'managePermissionsSection') {
                     populatePermissionSelect();
                     const select = document.getElementById('permissionTargetSelect');
                     if (select.value) loadPermissions(select.value);
                 }
-                // اگر بخش افزودن کارمند است، درس‌ها را بارگذاری کند
                 if (sectionId === 'addStaffSection') {
                     updateTeacherLessonCheckboxes();
                 }
-                // اگر بخش افزودن نمره است، لیست دانش‌آموزان را بارگذاری کند
                 if (sectionId === 'addGradeSection') {
                     populateStudentSelects();
                 }
@@ -1528,11 +1503,32 @@
             if (section) section.classList.add('hidden');
         }
 
+        function updateTeacherLessonCheckboxes() {
+            const section = document.getElementById('teacherLessonSection');
+            const container = document.getElementById('teacherLessonCheckboxes');
+            const role = document.getElementById('newStaffRole').value;
+
+            if (role === 'teacher') {
+                section.classList.remove('hidden');
+                const lessons = ['ریاضی', 'علوم', 'فارسی', 'انگلیسی', 'تاریخ', 'جغرافیا', 'دینی', 'هنر', 'شیمی', 'فیزیک', 'زیست'];
+                let html = '';
+                lessons.forEach(lesson => {
+                    html += `<div class="permission-item">
+                                <input type="checkbox" value="${lesson}" id="lesson_${lesson}">
+                                <label for="lesson_${lesson}">${lesson}</label>
+                            </div>`;
+                });
+                container.innerHTML = html;
+            } else {
+                section.classList.add('hidden');
+            }
+        }
+
         // ============================================================
-        // 17. زمانبندی، یادداشت و تمرین (مخصوص هر کاربر)
+        // 15. زمانبندی، یادداشت (محلی)
         // ============================================================
         function getStorageKey(prefix) {
-            const id = userRole === 'student' ? currentUser.nationalId : currentUser.username;
+            const id = userRole === 'student' ? currentUser.id : currentUser.username;
             return `sadra_${prefix}_${id}`;
         }
 
@@ -1587,57 +1583,8 @@
             }
         }
 
-        let tasksData = [];
-
-        function renderTasks() {
-            const saved = localStorage.getItem(getStorageKey('tasks'));
-            tasksData = saved ? JSON.parse(saved) : [];
-            const list = document.getElementById('taskList');
-            if (!tasksData.length) { list.innerHTML = '<p style="color:#666; text-align:center;">هیچ تمرینی ثبت نشده است.</p>'; return; }
-
-            // فیلتر بر اساس نقش
-            let filtered = tasksData;
-            if (userRole === 'student') {
-                filtered = tasksData.filter(t => t.studentId === currentUser.nationalId || t.studentId === 'all');
-            } else if (userRole === 'teacher') {
-                filtered = tasksData.filter(t => t.creator === currentUser.username);
-            }
-
-            let html = '';
-            filtered.forEach((t, i) => {
-                const target = t.studentId === 'all' ? 'همه دانش‌آموزان' : getUserName(t.studentId);
-                html += `<div class="item-row">
-                            <div class="info">
-                                <strong>${t.title}</strong> — ${t.due || 'بدون تاریخ'}
-                                ${t.studentId !== 'all' ? `<span style="color:#666; font-size:0.8rem;">برای: ${target}</span>` : ''}
-                                <span class="badge">${t.done ? '✅ انجام شده' : '⏳ در انتظار'}</span>
-                                <span style="color:#666; font-size:0.8rem;">ثبت: ${t.creator}</span>
-                            </div>
-                            <div class="actions">
-                                ${userRole !== 'student' ? `<button onclick="toggleTask(${i})">✔️</button>` : ''}
-                                ${userRole !== 'student' ? `<button onclick="deleteTask(${i})" class="danger">🗑️</button>` : ''}
-                            </div>
-                        </div>`;
-            });
-            list.innerHTML = html;
-        }
-
-        function toggleTask(index) {
-            tasksData[index].done = !tasksData[index].done;
-            localStorage.setItem(getStorageKey('tasks'), JSON.stringify(tasksData));
-            renderTasks();
-        }
-
-        function deleteTask(index) {
-            if (confirm('این تمرین حذف شود؟')) {
-                tasksData.splice(index, 1);
-                localStorage.setItem(getStorageKey('tasks'), JSON.stringify(tasksData));
-                renderTasks();
-            }
-        }
-
         // ============================================================
-        // 18. مدیریت تب‌ها
+        // 16. مدیریت تب‌ها
         // ============================================================
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', function() {
@@ -1649,44 +1596,15 @@
         });
 
         // ============================================================
-        // 19. بارگذاری اولیه
+        // 17. بارگذاری اولیه
         // ============================================================
         (async function init() {
             await loadAllData();
-            // بارگذاری داده‌های محلی
-            const savedUsers = localStorage.getItem('sadra_users_backup');
-            if (savedUsers) {
-                const parsed = JSON.parse(savedUsers);
-                if (parsed.length > 0) usersData = parsed;
-            }
-            const savedGrades = localStorage.getItem('sadra_grades_backup');
-            if (savedGrades) {
-                const parsed = JSON.parse(savedGrades);
-                if (parsed.length > 0) gradesData = parsed;
-            }
-            const savedDiscipline = localStorage.getItem('sadra_discipline');
-            if (savedDiscipline) {
-                disciplineRecords = JSON.parse(savedDiscipline);
-            }
-            const savedTasks = localStorage.getItem('sadra_tasks');
-            if (savedTasks) {
-                tasksData = JSON.parse(savedTasks);
-            }
-            const savedStaff = localStorage.getItem('sadra_staff');
-            if (savedStaff) {
-                staffData = JSON.parse(savedStaff);
-            }
-            const savedLessons = localStorage.getItem('sadra_lessons');
-            if (savedLessons) {
-                lessonsList = JSON.parse(savedLessons);
-            } else {
-                // درس‌های پیش‌فرض
-                lessonsList = ['ریاضی', 'علوم', 'فارسی', 'انگلیسی', 'تاریخ', 'جغرافیا', 'دینی', 'هنر'];
-                localStorage.setItem('sadra_lessons', JSON.stringify(lessonsList));
-            }
-
-            console.log('برنامه صدرا آماده است.');
-            console.log('کارکنان:', staffData);
+            console.log('برنامه صدرا با Supabase آماده است.');
+            console.log('کاربران:', usersData);
+            console.log('نمرات:', gradesData);
+            console.log('انضباطی:', disciplineRecords);
+            console.log('تمرین‌ها:', tasksData);
         })();
     </script>
 </body>
