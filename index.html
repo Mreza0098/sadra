@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>صدرا - سامانه مدیریت آموزشی</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js">
     </script>
-    <!-- فونت وزیرمتن (ایرانی) -->
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" />
     <style>
-        /* ========== ریست و مبنا ========== */
+        /* ===== ریست و مبنا ===== */
         * {
             margin: 0;
             padding: 0;
@@ -35,9 +34,7 @@
             padding: 20px;
             box-shadow: 0 0 40px rgba(0, 100, 0, 0.25);
             border: 1px solid #2a6b3c;
-            transition: all 0.3s;
         }
-        /* ========== تم انقلابی-ایرانی ========== */
         .theme-iran {
             --primary: #cc0000;
             --secondary: #2a6b3c;
@@ -45,29 +42,7 @@
             --bg: #0a0a0a;
             --card-bg: #161616;
             --border: #2a2a2a;
-            --text: #eee;
-            --shadow: rgba(200, 0, 0, 0.3);
         }
-        .theme-iran .logo-placeholder {
-            border-color: var(--gold);
-        }
-        .theme-iran .header-text h1 span {
-            color: var(--gold);
-        }
-        .theme-iran .card {
-            border-right-color: var(--gold);
-        }
-        .theme-iran .card h3 {
-            color: var(--gold);
-        }
-        .theme-iran .badge {
-            background: var(--gold);
-            color: #000;
-        }
-        .theme-iran .badge-red {
-            background: var(--primary);
-        }
-        /* ========== ورود ========== */
         #loginPage {
             display: block;
         }
@@ -144,7 +119,6 @@
             margin-top: 10px;
             font-size: 0.9rem;
         }
-        /* ========== هدر ========== */
         .header {
             display: flex;
             align-items: center;
@@ -163,8 +137,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
-            flex-shrink: 0;
             font-size: 2rem;
             color: var(--gold, #d4a017);
         }
@@ -200,70 +172,46 @@
             border-radius: 10px;
             cursor: pointer;
             font-size: 0.9rem;
-            margin-right: auto;
             transition: 0.2s;
         }
         .logout-btn:hover {
             background: var(--primary, #cc0000);
         }
-        /* ========== منوی جدید (سبک ماینکرافت.ir) ========== */
+
+        /* ===== منوی جدید (ساده و بدون کشویی) ===== */
         .navbar {
             background: var(--card-bg, #161616);
             border-radius: 15px;
-            padding: 10px 15px;
+            padding: 10px;
             margin-bottom: 25px;
             border-right: 4px solid var(--gold, #d4a017);
             border-bottom: 2px solid var(--primary, #cc0000);
-        }
-        .nav-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
-        .nav-toggle {
-            display: none;
-            background: transparent;
-            border: none;
-            color: #fff;
-            font-size: 1.8rem;
-            cursor: pointer;
-            padding: 5px 10px;
-        }
-        .nav-menu {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
-            list-style: none;
-            margin: 0;
-            padding: 5px 0;
-            width: 100%;
             justify-content: center;
         }
-        .nav-item {
-            position: relative;
-        }
-        .nav-link {
+        .nav-btn {
+            background: var(--bg, #0a0a0a);
+            border: 2px solid transparent;
+            color: #ccc;
+            padding: 10px 18px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 10px 18px;
-            color: #ccc;
-            text-decoration: none;
-            border-radius: 12px;
-            transition: all 0.2s;
-            cursor: pointer;
-            font-size: 0.95rem;
-            background: transparent;
-            border: 2px solid transparent;
-            font-weight: bold;
+            font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
         }
-        .nav-link:hover {
+        .nav-btn:hover {
             background: var(--bg, #0a0a0a);
             color: #fff;
             border-color: var(--gold, #d4a017);
         }
-        .nav-link.active {
+        .nav-btn.active {
             background: var(--primary, #cc0000);
             color: #fff;
             border-color: var(--gold, #d4a017);
@@ -272,41 +220,8 @@
         .nav-icon {
             font-size: 1.3rem;
         }
-        .arrow {
-            font-size: 0.7rem;
-            margin-right: 5px;
-            color: var(--gold, #d4a017);
-        }
-        .dropdown-menu {
-            display: none;
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background: var(--card-bg, #161616);
-            min-width: 200px;
-            border-radius: 12px;
-            padding: 8px 0;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
-            border: 1px solid var(--gold, #d4a017);
-            z-index: 1000;
-        }
-        .dropdown-menu.open {
-            display: block;
-        }
-        .dropdown-menu li {
-            list-style: none;
-        }
-        .dropdown-menu .nav-link {
-            padding: 10px 18px;
-            border-radius: 0;
-            font-weight: normal;
-            border: none;
-        }
-        .dropdown-menu .nav-link:hover {
-            background: var(--bg, #0a0a0a);
-            border-right: 3px solid var(--gold, #d4a017);
-        }
-        /* ========== محتوای تب‌ها ========== */
+
+        /* ===== بقیه استایل‌ها ===== */
         .tab-content {
             display: none;
             animation: fadeIn 0.3s;
@@ -386,10 +301,6 @@
         }
         button.warning:hover {
             filter: brightness(1.2);
-        }
-        button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
         }
         .item-list {
             margin-top: 15px;
@@ -507,10 +418,6 @@
             display: none;
             animation: fadeIn 0.5s;
         }
-        .notification-banner strong {
-            display: block;
-            margin-bottom: 5px;
-        }
         .settings-group {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -519,35 +426,12 @@
         .settings-group .full-width {
             grid-column: 1 / -1;
         }
-        /* ========== واکنش‌گرایی ========== */
         @media (max-width: 768px) {
-            .nav-toggle {
-                display: block;
-            }
-            .nav-menu {
-                display: none;
+            .navbar {
                 flex-direction: column;
-                width: 100%;
                 align-items: stretch;
             }
-            .nav-menu.open {
-                display: flex;
-            }
-            .nav-item {
-                width: 100%;
-            }
-            .nav-link {
-                justify-content: center;
-            }
-            .dropdown-menu {
-                position: static;
-                box-shadow: none;
-                border: none;
-                padding-right: 20px;
-                background: transparent;
-            }
-            .dropdown-menu .nav-link {
-                padding: 8px 16px;
+            .nav-btn {
                 justify-content: center;
             }
             .header-text h1 {
@@ -561,8 +445,6 @@
 </head>
 <body>
     <div class="app-container theme-iran" id="appContainer">
-
-        <!-- ==================== صفحه ورود ==================== -->
         <div id="loginPage">
             <div class="login-box">
                 <h2>★ صدرا ★</h2>
@@ -586,10 +468,7 @@
             </div>
         </div>
 
-        <!-- ==================== صفحه اصلی ==================== -->
         <div id="appPage">
-
-            <!-- هدر -->
             <div class="header">
                 <div class="logo-placeholder" id="logoPlaceholder">★</div>
                 <div class="header-text">
@@ -599,62 +478,43 @@
                 <button class="logout-btn" onclick="logout()">خروج</button>
             </div>
 
-            <!-- منوی جدید (سبک ماینکرافت.ir) -->
+            <!-- ===== منوی جدید (ساده) ===== -->
             <div class="navbar" id="mainNavbar">
-                <div class="nav-container">
-                    <button class="nav-toggle" id="navToggle" onclick="toggleMobileMenu()">☰</button>
-                    <ul class="nav-menu" id="navMenu">
-                        <!-- خانه -->
-                        <li class="nav-item">
-                            <a class="nav-link active" data-tab="home" onclick="switchTab('home')">
-                                <span class="nav-icon">🏠</span> خانه
-                            </a>
-                        </li>
-                        <!-- آموزشی (کشویی) -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" onclick="toggleDropdown('eduDropdown')">
-                                <span class="nav-icon">📚</span> آموزشی <span class="arrow">▼</span>
-                            </a>
-                            <ul class="dropdown-menu" id="eduDropdown">
-                                <li><a class="nav-link" data-tab="grades" onclick="switchTab('grades')">📊 نمرات</a></li>
-                                <li><a class="nav-link" data-tab="reports" onclick="switchTab('reports')">📋 کارنامه</a></li>
-                                <li><a class="nav-link" data-tab="notes" onclick="switchTab('notes')">📝 یادداشت</a></li>
-                            </ul>
-                        </li>
-                        <!-- مدیریتی (کشویی) -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" onclick="toggleDropdown('adminDropdown')">
-                                <span class="nav-icon">⚙️</span> مدیریت <span class="arrow">▼</span>
-                            </a>
-                            <ul class="dropdown-menu" id="adminDropdown">
-                                <li><a class="nav-link" data-tab="adminPanel" onclick="switchTab('adminPanel')">🔧 پنل مدیریت</a></li>
-                                <li><a class="nav-link" data-tab="discipline" onclick="switchTab('discipline')">⚖️ انضباطی</a></li>
-                                <li><a class="nav-link" data-tab="settings" onclick="switchTab('settings')">⚙️ تنظیمات</a></li>
-                            </ul>
-                        </li>
-                        <!-- شخصی (کشویی) -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" onclick="toggleDropdown('personalDropdown')">
-                                <span class="nav-icon">👤</span> شخصی <span class="arrow">▼</span>
-                            </a>
-                            <ul class="dropdown-menu" id="personalDropdown">
-                                <li><a class="nav-link" data-tab="schedule" onclick="switchTab('schedule')">🗓️ زمانبندی</a></li>
-                                <li><a class="nav-link" data-tab="tasks" onclick="switchTab('tasks')">✅ تمرین‌ها</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
+                <button class="nav-btn active" data-tab="home" onclick="switchTab('home')">
+                    <span class="nav-icon">🏠</span> خانه
+                </button>
+                <button class="nav-btn" data-tab="grades" onclick="switchTab('grades')">
+                    <span class="nav-icon">📊</span> نمرات
+                </button>
+                <button class="nav-btn" data-tab="reports" onclick="switchTab('reports')">
+                    <span class="nav-icon">📋</span> کارنامه
+                </button>
+                <button class="nav-btn" data-tab="schedule" onclick="switchTab('schedule')">
+                    <span class="nav-icon">🗓️</span> زمانبندی
+                </button>
+                <button class="nav-btn" data-tab="tasks" onclick="switchTab('tasks')">
+                    <span class="nav-icon">✅</span> تمرین‌ها
+                </button>
+                <button class="nav-btn" data-tab="discipline" onclick="switchTab('discipline')">
+                    <span class="nav-icon">⚖️</span> انضباطی
+                </button>
+                <button class="nav-btn" data-tab="adminPanel" onclick="switchTab('adminPanel')">
+                    <span class="nav-icon">🔧</span> مدیریت
+                </button>
+                <button class="nav-btn" data-tab="notes" onclick="switchTab('notes')">
+                    <span class="nav-icon">📝</span> یادداشت
+                </button>
+                <button class="nav-btn" data-tab="settings" onclick="switchTab('settings')">
+                    <span class="nav-icon">⚙️</span> تنظیمات
+                </button>
             </div>
 
-            <!-- اعلان‌ها -->
             <div id="notificationBanner" class="notification-banner">
                 <strong>📢 اعلان</strong>
                 <p id="notificationText"></p>
             </div>
 
-            <!-- ==================== تب‌ها ==================== -->
-
-            <!-- خانه -->
+            <!-- تب‌ها -->
             <div id="home" class="tab-content active">
                 <div class="card">
                     <h3>🚀 به صدرا خوش آمدی</h3>
@@ -672,7 +532,6 @@
                 </div>
             </div>
 
-            <!-- نمرات -->
             <div id="grades" class="tab-content">
                 <div class="card">
                     <h3>📊 نمرات</h3>
@@ -681,7 +540,6 @@
                 </div>
             </div>
 
-            <!-- زمانبندی -->
             <div id="schedule" class="tab-content">
                 <div class="card">
                     <h3>🗓️ زمانبندی هفتگی</h3>
@@ -699,11 +557,10 @@
                             </tbody>
                         </table>
                     </div>
-                    <button onclick="saveSchedule()" style="margin-top:15px;">💾 ذخیره‌ی زمانبندی</button>
+                    <button onclick="saveSchedule()">💾 ذخیره‌ی زمانبندی</button>
                 </div>
             </div>
 
-            <!-- یادداشت -->
             <div id="notes" class="tab-content">
                 <div class="card">
                     <h3>📝 یادداشت‌ها</h3>
@@ -713,7 +570,6 @@
                 </div>
             </div>
 
-            <!-- تمرین -->
             <div id="tasks" class="tab-content">
                 <div class="card">
                     <h3>✅ تمرین‌ها</h3>
@@ -727,7 +583,6 @@
                 </div>
             </div>
 
-            <!-- انضباطی -->
             <div id="discipline" class="tab-content">
                 <div class="card">
                     <h3>⚖️ ثبت منفی انضباطی</h3>
@@ -741,7 +596,6 @@
                 </div>
             </div>
 
-            <!-- کارنامه -->
             <div id="reports" class="tab-content">
                 <div class="card">
                     <h3>📋 کارنامه و گزارشات</h3>
@@ -758,7 +612,6 @@
                 </div>
             </div>
 
-            <!-- پنل مدیریت -->
             <div id="adminPanel" class="tab-content">
                 <div class="card">
                     <h3>🔧 پنل مدیریت</h3>
@@ -819,36 +672,21 @@
                 </div>
             </div>
 
-            <!-- تنظیمات -->
             <div id="settings" class="tab-content">
                 <div class="card">
                     <h3>⚙️ تنظیمات سایت</h3>
                     <div class="settings-group">
-                        <div class="full-width">
-                            <label>شعار سایت</label>
-                            <input type="text" id="settingSlogan" placeholder="شعار سایت را وارد کنید">
-                        </div>
-                        <div>
-                            <label>رنگ اصلی</label>
-                            <select id="settingTheme" onchange="applyTheme(this.value)">
+                        <div class="full-width"><label>شعار سایت</label><input type="text" id="settingSlogan" placeholder="شعار سایت را وارد کنید"></div>
+                        <div><label>رنگ اصلی</label><select id="settingTheme" onchange="applyTheme(this.value)">
                                 <option value="theme-iran">ایرانی-انقلابی</option>
                                 <option value="theme-dark">تیره (کلاسیک)</option>
                                 <option value="theme-red">قرمز</option>
                                 <option value="theme-green">سبز</option>
                                 <option value="theme-blue">آبی</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label>لوگو (آپلود عکس)</label>
-                            <input type="file" id="settingLogo" accept="image/*" onchange="uploadLogo(this)">
-                        </div>
-                        <div class="full-width">
-                            <label>عنوان سایت</label>
-                            <input type="text" id="settingTitle" placeholder="عنوان سایت را وارد کنید">
-                        </div>
-                        <div class="full-width">
-                            <button onclick="saveSettings()" class="success">💾 ذخیره تنظیمات</button>
-                        </div>
+                            </select></div>
+                        <div><label>لوگو (آپلود عکس)</label><input type="file" id="settingLogo" accept="image/*" onchange="uploadLogo(this)"></div>
+                        <div class="full-width"><label>عنوان سایت</label><input type="text" id="settingTitle" placeholder="عنوان سایت را وارد کنید"></div>
+                        <div class="full-width"><button onclick="saveSettings()" class="success">💾 ذخیره تنظیمات</button></div>
                     </div>
                 </div>
             </div>
@@ -960,17 +798,7 @@
             else if (userRole === 'observer') displayName = `مدیر کل - ${currentUser.name}`;
             document.getElementById('userDisplayName').textContent = displayName;
 
-            const isAdmin = (userRole === 'owner' || userRole === 'manager' || userRole === 'observer');
             const isObserver = (userRole === 'observer');
-
-            document.getElementById('adminPanelTab')?.remove();
-            document.getElementById('settingsTab')?.remove();
-
-            document.getElementById('disciplineTab')?.style.display = (userRole === 'teacher' || userRole === 'manager' ||
-                userRole === 'owner' || (userRole === 'deputy' && currentUser.permissions?.manageDiscipline) ||
-                userRole === 'observer') ? 'block' : 'none';
-            document.getElementById('reportsTab')?.style.display = (userRole === 'owner' || userRole === 'observer' ||
-                userRole === 'manager' || userRole === 'deputy' || userRole === 'teacher') ? 'block' : 'none';
 
             // غیرفعال کردن دکمه‌های ثبت برای observer
             document.querySelectorAll('#btnAddStudent, #btnAddStaff, #btnAddGrade, #btnPermissions').forEach(btn => {
@@ -984,7 +812,8 @@
             populateStudentSelects();
             updateHomeFeatures();
             renderUserData();
-            if (isAdmin) renderAdminPanel();
+            if (userRole === 'owner' || userRole === 'manager' || userRole === 'observer' || userRole === 'deputy')
+                renderAdminPanel();
             if (userRole === 'owner' || userRole === 'observer' || userRole === 'manager' || userRole === 'deputy' || userRole ===
                 'teacher') renderDisciplineList();
             if (userRole === 'teacher') {
@@ -1431,8 +1260,7 @@
         }
 
         function hasAdminAccess() {
-            if (userRole === 'owner' || userRole === 'manager' || userRole === 'observer') return true;
-            if (userRole === 'deputy') return currentUser.permissions?.manageStaff || false;
+            if (userRole === 'owner' || userRole === 'manager' || userRole === 'observer' || userRole === 'deputy') return true;
             return false;
         }
 
@@ -1652,44 +1480,23 @@
         }
 
         // ============================================================
-        // 17. منوی جدید
+        // 17. تابع سوئیچ تب (همون منوی جدید)
         // ============================================================
         function switchTab(tabId) {
+            // مخفی کردن همه تب‌ها
             document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+            // نمایش تب انتخاب شده
             const target = document.getElementById(tabId);
             if (target) target.classList.add('active');
 
-            document.querySelectorAll('.nav-link[data-tab]').forEach(link => {
-                link.classList.remove('active');
-                if (link.dataset.tab === tabId) {
-                    link.classList.add('active');
-                    document.getElementById('navMenu')?.classList.remove('open');
+            // به‌روزرسانی دکمه‌های فعال
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.tab === tabId) {
+                    btn.classList.add('active');
                 }
             });
-
-            document.querySelectorAll('.dropdown-menu').forEach(dm => dm.classList.remove('open'));
         }
-
-        function toggleDropdown(id) {
-            const menu = document.getElementById(id);
-            if (!menu) return;
-            document.querySelectorAll('.dropdown-menu').forEach(dm => {
-                if (dm.id !== id) dm.classList.remove('open');
-            });
-            menu.classList.toggle('open');
-        }
-
-        function toggleMobileMenu() {
-            const menu = document.getElementById('navMenu');
-            if (menu) menu.classList.toggle('open');
-        }
-
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.navbar')) {
-                document.querySelectorAll('.dropdown-menu').forEach(dm => dm.classList.remove('open'));
-                document.getElementById('navMenu')?.classList.remove('open');
-            }
-        });
 
         // ============================================================
         // 18. زمانبندی، یادداشت
@@ -1797,7 +1604,7 @@
         (async function init() {
             await loadAllData();
             loadSettings();
-            console.log('🚀 صدرا با تم ایرانی-انقلابی و منوی جدید آماده است!');
+            console.log('🚀 صدرا با منوی ساده و تم ایرانی-انقلابی آماده است!');
             console.log('👥 کاربران:', usersData);
             console.log('📊 نمرات:', gradesData);
             console.log('⚖️ انضباطی:', disciplineRecords);
