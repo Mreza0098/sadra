@@ -3,22 +3,863 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>صدرا</title>
+    <title>صدرا - سامانه مدیریت آموزشی</title>
     <style>
-        body { background: #1a1a1a; color: #fff; font-family: Tahoma; display: flex; justify-content: center; align-items: center; height: 100vh; }
-        .box { background: #222; padding: 40px; border-radius: 20px; border-right: 4px solid #8B0000; max-width: 400px; width: 100%; }
-        input, button { width: 100%; padding: 10px; margin: 8px 0; border-radius: 10px; border: 1px solid #444; background: #1a1a1a; color: #fff; }
-        button { background: #8B0000; cursor: pointer; font-weight: bold; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+        body { background: #1a1a1a; color: #eee; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
+        .app-container { max-width: 1000px; width: 100%; background: #222; border-radius: 20px; padding: 20px; box-shadow: 0 0 30px rgba(139,0,0,0.3); border: 1px solid #8B0000; }
+        #loginPage { display: block; } #appPage { display: none; }
+        .login-box { background: #2a2a2a; padding: 30px; border-radius: 20px; border-right: 4px solid #8B0000; max-width: 450px; margin: 0 auto; }
+        .login-box h2 { text-align: center; color: #8B0000; margin-bottom: 20px; }
+        .login-tabs { display: flex; gap: 10px; margin-bottom: 20px; }
+        .login-tab { flex: 1; padding: 10px; background: #1a1a1a; border: 1px solid #444; border-radius: 10px; text-align: center; cursor: pointer; color: #aaa; transition: 0.2s; }
+        .login-tab.active { background: #8B0000; color: #fff; border-color: #8B0000; }
+        .login-tab:hover { background: #333; }
+        .login-form { display: none; } .login-form.active { display: block; }
+        .login-box input, .login-box button { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #444; border-radius: 10px; background: #1a1a1a; color: #fff; font-size: 1rem; }
+        .login-box button { background: #8B0000; font-weight: bold; border: none; cursor: pointer; transition: 0.2s; }
+        .login-box button:hover { background: #a00000; }
+        .login-error { color: #ff4444; text-align: center; margin-top: 10px; font-size: 0.9rem; }
+        .header { display: flex; align-items: center; gap: 15px; border-bottom: 2px solid #8B0000; padding-bottom: 15px; margin-bottom: 20px; flex-wrap: wrap; }
+        .logo-placeholder { width: 70px; height: 70px; background: #2a2a2a; border-radius: 50%; border: 2px solid #8B0000; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: #8B0000; }
+        .header-text { flex: 1; } .header-text h1 { font-size: 2rem; color: #fff; letter-spacing: 2px; text-shadow: 0 0 10px #8B0000; }
+        .header-text h1 span { color: #8B0000; } .header-text p { color: #aaa; font-size: 0.9rem; font-weight: bold; border-right: 3px solid #2e7d32; padding-right: 10px; }
+        .logout-btn { background: #333; border: none; color: #fff; padding: 8px 16px; border-radius: 10px; cursor: pointer; font-size: 0.9rem; margin-right: auto; }
+        .logout-btn:hover { background: #8B0000; }
+        .tabs { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 25px; border-bottom: 1px solid #444; padding-bottom: 5px; }
+        .tab-btn { background: transparent; border: none; color: #aaa; padding: 10px 18px; font-size: 1rem; font-weight: bold; cursor: pointer; border-radius: 30px 30px 0 0; transition: all 0.2s; border-bottom: 3px solid transparent; }
+        .tab-btn:hover { background: #2a2a2a; color: #fff; }
+        .tab-btn.active { color: #fff; background: #2a2a2a; border-bottom: 3px solid #8B0000; }
+        .tab-content { display: none; animation: fadeIn 0.3s; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0.4; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        .card { background: #2a2a2a; padding: 18px; border-radius: 15px; margin-bottom: 20px; border-right: 4px solid #8B0000; }
+        .card h3 { color: #8B0000; margin-bottom: 10px; } .card h4 { color: #2e7d32; margin: 10px 0; }
+        input, textarea, button, select { width: 100%; padding: 10px; margin: 6px 0; border: 1px solid #444; border-radius: 10px; background: #1a1a1a; color: #fff; font-size: 1rem; }
+        input:focus, textarea:focus, select:focus { outline: 1px solid #8B0000; border-color: #8B0000; }
+        button { background: #8B0000; font-weight: bold; border: none; cursor: pointer; transition: 0.2s; }
         button:hover { background: #a00000; }
-        h2 { text-align: center; color: #8B0000; }
+        button.danger { background: #333; } button.danger:hover { background: #555; }
+        button.success { background: #2e7d32; } button.success:hover { background: #1b5e20; }
+        button.warning { background: #b8860b; } button.warning:hover { background: #8b6900; }
+        .item-list { margin-top: 15px; border-top: 1px solid #444; padding-top: 10px; }
+        .item-row { background: #1f1f1f; padding: 10px 12px; border-radius: 10px; margin: 8px 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; border-right: 2px solid #2e7d32; }
+        .item-row .info { flex: 1; } .item-row .actions button { width: auto; padding: 4px 12px; margin: 0 3px; background: #444; font-size: 0.8rem; }
+        .item-row .actions button:hover { background: #8B0000; }
+        .badge { background: #2e7d32; padding: 2px 12px; border-radius: 30px; font-size: 0.8rem; }
+        .badge-red { background: #8B0000; padding: 2px 12px; border-radius: 30px; font-size: 0.8rem; }
+        .avg-box { background: #1a1a1a; padding: 10px; border-radius: 10px; text-align: center; font-size: 1.2rem; border: 1px solid #2e7d32; margin-top: 10px; }
+        table { width: 100%; border-collapse: collapse; } th, td { padding: 8px; border: 1px solid #444; text-align: center; }
+        th { background: #1a1a1a; color: #8B0000; }
+        .small-input { width: 100%; padding: 5px; background: #1a1a1a; border: 1px solid #444; color: #fff; border-radius: 5px; text-align: center; }
+        .footer { text-align: center; margin-top: 30px; padding-top: 15px; border-top: 1px solid #333; color: #555; font-size: 0.8rem; }
+        .footer strong { color: #8B0000; }
+        .hidden { display: none; }
+        .permission-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin: 10px 0; }
+        .permission-item { background: #1a1a1a; padding: 8px; border-radius: 8px; display: flex; align-items: center; gap: 10px; }
+        .permission-item input[type="checkbox"] { width: auto; margin: 0; accent-color: #8B0000; }
+        @media (max-width: 600px) { .header-text h1 { font-size: 1.4rem; } .tab-btn { padding: 6px 12px; font-size: 0.8rem; } .permission-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
-<div class="box">
-    <h2>★ صدرا ★</h2>
-    <p style="text-align:center; color:#aaa;">نسخه‌ی جدید در حال آپدیت...</p>
-    <hr style="border-color:#333; margin:20px 0;">
-    <p style="text-align:center; color:#aaa;">لطفاً چند دقیقه دیگر مجدد تلاش کنید.</p>
-</div>
+    <div class="app-container">
+        <div id="loginPage">
+            <div class="login-box">
+                <h2>★ صدرا ★</h2>
+                <p style="text-align:center; color:#aaa; margin-bottom:15px;">سامانه مدیریت آموزشی</p>
+                <div class="login-tabs">
+                    <div class="login-tab active" data-role="student">دانش‌آموز</div>
+                    <div class="login-tab" data-role="admin">کارکنان</div>
+                </div>
+                <div id="studentForm" class="login-form active">
+                    <input type="text" id="loginNationalId" placeholder="کد ملی (۱۰ رقمی)">
+                    <input type="text" id="loginMobile" placeholder="شماره موبایل (۱۱ رقمی با صفر)">
+                    <button onclick="loginStudent()">ورود</button>
+                    <div id="loginError" class="login-error"></div>
+                </div>
+                <div id="adminForm" class="login-form">
+                    <input type="text" id="loginUsername" placeholder="نام کاربری">
+                    <input type="password" id="loginPassword" placeholder="رمز عبور">
+                    <button onclick="loginStaff()">ورود</button>
+                    <div id="adminLoginError" class="login-error"></div>
+                </div>
+            </div>
+        </div>
+        <div id="appPage">
+            <div class="header">
+                <div class="logo-placeholder">★</div>
+                <div class="header-text">
+                    <h1><span>★</span> صدرا</h1>
+                    <p id="userDisplayName">سامانه مدیریت آموزشی</p>
+                </div>
+                <button class="logout-btn" onclick="logout()">خروج</button>
+            </div>
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="home">🏠 خانه</button>
+                <button class="tab-btn" data-tab="grades">📊 نمرات</button>
+                <button class="tab-btn" data-tab="schedule">🗓️ زمانبندی</button>
+                <button class="tab-btn" data-tab="notes">📝 یادداشت</button>
+                <button class="tab-btn" data-tab="tasks">✅ تمرین</button>
+                <button class="tab-btn" data-tab="discipline" id="disciplineTab" style="display:none;">⚖️ انضباطی</button>
+                <button class="tab-btn" data-tab="adminPanel" id="adminPanelTab" style="display:none;">🔧 مدیریت</button>
+            </div>
+            <div id="home" class="tab-content active">
+                <div class="card"><h3>🚀 به صدرا خوش آمدی</h3>
+                    <p style="line-height:1.8; color:#ccc;" id="homeWelcome">این سامانه برای مدیریت امور آموزشی شما طراحی شده.</p>
+                    <ul style="list-style:none; margin-top:15px; color:#aaa;" id="homeFeatures">
+                        <li style="margin:8px 0;">📊 مشاهده نمرات</li>
+                        <li style="margin:8px 0;">🗓️ زمانبندی درسی هفتگی</li>
+                        <li style="margin:8px 0;">📝 یادداشت‌های مهم</li>
+                        <li style="margin:8px 0;">✅ مدیریت تکالیف</li>
+                    </ul>
+                    <div style="margin-top:20px; background:#1a1a1a; padding:10px; border-radius:10px; border-right:3px solid #2e7d32;">
+                        <span style="color:#2e7d32;">★</span> <span style="color:#aaa;">«سربازان علم، آینده را می‌سازند»</span>
+                    </div>
+                </div>
+            </div>
+            <div id="grades" class="tab-content">
+                <div class="card"><h3>📊 نمرات</h3><div id="gradeList"></div><div class="avg-box" id="avgBox">معدل کل: ۰.۰۰</div></div>
+            </div>
+            <div id="schedule" class="tab-content">
+                <div class="card"><h3>🗓️ زمانبندی هفتگی</h3>
+                    <p style="color:#aaa; font-size:0.9rem;">درس‌های هر روز را در سلول‌ها بنویس (ذخیره می‌شود).</p>
+                    <div style="overflow-x:auto; margin-top:15px;">
+                        <table id="scheduleTable"><thead><tr><th>روز</th><th>۸-۱۰</th><th>۱۰-۱۲</th><th>۱۴-۱۶</th><th>۱۶-۱۸</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>شنبه</strong></td><td><input class="small-input" data-day="0" data-time="0"></td><td><input class="small-input" data-day="0" data-time="1"></td><td><input class="small-input" data-day="0" data-time="2"></td><td><input class="small-input" data-day="0" data-time="3"></td></tr>
+                            <tr><td><strong>یک‌شنبه</strong></td><td><input class="small-input" data-day="1" data-time="0"></td><td><input class="small-input" data-day="1" data-time="1"></td><td><input class="small-input" data-day="1" data-time="2"></td><td><input class="small-input" data-day="1" data-time="3"></td></tr>
+                            <tr><td><strong>دوشنبه</strong></td><td><input class="small-input" data-day="2" data-time="0"></td><td><input class="small-input" data-day="2" data-time="1"></td><td><input class="small-input" data-day="2" data-time="2"></td><td><input class="small-input" data-day="2" data-time="3"></td></tr>
+                            <tr><td><strong>سه‌شنبه</strong></td><td><input class="small-input" data-day="3" data-time="0"></td><td><input class="small-input" data-day="3" data-time="1"></td><td><input class="small-input" data-day="3" data-time="2"></td><td><input class="small-input" data-day="3" data-time="3"></td></tr>
+                            <tr><td><strong>چهارشنبه</strong></td><td><input class="small-input" data-day="4" data-time="0"></td><td><input class="small-input" data-day="4" data-time="1"></td><td><input class="small-input" data-day="4" data-time="2"></td><td><input class="small-input" data-day="4" data-time="3"></td></tr>
+                            <tr><td><strong>پنج‌شنبه</strong></td><td><input class="small-input" data-day="5" data-time="0"></td><td><input class="small-input" data-day="5" data-time="1"></td><td><input class="small-input" data-day="5" data-time="2"></td><td><input class="small-input" data-day="5" data-time="3"></td></tr>
+                        </tbody></table>
+                    </div>
+                    <button onclick="saveSchedule()" style="margin-top:15px;">💾 ذخیره‌ی زمانبندی</button>
+                </div>
+            </div>
+            <div id="notes" class="tab-content">
+                <div class="card"><h3>📝 یادداشت‌ها</h3>
+                    <textarea id="noteText" rows="4" placeholder="متن یادداشت را اینجا بنویس..."></textarea>
+                    <button onclick="addNote()">➕ افزودن یادداشت</button>
+                    <div class="item-list" id="noteList"></div>
+                </div>
+            </div>
+            <div id="tasks" class="tab-content">
+                <div class="card"><h3>✅ تمرین‌ها</h3>
+                    <div id="taskManagement">
+                        <input type="text" id="taskTitle" placeholder="عنوان تمرین">
+                        <input type="date" id="taskDue">
+                        <select id="taskStudentSelect" style="display:none;"><option value="">انتخاب دانش‌آموز...</option></select>
+                        <button onclick="addTask()">➕ افزودن تمرین</button>
+                    </div>
+                    <div class="item-list" id="taskList"></div>
+                </div>
+            </div>
+            <div id="discipline" class="tab-content">
+                <div class="card"><h3>⚖️ ثبت منفی انضباطی</h3>
+                    <div id="disciplineManagement">
+                        <select id="disciplineStudentSelect"><option value="">انتخاب دانش‌آموز...</option></select>
+                        <input type="number" id="disciplineValue" placeholder="مقدار منفی (۱ تا ۱۰)" min="1" max="10">
+                        <input type="text" id="disciplineReason" placeholder="توضیح (اختیاری)">
+                        <button onclick="addDiscipline()">➕ ثبت منفی</button>
+                    </div>
+                    <div class="item-list" id="disciplineList"></div>
+                </div>
+            </div>
+            <div id="adminPanel" class="tab-content">
+                <div class="card"><h3>🔧 پنل مدیریت</h3>
+                    <div id="adminDashboard">
+                        <div style="display:flex; flex-wrap:wrap; gap:5px; margin-bottom:15px;">
+                            <button onclick="showSection('addStudentSection')" class="success" style="width:auto; padding:6px 18px;">➕ دانش‌آموز</button>
+                            <button onclick="showSection('addStaffSection')" class="success" style="width:auto; padding:6px 18px;">➕ کارکنان</button>
+                            <button onclick="showSection('addGradeSection')" class="success" style="width:auto; padding:6px 18px;">📊 نمره</button>
+                            <button onclick="showSection('managePermissionsSection')" class="warning" style="width:auto; padding:6px 18px;">🔑 دسترسی‌ها</button>
+                            <button onclick="showSection('viewAllSection')" style="width:auto; padding:6px 18px;">📋 همه</button>
+                        </div>
+                        <div id="addStudentSection" class="hidden card" style="border-right-color:#2e7d32;">
+                            <h4>افزودن دانش‌آموز جدید</h4>
+                            <input type="text" id="newStudentNationalId" placeholder="کد ملی">
+                            <input type="text" id="newStudentMobile" placeholder="شماره موبایل">
+                            <input type="text" id="newStudentName" placeholder="نام کامل">
+                            <button onclick="addStudent()" class="success">ذخیره</button>
+                            <button onclick="hideSection('addStudentSection')">لغو</button>
+                        </div>
+                        <div id="addStaffSection" class="hidden card" style="border-right-color:#2e7d32;">
+                            <h4>افزودن کارمند جدید</h4>
+                            <input type="text" id="newStaffUsername" placeholder="نام کاربری">
+                            <input type="password" id="newStaffPassword" placeholder="رمز عبور">
+                            <input type="text" id="newStaffName" placeholder="نام کامل">
+                            <select id="newStaffRole" onchange="updateTeacherLessonCheckboxes()">
+                                <option value="manager">مدیر</option>
+                                <option value="deputy">معاون</option>
+                                <option value="teacher">معلم</option>
+                            </select>
+                            <div id="teacherLessonSection" class="hidden"><h5>درس‌های این معلم</h5><div id="teacherLessonCheckboxes"></div></div>
+                            <button onclick="addStaff()" class="success">ذخیره</button>
+                            <button onclick="hideSection('addStaffSection')">لغو</button>
+                        </div>
+                        <div id="addGradeSection" class="hidden card" style="border-right-color:#2e7d32;">
+                            <h4>افزودن نمره</h4>
+                            <select id="newGradeStudentSelect"><option value="">انتخاب دانش‌آموز...</option></select>
+                            <input type="text" id="newGradeLesson" placeholder="نام درس">
+                            <input type="number" id="newGradeScore" placeholder="نمره" min="0" max="20">
+                            <input type="date" id="newGradeDate">
+                            <button onclick="addGrade()" class="success">ذخیره</button>
+                            <button onclick="hideSection('addGradeSection')">لغو</button>
+                        </div>
+                        <div id="managePermissionsSection" class="hidden card" style="border-right-color:#b8860b;">
+                            <h4>مدیریت دسترسی‌ها</h4>
+                            <p style="color:#aaa;">انتخاب معاون و تنظیم دسترسی‌های او</p>
+                            <select id="permissionTargetSelect" onchange="loadPermissions(this.value)"><option value="">انتخاب معاون...</option></select>
+                            <div id="permissionGrid" class="permission-grid"></div>
+                            <button onclick="savePermissions()" class="warning">ذخیره دسترسی‌ها</button>
+                            <button onclick="hideSection('managePermissionsSection')">لغو</button>
+                        </div>
+                        <div id="viewAllSection" class="hidden card"><h4>📋 همه اطلاعات</h4>
+                            <div id="adminGradeList"></div><div id="adminUserList"></div>
+                            <div id="adminStaffList"></div><div id="adminDisciplineList"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer"><strong>★</strong> صدرا · سامانه مدیریت آموزشی <strong>★</strong></div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const SUPABASE_URL = 'https://cyyfagessadtzzqcgero.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN5eWZhZ2Vzc2FkdHp6cWNnZXJvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ0MzY4NTYsImV4cCI6MjEwMDAxMjg1Nn0.ryER3Az8letoQDAoJhqAoYylRjgXrIBX0tKFMCLFLJ8';
+        const supabase_js = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        let currentUser = null, userRole = null, usersData = [], gradesData = [], disciplineRecords = [], tasksData = [];
+
+        async function loadAllData() {
+            const { data: users } = await supabase_js.from('users').select('*');
+            if (users) usersData = users;
+            const { data: grades } = await supabase_js.from('grades').select('*');
+            if (grades) gradesData = grades;
+            const { data: disciplines } = await supabase_js.from('disciplines').select('*');
+            if (disciplines) disciplineRecords = disciplines;
+            const { data: tasks } = await supabase_js.from('tasks').select('*');
+            if (tasks) tasksData = tasks;
+        }
+
+        document.querySelectorAll('.login-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.login-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                document.getElementById('studentForm').classList.toggle('active', this.dataset.role === 'student');
+                document.getElementById('adminForm').classList.toggle('active', this.dataset.role === 'admin');
+                document.getElementById('loginError').textContent = '';
+                document.getElementById('adminLoginError').textContent = '';
+            });
+        });
+
+        async function loginStudent() {
+            const id = document.getElementById('loginNationalId').value.trim();
+            const mobile = document.getElementById('loginMobile').value.trim();
+            const errorEl = document.getElementById('loginError');
+            if (!id || !mobile) { errorEl.textContent = 'لطفاً کد ملی و شماره موبایل را وارد کنید.'; return; }
+            if (usersData.length === 0) await loadAllData();
+            const user = usersData.find(u => u.id == id && u.mobile === mobile);
+            if (!user) { errorEl.textContent = 'کد ملی یا شماره موبایل اشتباه است.'; return; }
+            userRole = 'student'; currentUser = user; enterApp();
+        }
+
+        function loginStaff() {
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value.trim();
+            const errorEl = document.getElementById('adminLoginError');
+            if (username === 'Mreza0098' && password === '54215421') {
+                userRole = 'owner'; currentUser = { id: 'owner', name: 'مدیر اصلی', username: 'Mreza0098' };
+                enterApp(); return;
+            }
+            const staff = usersData.find(u => u.username === username && u.password === password);
+            if (!staff) { errorEl.textContent = 'نام کاربری یا رمز عبور اشتباه است.'; return; }
+            currentUser = staff; userRole = staff.role; enterApp();
+        }
+
+        function enterApp() {
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('appPage').style.display = 'block';
+            let displayName = '';
+            if (userRole === 'student') displayName = `خوش آمدی، ${currentUser.name}`;
+            else if (userRole === 'owner') displayName = 'مدیر اصلی - خوش آمدید';
+            else if (userRole === 'manager') displayName = `مدیر - ${currentUser.name}`;
+            else if (userRole === 'deputy') displayName = `معاون - ${currentUser.name}`;
+            else if (userRole === 'teacher') displayName = `معلم - ${currentUser.name}`;
+            document.getElementById('userDisplayName').textContent = displayName;
+            const adminTab = document.getElementById('adminPanelTab');
+            const disciplineTab = document.getElementById('disciplineTab');
+            const taskStudentSelect = document.getElementById('taskStudentSelect');
+            const disciplineStudentSelect = document.getElementById('disciplineStudentSelect');
+            const hasAdminAccess = (userRole === 'owner' || userRole === 'manager' || (userRole === 'deputy' && currentUser
+                .permissions?.manageStaff));
+            adminTab.style.display = hasAdminAccess ? 'block' : 'none';
+            const hasDisciplineAccess = (userRole === 'teacher' || userRole === 'manager' || userRole === 'owner' || (
+                userRole === 'deputy' && currentUser.permissions?.manageDiscipline));
+            disciplineTab.style.display = hasDisciplineAccess ? 'block' : 'none';
+            const showStudentSelect = (userRole === 'teacher' || userRole === 'manager' || userRole === 'owner' || (
+                userRole === 'deputy' && currentUser.permissions?.manageTasks));
+            taskStudentSelect.style.display = showStudentSelect ? 'block' : 'none';
+            disciplineStudentSelect.style.display = (userRole === 'teacher' || userRole === 'manager' || userRole ===
+                'owner' || (userRole === 'deputy' && currentUser.permissions?.manageDiscipline)) ? 'block' : 'none';
+            populateStudentSelects();
+            updateHomeFeatures();
+            renderUserData();
+            if (hasAdminAccess) renderAdminPanel();
+            if (hasDisciplineAccess) renderDisciplineList();
+            if (userRole === 'teacher') {
+                const teacherLessons = currentUser.lessons || [];
+                if (teacherLessons.length > 0) document.getElementById('newGradeLesson').placeholder =
+                    `درس‌های شما: ${teacherLessons.join(', ')}`;
+            }
+        }
+
+        function logout() {
+            currentUser = null;
+            userRole = null;
+            document.getElementById('loginPage').style.display = 'block';
+            document.getElementById('appPage').style.display = 'none';
+            document.getElementById('loginNationalId').value = '';
+            document.getElementById('loginMobile').value = '';
+            document.getElementById('loginUsername').value = '';
+            document.getElementById('loginPassword').value = '';
+            document.getElementById('loginError').textContent = '';
+            document.getElementById('adminLoginError').textContent = '';
+        }
+
+        function getUserName(id) { const user = usersData.find(u => u.id == id); return user ? user.name : id; }
+
+        function populateStudentSelects() {
+            const selects = ['taskStudentSelect', 'disciplineStudentSelect', 'newGradeStudentSelect'];
+            selects.forEach(id => {
+                const select = document.getElementById(id);
+                if (!select) return;
+                const currentVal = select.value;
+                select.innerHTML = '<option value="">انتخاب دانش‌آموز...</option>';
+                usersData.filter(u => u.role === 'student').forEach(u => {
+                    const option = document.createElement('option');
+                    option.value = u.id;
+                    option.textContent = `${u.name} (${u.id})`;
+                    select.appendChild(option);
+                });
+                if (currentVal) select.value = currentVal;
+            });
+        }
+
+        function updateHomeFeatures() {
+            const features = document.getElementById('homeFeatures');
+            let html = '';
+            if (userRole === 'student') {
+                html =
+                    `<li style="margin:8px 0;">📊 مشاهده نمرات</li><li style="margin:8px 0;">🗓️ زمانبندی درسی هفتگی</li><li style="margin:8px 0;">📝 یادداشت‌های مهم</li><li style="margin:8px 0;">✅ مدیریت تکالیف</li>`;
+            } else if (userRole === 'teacher') {
+                html =
+                    `<li style="margin:8px 0;">📊 ثبت و مدیریت نمرات درس‌های خود</li><li style="margin:8px 0;">✅ ثبت تمرین برای دانش‌آموزان</li><li style="margin:8px 0;">⚖️ ثبت منفی انضباطی</li>`;
+            } else if (userRole === 'deputy') {
+                const perms = currentUser.permissions || {};
+                html =
+                    `<li style="margin:8px 0;">📊 ${perms.manageGrades ? 'مدیریت نمرات' : 'مشاهده نمرات'}</li><li style="margin:8px 0;">✅ ${perms.manageTasks ? 'مدیریت تمرین‌ها' : 'مشاهده تمرین‌ها'}</li><li style="margin:8px 0;">⚖️ ${perms.manageDiscipline ? 'مدیریت انضباطی' : 'مشاهده انضباطی'}</li>${perms.manageUsers ? '<li style="margin:8px 0;">👥 مدیریت کاربران</li>' : ''}${perms.manageStaff ? '<li style="margin:8px 0;">🔧 مدیریت کارکنان</li>' : ''}`;
+            } else {
+                html =
+                    `<li style="margin:8px 0;">📊 مدیریت نمرات</li><li style="margin:8px 0;">✅ مدیریت تمرین‌ها</li><li style="margin:8px 0;">⚖️ مدیریت انضباطی</li><li style="margin:8px 0;">👥 مدیریت کاربران</li><li style="margin:8px 0;">🔧 مدیریت کارکنان</li>`;
+            }
+            features.innerHTML = html;
+            const welcome = document.getElementById('homeWelcome');
+            if (userRole === 'student') welcome.textContent = 'به پنل دانش‌آموزی خوش آمدی.';
+            else if (userRole === 'teacher') welcome.textContent = 'به پنل معلمی خوش آمدید.';
+            else if (userRole === 'deputy') welcome.textContent = 'به پنل معاونت خوش آمدید.';
+            else if (userRole === 'manager') welcome.textContent = 'به پنل مدیریت خوش آمدید.';
+            else if (userRole === 'owner') welcome.textContent = 'به پنل مدیر اصلی خوش آمدید.';
+        }
+
+        function renderUserData() {
+            if (!currentUser) return;
+            if (userRole === 'student') {
+                const userGrades = gradesData.filter(g => g.student_id == currentUser.id);
+                const list = document.getElementById('gradeList');
+                if (userGrades.length === 0) { list.innerHTML = '<p style="color:#666; text-align:center;">نمره‌ای ثبت نشده است.</p>';
+                    document.getElementById('avgBox').innerHTML = 'معدل کل: ۰.۰۰'; } else { let html = '',
+                        sum = 0;
+                    userGrades.forEach(g => { sum += g.score;
+                        html +=
+                            `<div class="item-row"><div class="info"><strong>${g.lesson}</strong> — <span style="color:#8B0000;">${g.score}</span> <span style="color:#666; font-size:0.8rem;">(${g.date || 'بدون تاریخ'})</span></div></div>`;
+                    });
+                    list.innerHTML = html;
+                    document.getElementById('avgBox').innerHTML =
+                        `معدل کل: <strong style="color:#8B0000;">${(sum / userGrades.length).toFixed(2)}</strong> (از ${userGrades.length} نمره)`; }
+            } else {
+                let filteredGrades = [];
+                if (userRole === 'teacher') {
+                    const teacherLessons = currentUser.lessons || [];
+                    filteredGrades = gradesData.filter(g => teacherLessons.includes(g.lesson));
+                } else { filteredGrades = gradesData; }
+                const list = document.getElementById('gradeList');
+                if (filteredGrades.length === 0) { list.innerHTML = '<p style="color:#666; text-align:center;">نمره‌ای یافت نشد.</p>';
+                    document.getElementById('avgBox').innerHTML = 'معدل کل: ۰.۰۰'; } else { let html = '',
+                        sum = 0;
+                    filteredGrades.forEach(g => { sum += g.score; const name = getUserName(g.student_id);
+                        html +=
+                            `<div class="item-row"><div class="info"><strong>${name}</strong> — <strong>${g.lesson}</strong>: <span style="color:#8B0000;">${g.score}</span> <span style="color:#666; font-size:0.8rem;">(${g.date || 'بدون تاریخ'})</span></div></div>`;
+                    });
+                    list.innerHTML = html;
+                    document.getElementById('avgBox').innerHTML =
+                        `معدل کل: <strong style="color:#8B0000;">${(sum / filteredGrades.length).toFixed(2)}</strong> (از ${filteredGrades.length} نمره)`; }
+            }
+            loadSchedule();
+            renderNotes();
+            renderTasks();
+        }
+
+        async function addGrade() {
+            if (!hasGradePermission()) { alert('شما مجوز افزودن نمره را ندارید.'); return; }
+            const student_id = document.getElementById('newGradeStudentSelect').value;
+            const lesson = document.getElementById('newGradeLesson').value.trim();
+            const score = parseFloat(document.getElementById('newGradeScore').value);
+            const date = document.getElementById('newGradeDate').value || new Date().toISOString().split('T')[0];
+            if (!student_id || !lesson || isNaN(score) || score < 0 || score > 20) { alert(
+                'لطفاً اطلاعات را به درستی وارد کنید.'); return; }
+            if (userRole === 'teacher') {
+                const teacherLessons = currentUser.lessons || [];
+                if (!teacherLessons.includes(lesson)) { alert(
+                    `شما فقط می‌توانید برای درس‌های خود (${teacherLessons.join(', ')}) نمره ثبت کنید.`); return; }
+            }
+            const { error } = await supabase_js.from('grades').insert([{ student_id, lesson, score, date,
+                teacher_id: currentUser.id }]);
+            if (error) { alert('خطا در ثبت نمره: ' + error.message); return; }
+            await loadAllData();
+            document.getElementById('newGradeLesson').value = '';
+            document.getElementById('newGradeScore').value = '';
+            document.getElementById('newGradeDate').value = '';
+            document.getElementById('newGradeStudentSelect').value = '';
+            renderUserData();
+            if (hasAdminAccess()) renderAdminPanel();
+            alert('نمره با موفقیت ثبت شد.');
+        }
+
+        function hasGradePermission() {
+            if (userRole === 'owner' || userRole === 'manager') return true;
+            if (userRole === 'teacher') { const teacherLessons = currentUser.lessons || []; return teacherLessons.length >
+                    0; }
+            if (userRole === 'deputy') return currentUser.permissions?.manageGrades || false;
+            return false;
+        }
+
+        async function deleteGrade(id) {
+            if (!hasGradePermission()) return;
+            if (confirm('آیا از حذف این نمره اطمینان دارید؟')) {
+                const { error } = await supabase_js.from('grades').delete().eq('id', id);
+                if (error) { alert('خطا در حذف نمره: ' + error.message); return; }
+                await loadAllData();
+                renderUserData();
+                if (hasAdminAccess()) renderAdminPanel();
+            }
+        }
+
+        async function addDiscipline() {
+            if (!hasDisciplinePermission()) { alert('شما مجوز ثبت منفی انضباطی را ندارید.'); return; }
+            const student_id = document.getElementById('disciplineStudentSelect').value;
+            const value = parseInt(document.getElementById('disciplineValue').value);
+            const reason = document.getElementById('disciplineReason').value.trim() || 'بدون توضیح';
+            if (!student_id || isNaN(value) || value < 1 || value > 10) { alert(
+                'لطفاً دانش‌آموز و مقدار منفی (۱ تا ۱۰) را انتخاب کنید.'); return; }
+            const { error } = await supabase_js.from('disciplines').insert([{ student_id, value, reason,
+                date: new Date().toISOString().split('T')[0], teacher_id: currentUser.id }]);
+            if (error) { alert('خطا در ثبت انضباطی: ' + error.message); return; }
+            await loadAllData();
+            document.getElementById('disciplineStudentSelect').value = '';
+            document.getElementById('disciplineValue').value = '';
+            document.getElementById('disciplineReason').value = '';
+            renderDisciplineList();
+            alert('منفی انضباطی با موفقیت ثبت شد.');
+        }
+
+        function hasDisciplinePermission() {
+            if (userRole === 'owner' || userRole === 'manager') return true;
+            if (userRole === 'teacher') return true;
+            if (userRole === 'deputy') return currentUser.permissions?.manageDiscipline || false;
+            return false;
+        }
+
+        function renderDisciplineList() {
+            const list = document.getElementById('disciplineList');
+            if (disciplineRecords.length === 0) { list.innerHTML =
+                '<p style="color:#666; text-align:center;">هیچ رکورد انضباطی ثبت نشده است.</p>'; return; }
+            let html = '';
+            let filtered = disciplineRecords;
+            if (userRole === 'student') filtered = disciplineRecords.filter(d => d.student_id == currentUser.id);
+            else if (userRole === 'teacher') filtered = disciplineRecords.filter(d => d.teacher_id === currentUser.id);
+            filtered.forEach(d => {
+                const name = getUserName(d.student_id);
+                html +=
+                    `<div class="item-row"><div class="info"><strong>${name}</strong> — <span class="badge-red">-${d.value}</span> ${d.reason ? `— ${d.reason}` : ''} <span style="color:#666; font-size:0.8rem;">(${d.date})</span>${userRole !== 'student' ? `<span style="color:#666; font-size:0.8rem;">ثبت: ${getUserName(d.teacher_id)}</span>` : ''}</div>${userRole !== 'student' ? `<div class="actions"><button onclick="deleteDiscipline(${d.id})" class="danger">🗑️</button></div>` : ''}</div>`;
+            });
+            list.innerHTML = html;
+        }
+
+        async function deleteDiscipline(id) {
+            if (confirm('آیا از حذف این رکورد انضباطی اطمینان دارید؟')) {
+                const { error } = await supabase_js.from('disciplines').delete().eq('id', id);
+                if (error) { alert('خطا در حذف: ' + error.message); return; }
+                await loadAllData();
+                renderDisciplineList();
+            }
+        }
+
+        async function addTask() {
+            if (!hasTaskPermission()) { alert('شما مجوز افزودن تمرین را ندارید.'); return; }
+            const title = document.getElementById('taskTitle').value.trim();
+            const due = document.getElementById('taskDue').value || '۱۴۰۴/۰۱/۰۱';
+            let student_id = document.getElementById('taskStudentSelect').value;
+            if (!title) { alert('عنوان تمرین را بنویس.'); return; }
+            if (!student_id) student_id = 'all';
+            const { error } = await supabase_js.from('tasks').insert([{ title, due, done: false, student_id,
+                creator_id: currentUser.id }]);
+            if (error) { alert('خطا در ثبت تمرین: ' + error.message); return; }
+            await loadAllData();
+            document.getElementById('taskTitle').value = '';
+            document.getElementById('taskDue').value = '';
+            document.getElementById('taskStudentSelect').value = '';
+            renderTasks();
+            alert('تمرین با موفقیت ثبت شد.');
+        }
+
+        function hasTaskPermission() {
+            if (userRole === 'owner' || userRole === 'manager') return true;
+            if (userRole === 'teacher') return true;
+            if (userRole === 'deputy') return currentUser.permissions?.manageTasks || false;
+            return false;
+        }
+
+        function renderTasks() {
+            const list = document.getElementById('taskList');
+            if (tasksData.length === 0) { list.innerHTML =
+                '<p style="color:#666; text-align:center;">هیچ تمرینی ثبت نشده است.</p>'; return; }
+            let filtered = tasksData;
+            if (userRole === 'student') filtered = tasksData.filter(t => t.student_id === currentUser.id || t
+                .student_id === 'all');
+            else if (userRole === 'teacher') filtered = tasksData.filter(t => t.creator_id === currentUser.id);
+            let html = '';
+            filtered.forEach(t => {
+                const target = t.student_id === 'all' ? 'همه دانش‌آموزان' : getUserName(t.student_id);
+                html +=
+                    `<div class="item-row"><div class="info"><strong>${t.title}</strong> — ${t.due || 'بدون تاریخ'}${t.student_id !== 'all' ? `<span style="color:#666; font-size:0.8rem;">برای: ${target}</span>` : ''}<span class="badge">${t.done ? '✅ انجام شده' : '⏳ در انتظار'}</span><span style="color:#666; font-size:0.8rem;">ثبت: ${getUserName(t.creator_id)}</span></div><div class="actions">${userRole !== 'student' ? `<button onclick="toggleTask(${t.id})">✔️</button>` : ''}${userRole !== 'student' ? `<button onclick="deleteTask(${t.id})" class="danger">🗑️</button>` : ''}</div></div>`;
+            });
+            list.innerHTML = html;
+        }
+
+        async function toggleTask(id) {
+            const task = tasksData.find(t => t.id === id);
+            if (!task) return;
+            const { error } = await supabase_js.from('tasks').update({ done: !task.done }).eq('id', id);
+            if (error) { alert('خطا در تغییر وضعیت: ' + error.message); return; }
+            await loadAllData();
+            renderTasks();
+        }
+
+        async function deleteTask(id) {
+            if (confirm('این تمرین حذف شود؟')) {
+                const { error } = await supabase_js.from('tasks').delete().eq('id', id);
+                if (error) { alert('خطا در حذف: ' + error.message); return; }
+                await loadAllData();
+                renderTasks();
+            }
+        }
+
+        function renderAdminPanel() {
+            if (!hasAdminAccess()) return;
+            const gradeList = document.getElementById('adminGradeList');
+            if (gradesData.length === 0) { gradeList.innerHTML = '<p style="color:#666;">هیچ نمره‌ای ثبت نشده است.</p>'; } else {
+                let html = '<h4>📋 لیست نمرات</h4>';
+                gradesData.forEach(g => {
+                    const name = getUserName(g.student_id);
+                    html +=
+                        `<div class="item-row"><div class="info"><strong>${name}</strong> (${g.student_id}) — <strong>${g.lesson}</strong>: <span style="color:#8B0000;">${g.score}</span> (${g.date || 'بدون تاریخ'})</div><div class="actions"><button onclick="deleteGrade(${g.id})" class="danger">🗑️</button></div></div>`;
+                });
+                gradeList.innerHTML = html;
+            }
+            const userList = document.getElementById('adminUserList');
+            const students = usersData.filter(u => u.role === 'student');
+            if (students.length === 0) { userList.innerHTML = '<p style="color:#666;">هیچ دانش‌آموزی ثبت نشده است.</p>'; } else {
+                let html = '<h4>📋 لیست دانش‌آموزان</h4>';
+                students.forEach(u => {
+                    html +=
+                        `<div class="item-row"><div class="info"><strong>${u.name}</strong> — کد: ${u.id} — موبایل: ${u.mobile}</div><div class="actions"><button onclick="deleteStudent(${u.id})" class="danger">🗑️</button></div></div>`;
+                });
+                userList.innerHTML = html;
+            }
+            const staffList = document.getElementById('adminStaffList');
+            const staff = usersData.filter(u => u.role !== 'student');
+            if (staff.length === 0) { staffList.innerHTML = '<p style="color:#666;">هیچ کارکنی ثبت نشده است.</p>'; } else {
+                let html = '<h4>👥 لیست کارکنان</h4>';
+                staff.forEach(s => {
+                    const roleMap = { manager: 'مدیر', deputy: 'معاون', teacher: 'معلم' };
+                    const roleName = roleMap[s.role] || s.role;
+                    let extraInfo = '';
+                    if (s.role === 'teacher') extraInfo = ` — درس‌ها: ${(s.lessons || []).join(', ')}`;
+                    if (s.role === 'deputy') {
+                        const perms = s.permissions || {};
+                        const activePerms = Object.keys(perms).filter(k => perms[k]);
+                        extraInfo = ` — دسترسی‌ها: ${activePerms.length > 0 ? activePerms.join(', ') : 'هیچ'}`;
+                    }
+                    html +=
+                        `<div class="item-row"><div class="info"><strong>${s.name}</strong> (${s.username}) — ${roleName} ${extraInfo}</div><div class="actions">${userRole === 'owner' || (userRole === 'manager' && s.role !== 'manager') ? `<button onclick="deleteStaff(${s.id})" class="danger">🗑️</button>` : ''}</div></div>`;
+                });
+                staffList.innerHTML = html;
+            }
+            const disciplineList = document.getElementById('adminDisciplineList');
+            if (disciplineRecords.length === 0) { disciplineList.innerHTML =
+                '<p style="color:#666;">هیچ رکورد انضباطی ثبت نشده است.</p>'; } else {
+                let html = '<h4>⚖️ لیست انضباطی</h4>';
+                disciplineRecords.forEach(d => {
+                    const name = getUserName(d.student_id);
+                    html +=
+                        `<div class="item-row"><div class="info"><strong>${name}</strong> (${d.student_id}) — <span class="badge-red">-${d.value}</span> ${d.reason ? `— ${d.reason}` : ''} (${d.date}) — ثبت: ${getUserName(d.teacher_id)}</div><div class="actions"><button onclick="deleteDiscipline(${d.id})" class="danger">🗑️</button></div></div>`;
+                });
+                disciplineList.innerHTML = html;
+            }
+            populatePermissionSelect();
+        }
+
+        function hasAdminAccess() {
+            if (userRole === 'owner' || userRole === 'manager') return true;
+            if (userRole === 'deputy') return currentUser.permissions?.manageStaff || false;
+            return false;
+        }
+
+        async function addStudent() {
+            if (!hasManageUsersPermission()) { alert('شما مجوز مدیریت کاربران را ندارید.'); return; }
+            const id = document.getElementById('newStudentNationalId').value.trim();
+            const mobile = document.getElementById('newStudentMobile').value.trim();
+            const name = document.getElementById('newStudentName').value.trim();
+            if (!id || !mobile || !name) { alert('لطفاً همه فیلدها را پر کنید.'); return; }
+            if (usersData.find(u => u.id == id)) { alert('این کد ملی قبلاً ثبت شده است.'); return; }
+            const { error } = await supabase_js.from('users').insert([{ id, mobile, name, role: 'student' }]);
+            if (error) { alert('خطا در افزودن دانش‌آموز: ' + error.message); return; }
+            await loadAllData();
+            document.getElementById('newStudentNationalId').value = '';
+            document.getElementById('newStudentMobile').value = '';
+            document.getElementById('newStudentName').value = '';
+            hideSection('addStudentSection');
+            renderAdminPanel();
+            populateStudentSelects();
+            alert('دانش‌آموز با موفقیت افزوده شد.');
+        }
+
+        async function deleteStudent(id) {
+            if (!hasManageUsersPermission()) return;
+            if (confirm('آیا از حذف این دانش‌آموز اطمینان دارید؟')) {
+                const { error } = await supabase_js.from('users').delete().eq('id', id);
+                if (error) { alert('خطا در حذف: ' + error.message); return; }
+                await loadAllData();
+                renderAdminPanel();
+                populateStudentSelects();
+            }
+        }
+
+        function hasManageUsersPermission() {
+            if (userRole === 'owner' || userRole === 'manager') return true;
+            if (userRole === 'deputy') return currentUser.permissions?.manageUsers || false;
+            return false;
+        }
+
+        async function addStaff() {
+            if (!hasManageStaffPermission()) { alert('شما مجوز مدیریت کارکنان را ندارید.'); return; }
+            const username = document.getElementById('newStaffUsername').value.trim();
+            const password = document.getElementById('newStaffPassword').value.trim();
+            const name = document.getElementById('newStaffName').value.trim();
+            const role = document.getElementById('newStaffRole').value;
+            if (!username || !password || !name) { alert('لطفاً همه فیلدها را پر کنید.'); return; }
+            if (username === 'Mreza0098' || usersData.find(u => u.username === username)) { alert(
+                'این نام کاربری قبلاً ثبت شده است.'); return; }
+            const newStaff = { username, password, name, role };
+            if (role === 'teacher') {
+                const selectedLessons = [];
+                document.querySelectorAll('#teacherLessonCheckboxes input:checked').forEach(cb => { selectedLessons.push(cb
+                        .value); });
+                if (selectedLessons.length === 0) { alert('لطفاً حداقل یک درس برای معلم انتخاب کنید.'); return; }
+                newStaff.lessons = selectedLessons;
+            }
+            if (role === 'deputy') newStaff.permissions = {};
+            const { error } = await supabase_js.from('users').insert([newStaff]);
+            if (error) { alert('خطا در افزودن کارمند: ' + error.message); return; }
+            await loadAllData();
+            document.getElementById('newStaffUsername').value = '';
+            document.getElementById('newStaffPassword').value = '';
+            document.getElementById('newStaffName').value = '';
+            document.getElementById('newStaffRole').value = 'manager';
+            document.getElementById('teacherLessonSection').classList.add('hidden');
+            hideSection('addStaffSection');
+            renderAdminPanel();
+            alert('کارمند با موفقیت افزوده شد.');
+        }
+
+        async function deleteStaff(id) {
+            if (!hasManageStaffPermission()) return;
+            const staff = usersData.find(u => u.id === id);
+            if (staff.username === 'Mreza0098') { alert('نمی‌توانید مدیر اصلی را حذف کنید.'); return; }
+            if (confirm(`آیا از حذف ${staff.name} اطمینان دارید؟`)) {
+                const { error } = await supabase_js.from('users').delete().eq('id', id);
+                if (error) { alert('خطا در حذف: ' + error.message); return; }
+                await loadAllData();
+                renderAdminPanel();
+            }
+        }
+
+        function hasManageStaffPermission() {
+            if (userRole === 'owner') return true;
+            if (userRole === 'manager') return true;
+            if (userRole === 'deputy') return currentUser.permissions?.manageStaff || false;
+            return false;
+        }
+
+        function populatePermissionSelect() {
+            const select = document.getElementById('permissionTargetSelect');
+            if (!select) return;
+            const currentVal = select.value;
+            select.innerHTML = '<option value="">انتخاب معاون...</option>';
+            usersData.filter(s => s.role === 'deputy').forEach(s => {
+                const option = document.createElement('option');
+                option.value = s.id;
+                option.textContent = `${s.name} (${s.username})`;
+                select.appendChild(option);
+            });
+            if (currentVal) select.value = currentVal;
+            if (select.value) loadPermissions(select.value);
+        }
+
+        function loadPermissions(id) {
+            const grid = document.getElementById('permissionGrid');
+            const staff = usersData.find(s => s.id === id);
+            if (!staff || staff.role !== 'deputy') { grid.innerHTML = '<p style="color:#aaa;">معاون انتخاب شده معتبر نیست.</p>'; return; }
+            const perms = staff.permissions || {};
+            const permLabels = { viewStudents: 'مشاهده دانش‌آموزان', viewGrades: 'مشاهده نمرات', manageGrades: 'مدیریت نمرات',
+                manageTasks: 'مدیریت تمرین‌ها', manageDiscipline: 'مدیریت انضباطی', manageUsers: 'مدیریت کاربران',
+                manageStaff: 'مدیریت کارکنان' };
+            let html = '';
+            Object.keys(permLabels).forEach(key => {
+                html +=
+                    `<div class="permission-item"><input type="checkbox" id="perm_${key}" ${perms[key] ? 'checked' : ''}><label for="perm_${key}">${permLabels[key]}</label></div>`;
+            });
+            grid.innerHTML = html;
+        }
+
+        async function savePermissions() {
+            if (userRole !== 'owner') { alert('فقط مدیر اصلی می‌تواند دسترسی‌ها را تنظیم کند.'); return; }
+            const id = document.getElementById('permissionTargetSelect').value;
+            if (!id) { alert('لطفاً یک معاون انتخاب کنید.'); return; }
+            const perms = {};
+            document.querySelectorAll('#permissionGrid input[type="checkbox"]').forEach(cb => {
+                const key = cb.id.replace('perm_', '');
+                perms[key] = cb.checked;
+            });
+            const { error } = await supabase_js.from('users').update({ permissions: perms }).eq('id', id);
+            if (error) { alert('خطا در ذخیره دسترسی‌ها: ' + error.message); return; }
+            await loadAllData();
+            alert('دسترسی‌ها با موفقیت ذخیره شد.');
+            renderAdminPanel();
+        }
+
+        function showSection(sectionId) {
+            document.querySelectorAll('#adminDashboard .card:not(.card:first-child)').forEach(c => {
+                if (c.id !== sectionId && !c.classList.contains('hidden')) c.classList.add('hidden');
+            });
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.classList.toggle('hidden');
+                if (sectionId === 'managePermissionsSection') { populatePermissionSelect(); const select = document
+                        .getElementById('permissionTargetSelect'); if (select.value) loadPermissions(select.value); }
+                if (sectionId === 'addStaffSection') updateTeacherLessonCheckboxes();
+                if (sectionId === 'addGradeSection') populateStudentSelects();
+            }
+        }
+
+        function hideSection(sectionId) { const section = document.getElementById(sectionId); if (section) section.classList.add(
+                'hidden'); }
+
+        function updateTeacherLessonCheckboxes() {
+            const section = document.getElementById('teacherLessonSection');
+            const container = document.getElementById('teacherLessonCheckboxes');
+            const role = document.getElementById('newStaffRole').value;
+            if (role === 'teacher') {
+                section.classList.remove('hidden');
+                const lessons = ['ریاضی', 'علوم', 'فارسی', 'انگلیسی', 'تاریخ', 'جغرافیا', 'دینی', 'هنر', 'شیمی', 'فیزیک', 'زیست'];
+                let html = '';
+                lessons.forEach(lesson => {
+                    html +=
+                        `<div class="permission-item"><input type="checkbox" value="${lesson}" id="lesson_${lesson}"><label for="lesson_${lesson}">${lesson}</label></div>`;
+                });
+                container.innerHTML = html;
+            } else section.classList.add('hidden');
+        }
+
+        function getStorageKey(prefix) { const id = userRole === 'student' ? currentUser.id : currentUser.username; return (
+                `sadra_${prefix}_${id}`); }
+
+        function saveSchedule() {
+            const inputs = document.querySelectorAll('#scheduleTable .small-input');
+            const data = {};
+            inputs.forEach(inp => { data[`day${inp.dataset.day}_time${inp.dataset.time}`] = inp.value; });
+            localStorage.setItem(getStorageKey('schedule'), JSON.stringify(data));
+            alert('⏳ زمانبندی ذخیره شد.');
+        }
+
+        function loadSchedule() {
+            const saved = localStorage.getItem(getStorageKey('schedule'));
+            if (!saved) return;
+            const data = JSON.parse(saved);
+            document.querySelectorAll('#scheduleTable .small-input').forEach(inp => {
+                const key = `day${inp.dataset.day}_time${inp.dataset.time}`;
+                if (data[key]) inp.value = data[key];
+            });
+        }
+
+        let notes = [];
+
+        function renderNotes() {
+            const saved = localStorage.getItem(getStorageKey('notes'));
+            notes = saved ? JSON.parse(saved) : [];
+            const list = document.getElementById('noteList');
+            if (!notes.length) { list.innerHTML = '<p style="color:#666; text-align:center;">یادداشتی وجود ندارد.</p>'; return; }
+            let html = '';
+            notes.forEach((n, i) => {
+                html +=
+                    `<div class="item-row"><div class="info">${n.text}</div><div class="actions"><button onclick="deleteNote(${i})" class="danger">🗑️</button></div></div>`;
+            });
+            list.innerHTML = html;
+        }
+
+        function addNote() {
+            const text = document.getElementById('noteText').value.trim();
+            if (!text) { alert('لطفاً متن یادداشت را بنویس.'); return; }
+            notes.push({ text });
+            document.getElementById('noteText').value = '';
+            localStorage.setItem(getStorageKey('notes'), JSON.stringify(notes));
+            renderNotes();
+        }
+
+        function deleteNote(index) {
+            if (confirm('یادداشت حذف شود؟')) {
+                notes.splice(index, 1);
+                localStorage.setItem(getStorageKey('notes'), JSON.stringify(notes));
+                renderNotes();
+            }
+        }
+
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+                document.getElementById(this.dataset.tab).classList.add('active');
+            });
+        });
+
+        (async function init() {
+            await loadAllData();
+            console.log('برنامه صدرا با Supabase آماده است.');
+            console.log('کاربران:', usersData);
+        })();
+    </script>
 </body>
 </html>
