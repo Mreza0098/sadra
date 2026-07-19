@@ -4,69 +4,469 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>صدرا - سامانه مدیریت آموزشی</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
-        body { background: #1a1a1a; color: #eee; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
-        .app-container { max-width: 1000px; width: 100%; background: #222; border-radius: 20px; padding: 20px; box-shadow: 0 0 30px rgba(139,0,0,0.3); border: 1px solid #8B0000; }
-        #loginPage { display: block; } #appPage { display: none; }
-        .login-box { background: #2a2a2a; padding: 30px; border-radius: 20px; border-right: 4px solid #8B0000; max-width: 450px; margin: 0 auto; }
-        .login-box h2 { text-align: center; color: #8B0000; margin-bottom: 20px; }
-        .login-tabs { display: flex; gap: 10px; margin-bottom: 20px; }
-        .login-tab { flex: 1; padding: 10px; background: #1a1a1a; border: 1px solid #444; border-radius: 10px; text-align: center; cursor: pointer; color: #aaa; transition: 0.2s; }
-        .login-tab.active { background: #8B0000; color: #fff; border-color: #8B0000; }
-        .login-tab:hover { background: #333; }
-        .login-form { display: none; } .login-form.active { display: block; }
-        .login-box input, .login-box button { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #444; border-radius: 10px; background: #1a1a1a; color: #fff; font-size: 1rem; }
-        .login-box button { background: #8B0000; font-weight: bold; border: none; cursor: pointer; transition: 0.2s; }
-        .login-box button:hover { background: #a00000; }
-        .login-error { color: #ff4444; text-align: center; margin-top: 10px; font-size: 0.9rem; }
-        .header { display: flex; align-items: center; gap: 15px; border-bottom: 2px solid #8B0000; padding-bottom: 15px; margin-bottom: 20px; flex-wrap: wrap; }
-        .logo-placeholder { width: 70px; height: 70px; background: #2a2a2a; border-radius: 50%; border: 2px solid #8B0000; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: #8B0000; }
-        .header-text { flex: 1; } .header-text h1 { font-size: 2rem; color: #fff; letter-spacing: 2px; text-shadow: 0 0 10px #8B0000; }
-        .header-text h1 span { color: #8B0000; } .header-text p { color: #aaa; font-size: 0.9rem; font-weight: bold; border-right: 3px solid #2e7d32; padding-right: 10px; }
-        .logout-btn { background: #333; border: none; color: #fff; padding: 8px 16px; border-radius: 10px; cursor: pointer; font-size: 0.9rem; margin-right: auto; }
-        .logout-btn:hover { background: #8B0000; }
-        .tabs { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 25px; border-bottom: 1px solid #444; padding-bottom: 5px; }
-        .tab-btn { background: transparent; border: none; color: #aaa; padding: 10px 18px; font-size: 1rem; font-weight: bold; cursor: pointer; border-radius: 30px 30px 0 0; transition: all 0.2s; border-bottom: 3px solid transparent; }
-        .tab-btn:hover { background: #2a2a2a; color: #fff; }
-        .tab-btn.active { color: #fff; background: #2a2a2a; border-bottom: 3px solid #8B0000; }
-        .tab-content { display: none; animation: fadeIn 0.3s; }
-        .tab-content.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0.4; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-        .card { background: #2a2a2a; padding: 18px; border-radius: 15px; margin-bottom: 20px; border-right: 4px solid #8B0000; }
-        .card h3 { color: #8B0000; margin-bottom: 10px; } .card h4 { color: #2e7d32; margin: 10px 0; }
-        input, textarea, button, select { width: 100%; padding: 10px; margin: 6px 0; border: 1px solid #444; border-radius: 10px; background: #1a1a1a; color: #fff; font-size: 1rem; }
-        input:focus, textarea:focus, select:focus { outline: 1px solid #8B0000; border-color: #8B0000; }
-        button { background: #8B0000; font-weight: bold; border: none; cursor: pointer; transition: 0.2s; }
-        button:hover { background: #a00000; }
-        button.danger { background: #333; } button.danger:hover { background: #555; }
-        button.success { background: #2e7d32; } button.success:hover { background: #1b5e20; }
-        button.warning { background: #b8860b; } button.warning:hover { background: #8b6900; }
-        .item-list { margin-top: 15px; border-top: 1px solid #444; padding-top: 10px; }
-        .item-row { background: #1f1f1f; padding: 10px 12px; border-radius: 10px; margin: 8px 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; border-right: 2px solid #2e7d32; }
-        .item-row .info { flex: 1; } .item-row .actions button { width: auto; padding: 4px 12px; margin: 0 3px; background: #444; font-size: 0.8rem; }
-        .item-row .actions button:hover { background: #8B0000; }
-        .badge { background: #2e7d32; padding: 2px 12px; border-radius: 30px; font-size: 0.8rem; }
-        .badge-red { background: #8B0000; padding: 2px 12px; border-radius: 30px; font-size: 0.8rem; }
-        .avg-box { background: #1a1a1a; padding: 10px; border-radius: 10px; text-align: center; font-size: 1.2rem; border: 1px solid #2e7d32; margin-top: 10px; }
-        table { width: 100%; border-collapse: collapse; } th, td { padding: 8px; border: 1px solid #444; text-align: center; }
-        th { background: #1a1a1a; color: #8B0000; }
-        .small-input { width: 100%; padding: 5px; background: #1a1a1a; border: 1px solid #444; color: #fff; border-radius: 5px; text-align: center; }
-        .footer { text-align: center; margin-top: 30px; padding-top: 15px; border-top: 1px solid #333; color: #555; font-size: 0.8rem; }
-        .footer strong { color: #8B0000; }
-        .hidden { display: none; }
-        .permission-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin: 10px 0; }
-        .permission-item { background: #1a1a1a; padding: 8px; border-radius: 8px; display: flex; align-items: center; gap: 10px; }
-        .permission-item input[type="checkbox"] { width: auto; margin: 0; accent-color: #8B0000; }
-        @media (max-width: 600px) { .header-text h1 { font-size: 1.4rem; } .tab-btn { padding: 6px 12px; font-size: 0.8rem; } .permission-grid { grid-template-columns: 1fr; } }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background: #1a1a1a;
+            color: #eee;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .app-container {
+            max-width: 1100px;
+            width: 100%;
+            background: #222;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 0 30px rgba(139, 0, 0, 0.3);
+            border: 1px solid #8B0000;
+            transition: all 0.3s;
+        }
+        /* تم‌های رنگی */
+        .theme-dark {
+            --primary: #8B0000;
+            --secondary: #2e7d32;
+            --bg: #1a1a1a;
+            --card-bg: #2a2a2a;
+            --border: #444;
+        }
+        .theme-red {
+            --primary: #c62828;
+            --secondary: #e53935;
+            --bg: #1a1a1a;
+            --card-bg: #2a2a2a;
+            --border: #444;
+        }
+        .theme-green {
+            --primary: #1b5e20;
+            --secondary: #2e7d32;
+            --bg: #1a1a1a;
+            --card-bg: #2a2a2a;
+            --border: #444;
+        }
+        .theme-blue {
+            --primary: #0d47a1;
+            --secondary: #1976d2;
+            --bg: #1a1a1a;
+            --card-bg: #2a2a2a;
+            --border: #444;
+        }
+        .theme-purple {
+            --primary: #4a148c;
+            --secondary: #7b1fa2;
+            --bg: #1a1a1a;
+            --card-bg: #2a2a2a;
+            --border: #444;
+        }
+        #loginPage {
+            display: block;
+        }
+        #appPage {
+            display: none;
+        }
+        .login-box {
+            background: var(--card-bg, #2a2a2a);
+            padding: 30px;
+            border-radius: 20px;
+            border-right: 4px solid var(--primary, #8B0000);
+            max-width: 450px;
+            margin: 0 auto;
+        }
+        .login-box h2 {
+            text-align: center;
+            color: var(--primary, #8B0000);
+            margin-bottom: 20px;
+        }
+        .login-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .login-tab {
+            flex: 1;
+            padding: 10px;
+            background: var(--bg, #1a1a1a);
+            border: 1px solid var(--border, #444);
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            color: #aaa;
+            transition: 0.2s;
+        }
+        .login-tab.active {
+            background: var(--primary, #8B0000);
+            color: #fff;
+            border-color: var(--primary, #8B0000);
+        }
+        .login-tab:hover {
+            background: #333;
+        }
+        .login-form {
+            display: none;
+        }
+        .login-form.active {
+            display: block;
+        }
+        .login-box input,
+        .login-box button {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid var(--border, #444);
+            border-radius: 10px;
+            background: var(--bg, #1a1a1a);
+            color: #fff;
+            font-size: 1rem;
+        }
+        .login-box button {
+            background: var(--primary, #8B0000);
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .login-box button:hover {
+            filter: brightness(1.2);
+        }
+        .login-error {
+            color: #ff4444;
+            text-align: center;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 2px solid var(--primary, #8B0000);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .logo-placeholder {
+            width: 70px;
+            height: 70px;
+            background: var(--bg, #1a1a1a);
+            border-radius: 50%;
+            border: 2px solid var(--primary, #8B0000);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            flex-shrink: 0;
+            font-size: 2rem;
+            color: var(--primary, #8B0000);
+        }
+        .logo-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .header-text {
+            flex: 1;
+        }
+        .header-text h1 {
+            font-size: 2rem;
+            color: #fff;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px var(--primary, #8B0000);
+        }
+        .header-text h1 span {
+            color: var(--primary, #8B0000);
+        }
+        .header-text p {
+            color: #aaa;
+            font-size: 0.9rem;
+            font-weight: bold;
+            border-right: 3px solid var(--secondary, #2e7d32);
+            padding-right: 10px;
+        }
+        .logout-btn {
+            background: #333;
+            border: none;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-right: auto;
+        }
+        .logout-btn:hover {
+            background: var(--primary, #8B0000);
+        }
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 25px;
+            border-bottom: 1px solid var(--border, #444);
+            padding-bottom: 5px;
+        }
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: #aaa;
+            padding: 10px 18px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 30px 30px 0 0;
+            transition: all 0.2s;
+            border-bottom: 3px solid transparent;
+        }
+        .tab-btn:hover {
+            background: var(--bg, #1a1a1a);
+            color: #fff;
+        }
+        .tab-btn.active {
+            color: #fff;
+            background: var(--bg, #1a1a1a);
+            border-bottom: 3px solid var(--primary, #8B0000);
+        }
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0.4;
+                transform: translateY(5px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .card {
+            background: var(--card-bg, #2a2a2a);
+            padding: 18px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border-right: 4px solid var(--primary, #8B0000);
+        }
+        .card h3 {
+            color: var(--primary, #8B0000);
+            margin-bottom: 10px;
+        }
+        .card h4 {
+            color: var(--secondary, #2e7d32);
+            margin: 10px 0;
+        }
+        input,
+        textarea,
+        button,
+        select {
+            width: 100%;
+            padding: 10px;
+            margin: 6px 0;
+            border: 1px solid var(--border, #444);
+            border-radius: 10px;
+            background: var(--bg, #1a1a1a);
+            color: #fff;
+            font-size: 1rem;
+        }
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: 1px solid var(--primary, #8B0000);
+            border-color: var(--primary, #8B0000);
+        }
+        button {
+            background: var(--primary, #8B0000);
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        button:hover {
+            filter: brightness(1.2);
+        }
+        button.danger {
+            background: #333;
+        }
+        button.danger:hover {
+            background: #555;
+        }
+        button.success {
+            background: var(--secondary, #2e7d32);
+        }
+        button.success:hover {
+            filter: brightness(1.2);
+        }
+        button.warning {
+            background: #b8860b;
+        }
+        button.warning:hover {
+            background: #8b6900;
+        }
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .item-list {
+            margin-top: 15px;
+            border-top: 1px solid var(--border, #444);
+            padding-top: 10px;
+        }
+        .item-row {
+            background: var(--bg, #1a1a1a);
+            padding: 10px 12px;
+            border-radius: 10px;
+            margin: 8px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            border-right: 2px solid var(--secondary, #2e7d32);
+        }
+        .item-row .info {
+            flex: 1;
+        }
+        .item-row .actions button {
+            width: auto;
+            padding: 4px 12px;
+            margin: 0 3px;
+            background: #444;
+            font-size: 0.8rem;
+        }
+        .item-row .actions button:hover {
+            background: var(--primary, #8B0000);
+        }
+        .badge {
+            background: var(--secondary, #2e7d32);
+            padding: 2px 12px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+        }
+        .badge-red {
+            background: var(--primary, #8B0000);
+            padding: 2px 12px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+        }
+        .avg-box {
+            background: var(--bg, #1a1a1a);
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.2rem;
+            border: 1px solid var(--secondary, #2e7d32);
+            margin-top: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th,
+        td {
+            padding: 8px;
+            border: 1px solid var(--border, #444);
+            text-align: center;
+        }
+        th {
+            background: var(--bg, #1a1a1a);
+            color: var(--primary, #8B0000);
+        }
+        .small-input {
+            width: 100%;
+            padding: 5px;
+            background: var(--bg, #1a1a1a);
+            border: 1px solid var(--border, #444);
+            color: #fff;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid #333;
+            color: #555;
+            font-size: 0.8rem;
+        }
+        .footer strong {
+            color: var(--primary, #8B0000);
+        }
+        .hidden {
+            display: none;
+        }
+        .permission-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+            margin: 10px 0;
+        }
+        .permission-item {
+            background: var(--bg, #1a1a1a);
+            padding: 8px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .permission-item input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+            accent-color: var(--primary, #8B0000);
+        }
+        .notification-banner {
+            background: var(--primary, #8B0000);
+            color: #fff;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        .notification-banner strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .settings-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .settings-group .full-width {
+            grid-column: 1 / -1;
+        }
+        @media (max-width: 600px) {
+            .header-text h1 {
+                font-size: 1.4rem;
+            }
+            .tab-btn {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+            .permission-grid {
+                grid-template-columns: 1fr;
+            }
+            .settings-group {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="app-container">
+    <div class="app-container" id="appContainer">
+        <!-- ==================== صفحه ورود ==================== -->
         <div id="loginPage">
             <div class="login-box">
-                <h2>★ صدرا ★</h2>
-                <p style="text-align:center; color:#aaa; margin-bottom:15px;">سامانه مدیریت آموزشی</p>
+                <h2 id="loginTitle">★ صدرا ★</h2>
+                <p style="text-align:center; color:#aaa; margin-bottom:15px;" id="loginSubtitle">سامانه مدیریت آموزشی</p>
                 <div class="login-tabs">
                     <div class="login-tab active" data-role="student">دانش‌آموز</div>
                     <div class="login-tab" data-role="admin">کارکنان</div>
@@ -85,26 +485,42 @@
                 </div>
             </div>
         </div>
+
+        <!-- ==================== صفحه اصلی ==================== -->
         <div id="appPage">
+            <!-- هدر -->
             <div class="header">
-                <div class="logo-placeholder">★</div>
+                <div class="logo-placeholder" id="logoPlaceholder">★</div>
                 <div class="header-text">
-                    <h1><span>★</span> صدرا</h1>
-                    <p id="userDisplayName">سامانه مدیریت آموزشی</p>
+                    <h1><span>★</span> <span id="siteTitle">صدرا</span></h1>
+                    <p id="siteSlogan">سامانه مدیریت آموزشی • جهاد علمی</p>
                 </div>
                 <button class="logout-btn" onclick="logout()">خروج</button>
             </div>
-            <div class="tabs">
+
+            <!-- اعلان‌ها -->
+            <div id="notificationBanner" class="notification-banner">
+                <strong>📢 اعلان</strong>
+                <p id="notificationText"></p>
+            </div>
+
+            <!-- تب‌ها -->
+            <div class="tabs" id="mainTabs">
                 <button class="tab-btn active" data-tab="home">🏠 خانه</button>
                 <button class="tab-btn" data-tab="grades">📊 نمرات</button>
                 <button class="tab-btn" data-tab="schedule">🗓️ زمانبندی</button>
                 <button class="tab-btn" data-tab="notes">📝 یادداشت</button>
                 <button class="tab-btn" data-tab="tasks">✅ تمرین</button>
                 <button class="tab-btn" data-tab="discipline" id="disciplineTab" style="display:none;">⚖️ انضباطی</button>
+                <button class="tab-btn" data-tab="reports" id="reportsTab" style="display:none;">📋 کارنامه</button>
                 <button class="tab-btn" data-tab="adminPanel" id="adminPanelTab" style="display:none;">🔧 مدیریت</button>
+                <button class="tab-btn" data-tab="settings" id="settingsTab" style="display:none;">⚙️ تنظیمات</button>
             </div>
+
+            <!-- ==================== خانه ==================== -->
             <div id="home" class="tab-content active">
-                <div class="card"><h3>🚀 به صدرا خوش آمدی</h3>
+                <div class="card">
+                    <h3>🚀 به صدرا خوش آمدی</h3>
                     <p style="line-height:1.8; color:#ccc;" id="homeWelcome">این سامانه برای مدیریت امور آموزشی شما طراحی شده.</p>
                     <ul style="list-style:none; margin-top:15px; color:#aaa;" id="homeFeatures">
                         <li style="margin:8px 0;">📊 مشاهده نمرات</li>
@@ -112,40 +528,58 @@
                         <li style="margin:8px 0;">📝 یادداشت‌های مهم</li>
                         <li style="margin:8px 0;">✅ مدیریت تکالیف</li>
                     </ul>
-                    <div style="margin-top:20px; background:#1a1a1a; padding:10px; border-radius:10px; border-right:3px solid #2e7d32;">
-                        <span style="color:#2e7d32;">★</span> <span style="color:#aaa;">«سربازان علم، آینده را می‌سازند»</span>
+                    <div style="margin-top:20px; background:var(--bg, #1a1a1a); padding:10px; border-radius:10px; border-right:3px solid var(--secondary, #2e7d32);">
+                        <span style="color:var(--secondary, #2e7d32);">★</span>
+                        <span style="color:#aaa;" id="footerSlogan">«سربازان علم، آینده را می‌سازند»</span>
                     </div>
                 </div>
             </div>
+
+            <!-- ==================== نمرات ==================== -->
             <div id="grades" class="tab-content">
-                <div class="card"><h3>📊 نمرات</h3><div id="gradeList"></div><div class="avg-box" id="avgBox">معدل کل: ۰.۰۰</div></div>
+                <div class="card">
+                    <h3>📊 نمرات</h3>
+                    <div id="gradeList"></div>
+                    <div class="avg-box" id="avgBox">معدل کل: ۰.۰۰</div>
+                </div>
             </div>
+
+            <!-- ==================== زمانبندی ==================== -->
             <div id="schedule" class="tab-content">
-                <div class="card"><h3>🗓️ زمانبندی هفتگی</h3>
+                <div class="card">
+                    <h3>🗓️ زمانبندی هفتگی</h3>
                     <p style="color:#aaa; font-size:0.9rem;">درس‌های هر روز را در سلول‌ها بنویس (ذخیره می‌شود).</p>
                     <div style="overflow-x:auto; margin-top:15px;">
-                        <table id="scheduleTable"><thead><tr><th>روز</th><th>۸-۱۰</th><th>۱۰-۱۲</th><th>۱۴-۱۶</th><th>۱۶-۱۸</th></tr></thead>
-                        <tbody>
-                            <tr><td><strong>شنبه</strong></td><td><input class="small-input" data-day="0" data-time="0"></td><td><input class="small-input" data-day="0" data-time="1"></td><td><input class="small-input" data-day="0" data-time="2"></td><td><input class="small-input" data-day="0" data-time="3"></td></tr>
-                            <tr><td><strong>یک‌شنبه</strong></td><td><input class="small-input" data-day="1" data-time="0"></td><td><input class="small-input" data-day="1" data-time="1"></td><td><input class="small-input" data-day="1" data-time="2"></td><td><input class="small-input" data-day="1" data-time="3"></td></tr>
-                            <tr><td><strong>دوشنبه</strong></td><td><input class="small-input" data-day="2" data-time="0"></td><td><input class="small-input" data-day="2" data-time="1"></td><td><input class="small-input" data-day="2" data-time="2"></td><td><input class="small-input" data-day="2" data-time="3"></td></tr>
-                            <tr><td><strong>سه‌شنبه</strong></td><td><input class="small-input" data-day="3" data-time="0"></td><td><input class="small-input" data-day="3" data-time="1"></td><td><input class="small-input" data-day="3" data-time="2"></td><td><input class="small-input" data-day="3" data-time="3"></td></tr>
-                            <tr><td><strong>چهارشنبه</strong></td><td><input class="small-input" data-day="4" data-time="0"></td><td><input class="small-input" data-day="4" data-time="1"></td><td><input class="small-input" data-day="4" data-time="2"></td><td><input class="small-input" data-day="4" data-time="3"></td></tr>
-                            <tr><td><strong>پنج‌شنبه</strong></td><td><input class="small-input" data-day="5" data-time="0"></td><td><input class="small-input" data-day="5" data-time="1"></td><td><input class="small-input" data-day="5" data-time="2"></td><td><input class="small-input" data-day="5" data-time="3"></td></tr>
-                        </tbody></table>
+                        <table id="scheduleTable">
+                            <thead><tr><th>روز</th><th>۸-۱۰</th><th>۱۰-۱۲</th><th>۱۴-۱۶</th><th>۱۶-۱۸</th></tr></thead>
+                            <tbody>
+                                <tr><td><strong>شنبه</strong></td><td><input class="small-input" data-day="0" data-time="0"></td><td><input class="small-input" data-day="0" data-time="1"></td><td><input class="small-input" data-day="0" data-time="2"></td><td><input class="small-input" data-day="0" data-time="3"></td></tr>
+                                <tr><td><strong>یک‌شنبه</strong></td><td><input class="small-input" data-day="1" data-time="0"></td><td><input class="small-input" data-day="1" data-time="1"></td><td><input class="small-input" data-day="1" data-time="2"></td><td><input class="small-input" data-day="1" data-time="3"></td></tr>
+                                <tr><td><strong>دوشنبه</strong></td><td><input class="small-input" data-day="2" data-time="0"></td><td><input class="small-input" data-day="2" data-time="1"></td><td><input class="small-input" data-day="2" data-time="2"></td><td><input class="small-input" data-day="2" data-time="3"></td></tr>
+                                <tr><td><strong>سه‌شنبه</strong></td><td><input class="small-input" data-day="3" data-time="0"></td><td><input class="small-input" data-day="3" data-time="1"></td><td><input class="small-input" data-day="3" data-time="2"></td><td><input class="small-input" data-day="3" data-time="3"></td></tr>
+                                <tr><td><strong>چهارشنبه</strong></td><td><input class="small-input" data-day="4" data-time="0"></td><td><input class="small-input" data-day="4" data-time="1"></td><td><input class="small-input" data-day="4" data-time="2"></td><td><input class="small-input" data-day="4" data-time="3"></td></tr>
+                                <tr><td><strong>پنج‌شنبه</strong></td><td><input class="small-input" data-day="5" data-time="0"></td><td><input class="small-input" data-day="5" data-time="1"></td><td><input class="small-input" data-day="5" data-time="2"></td><td><input class="small-input" data-day="5" data-time="3"></td></tr>
+                            </tbody>
+                        </table>
                     </div>
                     <button onclick="saveSchedule()" style="margin-top:15px;">💾 ذخیره‌ی زمانبندی</button>
                 </div>
             </div>
+
+            <!-- ==================== یادداشت ==================== -->
             <div id="notes" class="tab-content">
-                <div class="card"><h3>📝 یادداشت‌ها</h3>
+                <div class="card">
+                    <h3>📝 یادداشت‌ها</h3>
                     <textarea id="noteText" rows="4" placeholder="متن یادداشت را اینجا بنویس..."></textarea>
                     <button onclick="addNote()">➕ افزودن یادداشت</button>
                     <div class="item-list" id="noteList"></div>
                 </div>
             </div>
+
+            <!-- ==================== تمرین ==================== -->
             <div id="tasks" class="tab-content">
-                <div class="card"><h3>✅ تمرین‌ها</h3>
+                <div class="card">
+                    <h3>✅ تمرین‌ها</h3>
                     <div id="taskManagement">
                         <input type="text" id="taskTitle" placeholder="عنوان تمرین">
                         <input type="date" id="taskDue">
@@ -155,8 +589,11 @@
                     <div class="item-list" id="taskList"></div>
                 </div>
             </div>
+
+            <!-- ==================== انضباطی ==================== -->
             <div id="discipline" class="tab-content">
-                <div class="card"><h3>⚖️ ثبت منفی انضباطی</h3>
+                <div class="card">
+                    <h3>⚖️ ثبت منفی انضباطی</h3>
                     <div id="disciplineManagement">
                         <select id="disciplineStudentSelect"><option value="">انتخاب دانش‌آموز...</option></select>
                         <input type="number" id="disciplineValue" placeholder="مقدار منفی (۱ تا ۱۰)" min="1" max="10">
@@ -166,17 +603,38 @@
                     <div class="item-list" id="disciplineList"></div>
                 </div>
             </div>
+
+            <!-- ==================== کارنامه ==================== -->
+            <div id="reports" class="tab-content">
+                <div class="card">
+                    <h3>📋 کارنامه و گزارشات</h3>
+                    <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:15px;">
+                        <select id="reportStudentSelect" style="width:auto; flex:2; min-width:200px;">
+                            <option value="">انتخاب دانش‌آموز...</option>
+                        </select>
+                        <button onclick="generateReport()" class="success" style="width:auto; padding:6px 18px;">📄 نمایش کارنامه</button>
+                        <button onclick="downloadPDF()" class="warning" style="width:auto; padding:6px 18px;">📥 خروجی PDF</button>
+                    </div>
+                    <div id="reportContainer" style="background:var(--bg, #1a1a1a); padding:20px; border-radius:15px; min-height:200px;">
+                        <p style="color:#aaa; text-align:center;">لطفاً یک دانش‌آموز را انتخاب کنید.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== پنل مدیریت ==================== -->
             <div id="adminPanel" class="tab-content">
-                <div class="card"><h3>🔧 پنل مدیریت</h3>
+                <div class="card">
+                    <h3>🔧 پنل مدیریت</h3>
                     <div id="adminDashboard">
                         <div style="display:flex; flex-wrap:wrap; gap:5px; margin-bottom:15px;">
-                            <button onclick="showSection('addStudentSection')" class="success" style="width:auto; padding:6px 18px;">➕ دانش‌آموز</button>
-                            <button onclick="showSection('addStaffSection')" class="success" style="width:auto; padding:6px 18px;">➕ کارکنان</button>
-                            <button onclick="showSection('addGradeSection')" class="success" style="width:auto; padding:6px 18px;">📊 نمره</button>
-                            <button onclick="showSection('managePermissionsSection')" class="warning" style="width:auto; padding:6px 18px;">🔑 دسترسی‌ها</button>
+                            <button onclick="showSection('addStudentSection')" class="success" style="width:auto; padding:6px 18px;" id="btnAddStudent">➕ دانش‌آموز</button>
+                            <button onclick="showSection('addStaffSection')" class="success" style="width:auto; padding:6px 18px;" id="btnAddStaff">➕ کارکنان</button>
+                            <button onclick="showSection('addGradeSection')" class="success" style="width:auto; padding:6px 18px;" id="btnAddGrade">📊 نمره</button>
+                            <button onclick="showSection('managePermissionsSection')" class="warning" style="width:auto; padding:6px 18px;" id="btnPermissions">🔑 دسترسی‌ها</button>
                             <button onclick="showSection('viewAllSection')" style="width:auto; padding:6px 18px;">📋 همه</button>
+                            <button onclick="sendNotification()" class="warning" style="width:auto; padding:6px 18px;">📢 اعلان</button>
                         </div>
-                        <div id="addStudentSection" class="hidden card" style="border-right-color:#2e7d32;">
+                        <div id="addStudentSection" class="hidden card" style="border-right-color:var(--secondary, #2e7d32);">
                             <h4>افزودن دانش‌آموز جدید</h4>
                             <input type="text" id="newStudentNationalId" placeholder="کد ملی">
                             <input type="text" id="newStudentMobile" placeholder="شماره موبایل">
@@ -184,7 +642,7 @@
                             <button onclick="addStudent()" class="success">ذخیره</button>
                             <button onclick="hideSection('addStudentSection')">لغو</button>
                         </div>
-                        <div id="addStaffSection" class="hidden card" style="border-right-color:#2e7d32;">
+                        <div id="addStaffSection" class="hidden card" style="border-right-color:var(--secondary, #2e7d32);">
                             <h4>افزودن کارمند جدید</h4>
                             <input type="text" id="newStaffUsername" placeholder="نام کاربری">
                             <input type="password" id="newStaffPassword" placeholder="رمز عبور">
@@ -193,12 +651,13 @@
                                 <option value="manager">مدیر</option>
                                 <option value="deputy">معاون</option>
                                 <option value="teacher">معلم</option>
+                                <option value="observer">مدیر کل (مشاهده‌گر)</option>
                             </select>
                             <div id="teacherLessonSection" class="hidden"><h5>درس‌های این معلم</h5><div id="teacherLessonCheckboxes"></div></div>
                             <button onclick="addStaff()" class="success">ذخیره</button>
                             <button onclick="hideSection('addStaffSection')">لغو</button>
                         </div>
-                        <div id="addGradeSection" class="hidden card" style="border-right-color:#2e7d32;">
+                        <div id="addGradeSection" class="hidden card" style="border-right-color:var(--secondary, #2e7d32);">
                             <h4>افزودن نمره</h4>
                             <select id="newGradeStudentSelect"><option value="">انتخاب دانش‌آموز...</option></select>
                             <input type="text" id="newGradeLesson" placeholder="نام درس">
@@ -222,16 +681,73 @@
                     </div>
                 </div>
             </div>
+
+            <!-- ==================== تنظیمات سایت ==================== -->
+            <div id="settings" class="tab-content">
+                <div class="card">
+                    <h3>⚙️ تنظیمات سایت</h3>
+                    <div class="settings-group">
+                        <div class="full-width">
+                            <label>شعار سایت</label>
+                            <input type="text" id="settingSlogan" placeholder="شعار سایت را وارد کنید">
+                        </div>
+                        <div>
+                            <label>رنگ اصلی</label>
+                            <select id="settingTheme" onchange="applyTheme(this.value)">
+                                <option value="theme-dark">مشکی</option>
+                                <option value="theme-red">قرمز</option>
+                                <option value="theme-green">سبز</option>
+                                <option value="theme-blue">آبی</option>
+                                <option value="theme-purple">بنفش</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>لوگو (آپلود عکس)</label>
+                            <input type="file" id="settingLogo" accept="image/*" onchange="uploadLogo(this)">
+                        </div>
+                        <div class="full-width">
+                            <label>عنوان سایت</label>
+                            <input type="text" id="settingTitle" placeholder="عنوان سایت را وارد کنید">
+                        </div>
+                        <div class="full-width">
+                            <button onclick="saveSettings()" class="success">💾 ذخیره تنظیمات</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="footer"><strong>★</strong> صدرا · سامانه مدیریت آموزشی <strong>★</strong></div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <script>
+        // ============================================================
+        // 1.  تنظیمات Supabase
+        // ============================================================
         const SUPABASE_URL = 'https://cyyfagessadtzzqcgero.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN5eWZhZ2Vzc2FkdHp6cWNnZXJvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ0MzY4NTYsImV4cCI6MjEwMDAxMjg1Nn0.ryER3Az8letoQDAoJhqAoYylRjgXrIBX0tKFMCLFLJ8';
         const supabase_js = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-        let currentUser = null, userRole = null, usersData = [], gradesData = [], disciplineRecords = [], tasksData = [];
 
+        // ============================================================
+        // 2.  متغیرهای عمومی
+        // ============================================================
+        let currentUser = null;
+        let userRole = null; // 'student', 'manager', 'deputy', 'teacher', 'owner', 'observer'
+        let usersData = [];
+        let gradesData = [];
+        let disciplineRecords = [];
+        let tasksData = [];
+        let notifications = JSON.parse(localStorage.getItem('sadra_notifications')) || [];
+        let siteSettings = JSON.parse(localStorage.getItem('sadra_settings')) || {
+            theme: 'theme-dark',
+            slogan: 'سامانه مدیریت آموزشی • جهاد علمی',
+            title: 'صدرا',
+            logo: ''
+        };
+
+        // ============================================================
+        // 3.  توابع اصلی (خواندن از Supabase)
+        // ============================================================
         async function loadAllData() {
             const { data: users } = await supabase_js.from('users').select('*');
             if (users) usersData = users;
@@ -243,6 +759,9 @@
             if (tasks) tasksData = tasks;
         }
 
+        // ============================================================
+        // 4.  ورود و خروج
+        // ============================================================
         document.querySelectorAll('.login-tab').forEach(tab => {
             tab.addEventListener('click', function() {
                 document.querySelectorAll('.login-tab').forEach(t => t.classList.remove('active'));
@@ -262,7 +781,9 @@
             if (usersData.length === 0) await loadAllData();
             const user = usersData.find(u => u.id == id && u.mobile === mobile);
             if (!user) { errorEl.textContent = 'کد ملی یا شماره موبایل اشتباه است.'; return; }
-            userRole = 'student'; currentUser = user; enterApp();
+            userRole = 'student';
+            currentUser = user;
+            enterApp();
         }
 
         function loginStaff() {
@@ -270,49 +791,77 @@
             const password = document.getElementById('loginPassword').value.trim();
             const errorEl = document.getElementById('adminLoginError');
             if (username === 'Mreza0098' && password === '54215421') {
-                userRole = 'owner'; currentUser = { id: 'owner', name: 'مدیر اصلی', username: 'Mreza0098' };
-                enterApp(); return;
+                userRole = 'owner';
+                currentUser = { id: 'owner', name: 'مدیر اصلی', username: 'Mreza0098' };
+                enterApp();
+                return;
             }
             const staff = usersData.find(u => u.username === username && u.password === password);
             if (!staff) { errorEl.textContent = 'نام کاربری یا رمز عبور اشتباه است.'; return; }
-            currentUser = staff; userRole = staff.role; enterApp();
+            currentUser = staff;
+            userRole = staff.role;
+            enterApp();
         }
 
         function enterApp() {
             document.getElementById('loginPage').style.display = 'none';
             document.getElementById('appPage').style.display = 'block';
+            applyTheme(siteSettings.theme);
+            document.getElementById('siteTitle').textContent = siteSettings.title;
+            document.getElementById('siteSlogan').textContent = siteSettings.slogan;
+            document.getElementById('footerSlogan').textContent = siteSettings.slogan;
+            if (siteSettings.logo) {
+                document.getElementById('logoPlaceholder').innerHTML = `<img src="${siteSettings.logo}" alt="لوگو">`;
+            }
+
             let displayName = '';
             if (userRole === 'student') displayName = `خوش آمدی، ${currentUser.name}`;
             else if (userRole === 'owner') displayName = 'مدیر اصلی - خوش آمدید';
             else if (userRole === 'manager') displayName = `مدیر - ${currentUser.name}`;
             else if (userRole === 'deputy') displayName = `معاون - ${currentUser.name}`;
             else if (userRole === 'teacher') displayName = `معلم - ${currentUser.name}`;
+            else if (userRole === 'observer') displayName = `مدیر کل - ${currentUser.name}`;
             document.getElementById('userDisplayName').textContent = displayName;
-            const adminTab = document.getElementById('adminPanelTab');
-            const disciplineTab = document.getElementById('disciplineTab');
-            const taskStudentSelect = document.getElementById('taskStudentSelect');
-            const disciplineStudentSelect = document.getElementById('disciplineStudentSelect');
-            const hasAdminAccess = (userRole === 'owner' || userRole === 'manager' || (userRole === 'deputy' && currentUser
-                .permissions?.manageStaff));
-            adminTab.style.display = hasAdminAccess ? 'block' : 'none';
-            const hasDisciplineAccess = (userRole === 'teacher' || userRole === 'manager' || userRole === 'owner' || (
-                userRole === 'deputy' && currentUser.permissions?.manageDiscipline));
-            disciplineTab.style.display = hasDisciplineAccess ? 'block' : 'none';
-            const showStudentSelect = (userRole === 'teacher' || userRole === 'manager' || userRole === 'owner' || (
-                userRole === 'deputy' && currentUser.permissions?.manageTasks));
-            taskStudentSelect.style.display = showStudentSelect ? 'block' : 'none';
-            disciplineStudentSelect.style.display = (userRole === 'teacher' || userRole === 'manager' || userRole ===
-                'owner' || (userRole === 'deputy' && currentUser.permissions?.manageDiscipline)) ? 'block' : 'none';
+
+            // نمایش/مخفی کردن تب‌ها
+            const isAdmin = (userRole === 'owner' || userRole === 'manager' || userRole === 'observer');
+            const hasWriteAccess = (userRole === 'owner' || userRole === 'manager' ||
+                (userRole === 'deputy' && currentUser.permissions?.manageStaff) ||
+                userRole === 'teacher');
+            const isObserver = (userRole === 'observer');
+
+            document.getElementById('adminPanelTab').style.display = isAdmin ? 'block' : 'none';
+            document.getElementById('settingsTab').style.display = (userRole === 'owner' || userRole === 'observer') ? 'block' :
+            'none';
+            document.getElementById('reportsTab').style.display = (userRole === 'owner' || userRole === 'observer' ||
+                userRole === 'manager' || userRole === 'deputy' || userRole === 'teacher') ? 'block' : 'none';
+            document.getElementById('disciplineTab').style.display = (userRole === 'teacher' || userRole === 'manager' ||
+                userRole === 'owner' || (userRole === 'deputy' && currentUser.permissions?.manageDiscipline) ||
+                userRole === 'observer') ? 'block' : 'none';
+
+            // غیرفعال کردن دکمه‌های ثبت برای observer
+            document.querySelectorAll('#btnAddStudent, #btnAddStaff, #btnAddGrade, #btnPermissions').forEach(btn => {
+                btn.style.display = isObserver ? 'none' : 'inline-block';
+            });
+
+            // مخفی کردن فرم‌های ثبت برای observer
+            if (isObserver) {
+                document.querySelectorAll('#addStudentSection, #addStaffSection, #addGradeSection, #managePermissionsSection')
+                    .forEach(el => el.classList.add('hidden'));
+            }
+
             populateStudentSelects();
             updateHomeFeatures();
             renderUserData();
-            if (hasAdminAccess) renderAdminPanel();
-            if (hasDisciplineAccess) renderDisciplineList();
+            if (isAdmin) renderAdminPanel();
+            if (userRole === 'owner' || userRole === 'observer' || userRole === 'manager' || userRole === 'deputy' || userRole ===
+                'teacher') renderDisciplineList();
             if (userRole === 'teacher') {
                 const teacherLessons = currentUser.lessons || [];
                 if (teacherLessons.length > 0) document.getElementById('newGradeLesson').placeholder =
                     `درس‌های شما: ${teacherLessons.join(', ')}`;
             }
+            showNotification();
         }
 
         function logout() {
@@ -328,10 +877,17 @@
             document.getElementById('adminLoginError').textContent = '';
         }
 
-        function getUserName(id) { const user = usersData.find(u => u.id == id); return user ? user.name : id; }
+        // ============================================================
+        // 5.  توابع کمکی
+        // ============================================================
+        function getUserName(id) {
+            if (id === 'owner') return 'مدیر اصلی';
+            const user = usersData.find(u => u.id == id);
+            return user ? user.name : id;
+        }
 
         function populateStudentSelects() {
-            const selects = ['taskStudentSelect', 'disciplineStudentSelect', 'newGradeStudentSelect'];
+            const selects = ['taskStudentSelect', 'disciplineStudentSelect', 'newGradeStudentSelect', 'reportStudentSelect'];
             selects.forEach(id => {
                 const select = document.getElementById(id);
                 if (!select) return;
@@ -360,6 +916,9 @@
                 const perms = currentUser.permissions || {};
                 html =
                     `<li style="margin:8px 0;">📊 ${perms.manageGrades ? 'مدیریت نمرات' : 'مشاهده نمرات'}</li><li style="margin:8px 0;">✅ ${perms.manageTasks ? 'مدیریت تمرین‌ها' : 'مشاهده تمرین‌ها'}</li><li style="margin:8px 0;">⚖️ ${perms.manageDiscipline ? 'مدیریت انضباطی' : 'مشاهده انضباطی'}</li>${perms.manageUsers ? '<li style="margin:8px 0;">👥 مدیریت کاربران</li>' : ''}${perms.manageStaff ? '<li style="margin:8px 0;">🔧 مدیریت کارکنان</li>' : ''}`;
+            } else if (userRole === 'observer') {
+                html =
+                    `<li style="margin:8px 0;">📊 مشاهده نمرات</li><li style="margin:8px 0;">✅ مشاهده تمرین‌ها</li><li style="margin:8px 0;">⚖️ مشاهده انضباطی</li><li style="margin:8px 0;">👥 مشاهده کاربران</li><li style="margin:8px 0;">⚙️ تنظیمات سایت</li>`;
             } else {
                 html =
                     `<li style="margin:8px 0;">📊 مدیریت نمرات</li><li style="margin:8px 0;">✅ مدیریت تمرین‌ها</li><li style="margin:8px 0;">⚖️ مدیریت انضباطی</li><li style="margin:8px 0;">👥 مدیریت کاربران</li><li style="margin:8px 0;">🔧 مدیریت کارکنان</li>`;
@@ -371,46 +930,70 @@
             else if (userRole === 'deputy') welcome.textContent = 'به پنل معاونت خوش آمدید.';
             else if (userRole === 'manager') welcome.textContent = 'به پنل مدیریت خوش آمدید.';
             else if (userRole === 'owner') welcome.textContent = 'به پنل مدیر اصلی خوش آمدید.';
+            else if (userRole === 'observer') welcome.textContent = 'به پنل مدیریت کل خوش آمدید.';
         }
 
+        // ============================================================
+        // 6.  نمایش داده‌ها
+        // ============================================================
         function renderUserData() {
             if (!currentUser) return;
             if (userRole === 'student') {
-                const userGrades = gradesData.filter(g => g.student_id == currentUser.id);
-                const list = document.getElementById('gradeList');
-                if (userGrades.length === 0) { list.innerHTML = '<p style="color:#666; text-align:center;">نمره‌ای ثبت نشده است.</p>';
-                    document.getElementById('avgBox').innerHTML = 'معدل کل: ۰.۰۰'; } else { let html = '',
-                        sum = 0;
-                    userGrades.forEach(g => { sum += g.score;
-                        html +=
-                            `<div class="item-row"><div class="info"><strong>${g.lesson}</strong> — <span style="color:#8B0000;">${g.score}</span> <span style="color:#666; font-size:0.8rem;">(${g.date || 'بدون تاریخ'})</span></div></div>`;
-                    });
-                    list.innerHTML = html;
-                    document.getElementById('avgBox').innerHTML =
-                        `معدل کل: <strong style="color:#8B0000;">${(sum / userGrades.length).toFixed(2)}</strong> (از ${userGrades.length} نمره)`; }
+                renderStudentGrades();
             } else {
                 let filteredGrades = [];
                 if (userRole === 'teacher') {
                     const teacherLessons = currentUser.lessons || [];
                     filteredGrades = gradesData.filter(g => teacherLessons.includes(g.lesson));
-                } else { filteredGrades = gradesData; }
+                } else {
+                    filteredGrades = gradesData;
+                }
                 const list = document.getElementById('gradeList');
-                if (filteredGrades.length === 0) { list.innerHTML = '<p style="color:#666; text-align:center;">نمره‌ای یافت نشد.</p>';
-                    document.getElementById('avgBox').innerHTML = 'معدل کل: ۰.۰۰'; } else { let html = '',
+                if (filteredGrades.length === 0) {
+                    list.innerHTML = '<p style="color:#666; text-align:center;">نمره‌ای یافت نشد.</p>';
+                    document.getElementById('avgBox').innerHTML = 'معدل کل: ۰.۰۰';
+                } else {
+                    let html = '',
                         sum = 0;
-                    filteredGrades.forEach(g => { sum += g.score; const name = getUserName(g.student_id);
+                    filteredGrades.forEach(g => {
+                        sum += g.score;
+                        const name = getUserName(g.student_id);
                         html +=
-                            `<div class="item-row"><div class="info"><strong>${name}</strong> — <strong>${g.lesson}</strong>: <span style="color:#8B0000;">${g.score}</span> <span style="color:#666; font-size:0.8rem;">(${g.date || 'بدون تاریخ'})</span></div></div>`;
+                            `<div class="item-row"><div class="info"><strong>${name}</strong> — <strong>${g.lesson}</strong>: <span style="color:var(--primary, #8B0000);">${g.score}</span> <span style="color:#666; font-size:0.8rem;">(${g.date || 'بدون تاریخ'})</span></div></div>`;
                     });
                     list.innerHTML = html;
                     document.getElementById('avgBox').innerHTML =
-                        `معدل کل: <strong style="color:#8B0000;">${(sum / filteredGrades.length).toFixed(2)}</strong> (از ${filteredGrades.length} نمره)`; }
+                        `معدل کل: <strong style="color:var(--primary, #8B0000);">${(sum / filteredGrades.length).toFixed(2)}</strong> (از ${filteredGrades.length} نمره)`;
+                }
             }
             loadSchedule();
             renderNotes();
             renderTasks();
         }
 
+        function renderStudentGrades() {
+            const userGrades = gradesData.filter(g => g.student_id == currentUser.id);
+            const list = document.getElementById('gradeList');
+            if (userGrades.length === 0) {
+                list.innerHTML = '<p style="color:#666; text-align:center;">نمره‌ای ثبت نشده است.</p>';
+                document.getElementById('avgBox').innerHTML = 'معدل کل: ۰.۰۰';
+            } else {
+                let html = '',
+                    sum = 0;
+                userGrades.forEach(g => {
+                    sum += g.score;
+                    html +=
+                        `<div class="item-row"><div class="info"><strong>${g.lesson}</strong> — <span style="color:var(--primary, #8B0000);">${g.score}</span> <span style="color:#666; font-size:0.8rem;">(${g.date || 'بدون تاریخ'})</span></div></div>`;
+                });
+                list.innerHTML = html;
+                document.getElementById('avgBox').innerHTML =
+                    `معدل کل: <strong style="color:var(--primary, #8B0000);">${(sum / userGrades.length).toFixed(2)}</strong> (از ${userGrades.length} نمره)`;
+            }
+        }
+
+        // ============================================================
+        // 7.  مدیریت نمرات (با Supabase)
+        // ============================================================
         async function addGrade() {
             if (!hasGradePermission()) { alert('شما مجوز افزودن نمره را ندارید.'); return; }
             const student_id = document.getElementById('newGradeStudentSelect').value;
@@ -456,6 +1039,9 @@
             }
         }
 
+        // ============================================================
+        // 8.  مدیریت انضباطی (با Supabase)
+        // ============================================================
         async function addDiscipline() {
             if (!hasDisciplinePermission()) { alert('شما مجوز ثبت منفی انضباطی را ندارید.'); return; }
             const student_id = document.getElementById('disciplineStudentSelect').value;
@@ -492,12 +1078,13 @@
             filtered.forEach(d => {
                 const name = getUserName(d.student_id);
                 html +=
-                    `<div class="item-row"><div class="info"><strong>${name}</strong> — <span class="badge-red">-${d.value}</span> ${d.reason ? `— ${d.reason}` : ''} <span style="color:#666; font-size:0.8rem;">(${d.date})</span>${userRole !== 'student' ? `<span style="color:#666; font-size:0.8rem;">ثبت: ${getUserName(d.teacher_id)}</span>` : ''}</div>${userRole !== 'student' ? `<div class="actions"><button onclick="deleteDiscipline(${d.id})" class="danger">🗑️</button></div>` : ''}</div>`;
+                    `<div class="item-row"><div class="info"><strong>${name}</strong> — <span class="badge-red">-${d.value}</span> ${d.reason ? `— ${d.reason}` : ''} <span style="color:#666; font-size:0.8rem;">(${d.date})</span>${userRole !== 'student' ? `<span style="color:#666; font-size:0.8rem;">ثبت: ${getUserName(d.teacher_id)}</span>` : ''}</div>${userRole !== 'student' && userRole !== 'observer' ? `<div class="actions"><button onclick="deleteDiscipline(${d.id})" class="danger">🗑️</button></div>` : ''}</div>`;
             });
             list.innerHTML = html;
         }
 
         async function deleteDiscipline(id) {
+            if (userRole === 'observer') { alert('شما به عنوان مدیر کل، مجوز حذف ندارید.'); return; }
             if (confirm('آیا از حذف این رکورد انضباطی اطمینان دارید؟')) {
                 const { error } = await supabase_js.from('disciplines').delete().eq('id', id);
                 if (error) { alert('خطا در حذف: ' + error.message); return; }
@@ -506,6 +1093,9 @@
             }
         }
 
+        // ============================================================
+        // 9.  مدیریت تمرین‌ها (با Supabase)
+        // ============================================================
         async function addTask() {
             if (!hasTaskPermission()) { alert('شما مجوز افزودن تمرین را ندارید.'); return; }
             const title = document.getElementById('taskTitle').value.trim();
@@ -543,12 +1133,13 @@
             filtered.forEach(t => {
                 const target = t.student_id === 'all' ? 'همه دانش‌آموزان' : getUserName(t.student_id);
                 html +=
-                    `<div class="item-row"><div class="info"><strong>${t.title}</strong> — ${t.due || 'بدون تاریخ'}${t.student_id !== 'all' ? `<span style="color:#666; font-size:0.8rem;">برای: ${target}</span>` : ''}<span class="badge">${t.done ? '✅ انجام شده' : '⏳ در انتظار'}</span><span style="color:#666; font-size:0.8rem;">ثبت: ${getUserName(t.creator_id)}</span></div><div class="actions">${userRole !== 'student' ? `<button onclick="toggleTask(${t.id})">✔️</button>` : ''}${userRole !== 'student' ? `<button onclick="deleteTask(${t.id})" class="danger">🗑️</button>` : ''}</div></div>`;
+                    `<div class="item-row"><div class="info"><strong>${t.title}</strong> — ${t.due || 'بدون تاریخ'}${t.student_id !== 'all' ? `<span style="color:#666; font-size:0.8rem;">برای: ${target}</span>` : ''}<span class="badge">${t.done ? '✅ انجام شده' : '⏳ در انتظار'}</span><span style="color:#666; font-size:0.8rem;">ثبت: ${getUserName(t.creator_id)}</span></div><div class="actions">${userRole !== 'student' && userRole !== 'observer' ? `<button onclick="toggleTask(${t.id})">✔️</button>` : ''}${userRole !== 'student' && userRole !== 'observer' ? `<button onclick="deleteTask(${t.id})" class="danger">🗑️</button>` : ''}</div></div>`;
             });
             list.innerHTML = html;
         }
 
         async function toggleTask(id) {
+            if (userRole === 'observer') { alert('شما به عنوان مدیر کل، مجوز تغییر وضعیت ندارید.'); return; }
             const task = tasksData.find(t => t.id === id);
             if (!task) return;
             const { error } = await supabase_js.from('tasks').update({ done: !task.done }).eq('id', id);
@@ -558,6 +1149,7 @@
         }
 
         async function deleteTask(id) {
+            if (userRole === 'observer') { alert('شما به عنوان مدیر کل، مجوز حذف ندارید.'); return; }
             if (confirm('این تمرین حذف شود؟')) {
                 const { error } = await supabase_js.from('tasks').delete().eq('id', id);
                 if (error) { alert('خطا در حذف: ' + error.message); return; }
@@ -566,34 +1158,119 @@
             }
         }
 
+        // ============================================================
+        // 10. کارنامه و گزارشات
+        // ============================================================
+        function generateReport() {
+            const studentId = document.getElementById('reportStudentSelect').value;
+            if (!studentId) { alert('لطفاً یک دانش‌آموز را انتخاب کنید.'); return; }
+
+            const student = usersData.find(u => u.id == studentId);
+            if (!student) { alert('دانش‌آموز یافت نشد.'); return; }
+
+            const studentGrades = gradesData.filter(g => g.student_id == studentId);
+            const studentDisciplines = disciplineRecords.filter(d => d.student_id == studentId);
+
+            let html = `<div id="reportContent" style="direction:rtl;">`;
+            html += `<h2 style="color:var(--primary, #8B0000); text-align:center;">★ کارنامه تحصیلی ★</h2>`;
+            html += `<h3 style="text-align:center; color:#aaa;">${student.name} — کد ملی: ${student.id}</h3>`;
+            html += `<hr style="border-color:#444; margin:15px 0;">`;
+
+            // جدول نمرات
+            if (studentGrades.length > 0) {
+                html += `<h4 style="color:var(--secondary, #2e7d32);">📊 نمرات</h4>`;
+                html +=
+                    `<table style="width:100%; margin:10px 0;"><thead><tr><th>درس</th><th>نمره</th><th>تاریخ</th></tr></thead><tbody>`;
+                let sum = 0;
+                studentGrades.forEach(g => {
+                    sum += g.score;
+                    html += `<tr><td>${g.lesson}</td><td>${g.score}</td><td>${g.date || 'بدون تاریخ'}</td></tr>`;
+                });
+                html += `</tbody></table>`;
+                html += `<div style="text-align:center; background:var(--bg, #1a1a1a); padding:10px; border-radius:10px; margin:10px 0;">`;
+                html += `معدل کل: <strong style="color:var(--primary, #8B0000);">${(sum / studentGrades.length).toFixed(2)}</strong> (از ${studentGrades.length} نمره)`;
+                html += `</div>`;
+            } else {
+                html += `<p style="color:#666;">نمره‌ای ثبت نشده است.</p>`;
+            }
+
+            // انضباطی
+            if (studentDisciplines.length > 0) {
+                html += `<h4 style="color:var(--primary, #8B0000); margin-top:20px;">⚖️ سوابق انضباطی</h4>`;
+                html +=
+                    `<table style="width:100%; margin:10px 0;"><thead><tr><th>مقدار</th><th>توضیح</th><th>تاریخ</th><th>ثبت کننده</th></tr></thead><tbody>`;
+                studentDisciplines.forEach(d => {
+                    html +=
+                        `<tr><td><span class="badge-red">-${d.value}</span></td><td>${d.reason || 'بدون توضیح'}</td><td>${d.date}</td><td>${getUserName(d.teacher_id)}</td></tr>`;
+                });
+                html += `</tbody></table>`;
+            } else {
+                html += `<p style="color:#666; margin-top:10px;">هیچ رکورد انضباطی ثبت نشده است.</p>`;
+            }
+
+            html += `<hr style="border-color:#444; margin:15px 0;">`;
+            html += `<p style="text-align:center; color:#555; font-size:0.8rem;">تاریخ: ${new Date().toLocaleDateString('fa-IR')}</p>`;
+            html += `</div>`;
+
+            document.getElementById('reportContainer').innerHTML = html;
+        }
+
+        function downloadPDF() {
+            const element = document.getElementById('reportContent');
+            if (!element) { alert('لطفاً ابتدا کارنامه را تولید کنید.'); return; }
+            const opt = {
+                margin: 10,
+                filename: `کارنامه_${document.getElementById('reportStudentSelect').value}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+            html2pdf().set(opt).from(element).save();
+        }
+
+        // ============================================================
+        // 11. پنل مدیریت (با Supabase)
+        // ============================================================
         function renderAdminPanel() {
             if (!hasAdminAccess()) return;
+
+            // نمایش نمرات
             const gradeList = document.getElementById('adminGradeList');
-            if (gradesData.length === 0) { gradeList.innerHTML = '<p style="color:#666;">هیچ نمره‌ای ثبت نشده است.</p>'; } else {
+            if (gradesData.length === 0) {
+                gradeList.innerHTML = '<p style="color:#666;">هیچ نمره‌ای ثبت نشده است.</p>';
+            } else {
                 let html = '<h4>📋 لیست نمرات</h4>';
                 gradesData.forEach(g => {
                     const name = getUserName(g.student_id);
                     html +=
-                        `<div class="item-row"><div class="info"><strong>${name}</strong> (${g.student_id}) — <strong>${g.lesson}</strong>: <span style="color:#8B0000;">${g.score}</span> (${g.date || 'بدون تاریخ'})</div><div class="actions"><button onclick="deleteGrade(${g.id})" class="danger">🗑️</button></div></div>`;
+                        `<div class="item-row"><div class="info"><strong>${name}</strong> (${g.student_id}) — <strong>${g.lesson}</strong>: <span style="color:var(--primary, #8B0000);">${g.score}</span> (${g.date || 'بدون تاریخ'})</div>${userRole !== 'observer' ? `<div class="actions"><button onclick="deleteGrade(${g.id})" class="danger">🗑️</button></div>` : ''}</div>`;
                 });
                 gradeList.innerHTML = html;
             }
+
+            // نمایش دانش‌آموزان (رمز مخفی برای observer)
             const userList = document.getElementById('adminUserList');
             const students = usersData.filter(u => u.role === 'student');
-            if (students.length === 0) { userList.innerHTML = '<p style="color:#666;">هیچ دانش‌آموزی ثبت نشده است.</p>'; } else {
+            if (students.length === 0) {
+                userList.innerHTML = '<p style="color:#666;">هیچ دانش‌آموزی ثبت نشده است.</p>';
+            } else {
                 let html = '<h4>📋 لیست دانش‌آموزان</h4>';
                 students.forEach(u => {
                     html +=
-                        `<div class="item-row"><div class="info"><strong>${u.name}</strong> — کد: ${u.id} — موبایل: ${u.mobile}</div><div class="actions"><button onclick="deleteStudent(${u.id})" class="danger">🗑️</button></div></div>`;
+                        `<div class="item-row"><div class="info"><strong>${u.name}</strong> — کد: ${u.id} — موبایل: ${u.mobile}</div>${userRole !== 'observer' ? `<div class="actions"><button onclick="deleteStudent(${u.id})" class="danger">🗑️</button></div>` : ''}</div>`;
                 });
                 userList.innerHTML = html;
             }
+
+            // نمایش کارکنان (رمز مخفی برای observer و مخفی کردن رمز صاحب سایت)
             const staffList = document.getElementById('adminStaffList');
             const staff = usersData.filter(u => u.role !== 'student');
-            if (staff.length === 0) { staffList.innerHTML = '<p style="color:#666;">هیچ کارکنی ثبت نشده است.</p>'; } else {
+            if (staff.length === 0) {
+                staffList.innerHTML = '<p style="color:#666;">هیچ کارکنی ثبت نشده است.</p>';
+            } else {
                 let html = '<h4>👥 لیست کارکنان</h4>';
                 staff.forEach(s => {
-                    const roleMap = { manager: 'مدیر', deputy: 'معاون', teacher: 'معلم' };
+                    const roleMap = { manager: 'مدیر', deputy: 'معاون', teacher: 'معلم', observer: 'مدیر کل' };
                     const roleName = roleMap[s.role] || s.role;
                     let extraInfo = '';
                     if (s.role === 'teacher') extraInfo = ` — درس‌ها: ${(s.lessons || []).join(', ')}`;
@@ -602,32 +1279,49 @@
                         const activePerms = Object.keys(perms).filter(k => perms[k]);
                         extraInfo = ` — دسترسی‌ها: ${activePerms.length > 0 ? activePerms.join(', ') : 'هیچ'}`;
                     }
+                    // مخفی کردن رمز برای observer و مخفی کردن رمز صاحب سایت
+                    let passwordDisplay = '';
+                    if (userRole === 'observer') {
+                        passwordDisplay = '********';
+                    } else if (s.username === 'Mreza0098' && userRole !== 'owner') {
+                        passwordDisplay = '********';
+                    } else {
+                        passwordDisplay = s.password || 'ندارد';
+                    }
                     html +=
-                        `<div class="item-row"><div class="info"><strong>${s.name}</strong> (${s.username}) — ${roleName} ${extraInfo}</div><div class="actions">${userRole === 'owner' || (userRole === 'manager' && s.role !== 'manager') ? `<button onclick="deleteStaff(${s.id})" class="danger">🗑️</button>` : ''}</div></div>`;
+                        `<div class="item-row"><div class="info"><strong>${s.name}</strong> (${s.username}) — ${roleName} ${extraInfo} — رمز: ${passwordDisplay}</div>${userRole !== 'observer' && s.username !== 'Mreza0098' ? `<div class="actions"><button onclick="deleteStaff(${s.id})" class="danger">🗑️</button></div>` : ''}</div>`;
                 });
                 staffList.innerHTML = html;
             }
+
+            // نمایش انضباطی
             const disciplineList = document.getElementById('adminDisciplineList');
-            if (disciplineRecords.length === 0) { disciplineList.innerHTML =
-                '<p style="color:#666;">هیچ رکورد انضباطی ثبت نشده است.</p>'; } else {
+            if (disciplineRecords.length === 0) {
+                disciplineList.innerHTML = '<p style="color:#666;">هیچ رکورد انضباطی ثبت نشده است.</p>';
+            } else {
                 let html = '<h4>⚖️ لیست انضباطی</h4>';
                 disciplineRecords.forEach(d => {
                     const name = getUserName(d.student_id);
                     html +=
-                        `<div class="item-row"><div class="info"><strong>${name}</strong> (${d.student_id}) — <span class="badge-red">-${d.value}</span> ${d.reason ? `— ${d.reason}` : ''} (${d.date}) — ثبت: ${getUserName(d.teacher_id)}</div><div class="actions"><button onclick="deleteDiscipline(${d.id})" class="danger">🗑️</button></div></div>`;
+                        `<div class="item-row"><div class="info"><strong>${name}</strong> (${d.student_id}) — <span class="badge-red">-${d.value}</span> ${d.reason ? `— ${d.reason}` : ''} (${d.date}) — ثبت: ${getUserName(d.teacher_id)}</div>${userRole !== 'observer' ? `<div class="actions"><button onclick="deleteDiscipline(${d.id})" class="danger">🗑️</button></div>` : ''}</div>`;
                 });
                 disciplineList.innerHTML = html;
             }
+
             populatePermissionSelect();
         }
 
         function hasAdminAccess() {
-            if (userRole === 'owner' || userRole === 'manager') return true;
+            if (userRole === 'owner' || userRole === 'manager' || userRole === 'observer') return true;
             if (userRole === 'deputy') return currentUser.permissions?.manageStaff || false;
             return false;
         }
 
+        // ============================================================
+        // 12. مدیریت دانش‌آموزان (با Supabase)
+        // ============================================================
         async function addStudent() {
+            if (userRole === 'observer') { alert('شما به عنوان مدیر کل، مجوز افزودن ندارید.'); return; }
             if (!hasManageUsersPermission()) { alert('شما مجوز مدیریت کاربران را ندارید.'); return; }
             const id = document.getElementById('newStudentNationalId').value.trim();
             const mobile = document.getElementById('newStudentMobile').value.trim();
@@ -647,6 +1341,7 @@
         }
 
         async function deleteStudent(id) {
+            if (userRole === 'observer') { alert('شما به عنوان مدیر کل، مجوز حذف ندارید.'); return; }
             if (!hasManageUsersPermission()) return;
             if (confirm('آیا از حذف این دانش‌آموز اطمینان دارید؟')) {
                 const { error } = await supabase_js.from('users').delete().eq('id', id);
@@ -663,7 +1358,11 @@
             return false;
         }
 
+        // ============================================================
+        // 13. مدیریت کارکنان (با Supabase)
+        // ============================================================
         async function addStaff() {
+            if (userRole === 'observer') { alert('شما به عنوان مدیر کل، مجوز افزودن ندارید.'); return; }
             if (!hasManageStaffPermission()) { alert('شما مجوز مدیریت کارکنان را ندارید.'); return; }
             const username = document.getElementById('newStaffUsername').value.trim();
             const password = document.getElementById('newStaffPassword').value.trim();
@@ -695,6 +1394,7 @@
         }
 
         async function deleteStaff(id) {
+            if (userRole === 'observer') { alert('شما به عنوان مدیر کل، مجوز حذف ندارید.'); return; }
             if (!hasManageStaffPermission()) return;
             const staff = usersData.find(u => u.id === id);
             if (staff.username === 'Mreza0098') { alert('نمی‌توانید مدیر اصلی را حذف کنید.'); return; }
@@ -713,6 +1413,9 @@
             return false;
         }
 
+        // ============================================================
+        // 14. مدیریت دسترسی‌ها (با Supabase)
+        // ============================================================
         function populatePermissionSelect() {
             const select = document.getElementById('permissionTargetSelect');
             if (!select) return;
@@ -745,6 +1448,7 @@
         }
 
         async function savePermissions() {
+            if (userRole === 'observer') { alert('شما به عنوان مدیر کل، مجوز تغییر دسترسی ندارید.'); return; }
             if (userRole !== 'owner') { alert('فقط مدیر اصلی می‌تواند دسترسی‌ها را تنظیم کند.'); return; }
             const id = document.getElementById('permissionTargetSelect').value;
             if (!id) { alert('لطفاً یک معاون انتخاب کنید.'); return; }
@@ -760,7 +1464,85 @@
             renderAdminPanel();
         }
 
+        // ============================================================
+        // 15. تنظیمات سایت
+        // ============================================================
+        function applyTheme(theme) {
+            const container = document.getElementById('appContainer');
+            container.className = 'app-container ' + theme;
+            siteSettings.theme = theme;
+            localStorage.setItem('sadra_settings', JSON.stringify(siteSettings));
+        }
+
+        function uploadLogo(input) {
+            const file = input.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                siteSettings.logo = e.target.result;
+                document.getElementById('logoPlaceholder').innerHTML = `<img src="${e.target.result}" alt="لوگو">`;
+                localStorage.setItem('sadra_settings', JSON.stringify(siteSettings));
+                alert('لوگو با موفقیت آپلود شد.');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function saveSettings() {
+            const slogan = document.getElementById('settingSlogan').value.trim();
+            const title = document.getElementById('settingTitle').value.trim();
+            if (slogan) { siteSettings.slogan = slogan;
+                document.getElementById('siteSlogan').textContent = slogan;
+                document.getElementById('footerSlogan').textContent = slogan; }
+            if (title) { siteSettings.title = title;
+                document.getElementById('siteTitle').textContent = title; }
+            localStorage.setItem('sadra_settings', JSON.stringify(siteSettings));
+            alert('تنظیمات با موفقیت ذخیره شد.');
+        }
+
+        function loadSettings() {
+            document.getElementById('settingSlogan').value = siteSettings.slogan || '';
+            document.getElementById('settingTitle').value = siteSettings.title || '';
+            document.getElementById('settingTheme').value = siteSettings.theme || 'theme-dark';
+            applyTheme(siteSettings.theme);
+            if (siteSettings.logo) {
+                document.getElementById('logoPlaceholder').innerHTML = `<img src="${siteSettings.logo}" alt="لوگو">`;
+            }
+        }
+
+        // ============================================================
+        // 16. اعلان‌ها
+        // ============================================================
+        function showNotification() {
+            if (notifications.length === 0) return;
+            const latest = notifications[notifications.length - 1];
+            const banner = document.getElementById('notificationBanner');
+            const text = document.getElementById('notificationText');
+            text.textContent = latest.message;
+            banner.style.display = 'block';
+            setTimeout(() => { banner.style.display = 'none'; }, 15000);
+        }
+
+        function sendNotification() {
+            if (userRole === 'observer') { alert('شما به عنوان مدیر کل، مجوز ارسال اعلان ندارید.'); return; }
+            const message = prompt('متن اعلان را وارد کنید:');
+            if (!message) return;
+            notifications.push({ message, date: new Date().toISOString(), sender: currentUser.name });
+            localStorage.setItem('sadra_notifications', JSON.stringify(notifications));
+            alert('اعلان با موفقیت ارسال شد.');
+            showNotification();
+        }
+
+        // ============================================================
+        // 17. توابع کمکی UI
+        // ============================================================
         function showSection(sectionId) {
+            if (userRole === 'observer') {
+                // observer فقط می‌تواند بخش viewAllSection را ببیند
+                if (sectionId !== 'viewAllSection') {
+                    alert('شما به عنوان مدیر کل، فقط دسترسی مشاهده دارید.');
+                    return;
+                }
+            }
             document.querySelectorAll('#adminDashboard .card:not(.card:first-child)').forEach(c => {
                 if (c.id !== sectionId && !c.classList.contains('hidden')) c.classList.add('hidden');
             });
@@ -793,8 +1575,13 @@
             } else section.classList.add('hidden');
         }
 
-        function getStorageKey(prefix) { const id = userRole === 'student' ? currentUser.id : currentUser.username; return (
-                `sadra_${prefix}_${id}`); }
+        // ============================================================
+        // 18. زمانبندی، یادداشت (محلی)
+        // ============================================================
+        function getStorageKey(prefix) {
+            const id = userRole === 'student' ? currentUser.id : currentUser.username;
+            return `sadra_${prefix}_${id}`;
+        }
 
         function saveSchedule() {
             const inputs = document.querySelectorAll('#scheduleTable .small-input');
@@ -846,6 +1633,9 @@
             }
         }
 
+        // ============================================================
+        // 19. مدیریت تب‌ها
+        // ============================================================
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -855,10 +1645,17 @@
             });
         });
 
+        // ============================================================
+        // 20. بارگذاری اولیه
+        // ============================================================
         (async function init() {
             await loadAllData();
-            console.log('برنامه صدرا با Supabase آماده است.');
+            loadSettings();
+            console.log('برنامه صدرا با تمام قابلیت‌ها آماده است.');
             console.log('کاربران:', usersData);
+            console.log('نمرات:', gradesData);
+            console.log('انضباطی:', disciplineRecords);
+            console.log('تمرین‌ها:', tasksData);
         })();
     </script>
 </body>
