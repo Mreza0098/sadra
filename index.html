@@ -4,9 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>صدرا - سامانه مدیریت آموزشی</title>
-    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIlx1MDYzM1x1MDY0NFx1MDYyOFx1MDYyNyAtIFx1MDYzM1x1MDYyN1x1MDY0N1x1MDYyYVx1MDYyOVx1MDYyNyBcdTA2NDVcdTA2MjhcdTA2MzFcdTA2NDdcdTA2MjdcdTA2MjkiLAogICJzaG9ydF9uYW1lIjogIlx1MDYzM1x1MDY0NFx1MDYyOFx1MDYyNyIsCiAgImRlc2NyaXB0aW9uIjogIlx1MDYzM1x1MDYyN1x1MDY0N1x1MDYyYVx1MDYyOVx1MDYyNyBcdTA2NDVcdTA2MjhcdTA2MzFcdTA2NDdcdTA2MjdcdTA2MjkgXHUwNjI4XHUwNjI3XHUwNjI4XHUwNjI5XHUwNjI3IiLAogICJzdGFydF91cmwiOiAiLyIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiIzBhMGEwYSIsCiAgInRoZW1lX2NvbG9yIjogIiNjYzAwMDAiLAogICJpY29ucyI6IFsKICAgIHsKICAgICAgInNyYyI6ICJpY29uLnBuZyIsCiAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICAgInR5cGUiOiAiaW1hZ2UvcG5nIgogICAgfSwKICAgIHsKICAgICAgInNyYyI6ICJpY29uLnBuZyIsCiAgICAgICJzaXplcyI6ICI1MTJ4NTEyIiwKICAgICAgInR5cGUiOiAiaW1hZ2UvcG5nIgogICAgfQogIF0sCiAgImxhbmciOiAiZmEiLAogICJkaXIiOiAicnRsIgp9" />
+    <!-- ====== PWA ====== -->
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIlx1MDYzM1x1MDY0NFx1MDYyOFx1MDYyNyAtIFx1MDYzM1x1MDYyN1x1MDY0N1x1MDYyYVx1MDYyOVx1MDYyNyBcdTA2NDVcdTA2MjhcdTA2MzFcdTA2NDdcdTA2MjdcdTA2MjkiLAogICJzaG9ydF9uYW1lIjogIlx1MDYzM1x1MDY0NFx1MDYyOFx1MDYyNyIsCiAgImRlc2NyaXB0aW9uIjogIlx1MDYzM1x1MDYyN1x1MDY0N1x1MDYyYVx1MDYyOVx1MDYyNyBcdTA2NDVcdTA2MjhcdTA2MzFcdTA2NDdcdTA2MjdcdTA2MjkgXHUwNjI4XHUwNjI3XHUwNjI4XHUwNjI5XHUwNjI3IiLAogICJzdGFydF91cmwiOiAiLyIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiIzBhMGEwYSIsCiAgInRoZW1lX2NvbG9yIjogIiNjYzAwMDAiLAogICJpY29ucyI6IFsKICAgIHsKICAgICAgInNyYyI6ICJzYWRyYS5wbmciLAogICAgICAic2l6ZXMiOiAiMTkyeDE5MiIsCiAgICAgICJ0eXBlIjogImltYWdlL3BuZyIKICAgIH0sCiAgICB7CiAgICAgICJzcmMiOiAic2FkcmEucG5nIiwKICAgICAgInNpemVzIjogIjUxMng1MTIiLAogICAgICAidHlwZSI6ICJpbWFnZS9wbmciCiAgICB9CiAgXQp9" />
     <meta name="theme-color" content="#cc0000" />
-    <link rel="apple-touch-icon" href="icon.png" />
+    <link rel="apple-touch-icon" href="sadra.png" />
+    <link rel="icon" type="image/png" href="sadra.png" />
+    <!-- ====== SCRIPTS ====== -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js">
@@ -15,38 +18,84 @@
     </script>
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" />
     <style>
+        /* ===== RESET ===== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Vazirmatn', Tahoma, sans-serif;
+            font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
         }
         body {
             background: #0a0a0a;
-            color: #eee;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
             padding: 20px;
+            transition: background 0.3s;
         }
-        .app {
-            max-width: 1100px;
-            width: 100%;
-            background: #111;
-            border-radius: 20px;
-            padding: 20px;
-            border: 1px solid #2a6b3c;
-            box-shadow: 0 0 40px rgba(0, 100, 0, 0.25);
-        }
-        .iran-theme {
-            --primary: #cc0000;
-            --secondary: #2a6b3c;
+        /* ===== تم‌ها ===== */
+        .theme-dark {
+            --primary: #8B0000;
+            --secondary: #2e7d32;
             --gold: #d4a017;
             --bg: #0a0a0a;
             --card-bg: #161616;
             --border: #2a2a2a;
+            --text: #eee;
+            --shadow: rgba(139, 0, 0, 0.3);
         }
+        .theme-red {
+            --primary: #c62828;
+            --secondary: #e53935;
+            --gold: #ffd54f;
+            --bg: #1a1a1a;
+            --card-bg: #2a2a2a;
+            --border: #444;
+            --text: #eee;
+            --shadow: rgba(198, 40, 40, 0.3);
+        }
+        .theme-green {
+            --primary: #1b5e20;
+            --secondary: #2e7d32;
+            --gold: #ffd54f;
+            --bg: #0a1a0a;
+            --card-bg: #162016;
+            --border: #2a3a2a;
+            --text: #eee;
+            --shadow: rgba(27, 94, 32, 0.3);
+        }
+        .theme-blue {
+            --primary: #0d47a1;
+            --secondary: #1976d2;
+            --gold: #ffd54f;
+            --bg: #0a0a1a;
+            --card-bg: #16162a;
+            --border: #2a2a4a;
+            --text: #eee;
+            --shadow: rgba(13, 71, 161, 0.3);
+        }
+        .theme-gold {
+            --primary: #b8860b;
+            --secondary: #d4a017;
+            --gold: #ffd700;
+            --bg: #1a1a0a;
+            --card-bg: #2a2a16;
+            --border: #4a4a2a;
+            --text: #eee;
+            --shadow: rgba(184, 134, 11, 0.3);
+        }
+        .app {
+            max-width: 1200px;
+            width: 100%;
+            background: var(--card-bg);
+            border-radius: 30px;
+            padding: 25px;
+            border: 1px solid var(--primary);
+            box-shadow: 0 0 60px var(--shadow);
+            transition: all 0.4s ease;
+        }
+        /* ===== ورود ===== */
         #loginPage {
             display: block;
         }
@@ -54,17 +103,26 @@
             display: none;
         }
         .login-box {
-            background: var(--card-bg, #161616);
-            padding: 30px;
-            border-radius: 20px;
-            border-right: 4px solid var(--gold, #d4a017);
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 30px;
+            border-right: 6px solid var(--gold);
             max-width: 450px;
             margin: 0 auto;
+            box-shadow: 0 0 40px var(--shadow);
         }
         .login-box h2 {
             text-align: center;
-            color: var(--gold, #d4a017);
-            margin-bottom: 20px;
+            color: var(--gold);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px var(--shadow);
+        }
+        .login-box .sub {
+            text-align: center;
+            color: #aaa;
+            margin-bottom: 25px;
+            font-size: 0.95rem;
         }
         .login-tabs {
             display: flex;
@@ -73,22 +131,24 @@
         }
         .login-tab {
             flex: 1;
-            padding: 10px;
-            background: var(--bg, #0a0a0a);
-            border: 1px solid var(--border, #2a2a2a);
-            border-radius: 10px;
+            padding: 12px;
+            background: var(--bg);
+            border: 2px solid var(--border);
+            border-radius: 15px;
             text-align: center;
             cursor: pointer;
             color: #aaa;
-            transition: 0.2s;
+            transition: 0.3s;
+            font-weight: bold;
         }
         .login-tab.active {
-            background: var(--primary, #cc0000);
+            background: var(--primary);
             color: #fff;
-            border-color: var(--primary, #cc0000);
+            border-color: var(--gold);
+            box-shadow: 0 0 20px var(--shadow);
         }
         .login-tab:hover {
-            background: #222;
+            transform: scale(1.02);
         }
         .login-form {
             display: none;
@@ -99,22 +159,29 @@
         .login-box input,
         .login-box button {
             width: 100%;
-            padding: 12px;
-            margin: 8px 0;
-            border: 1px solid var(--border, #2a2a2a);
-            border-radius: 10px;
-            background: var(--bg, #0a0a0a);
-            color: #fff;
+            padding: 14px;
+            margin: 10px 0;
+            border: 2px solid var(--border);
+            border-radius: 15px;
+            background: var(--bg);
+            color: var(--text);
             font-size: 1rem;
+            transition: 0.3s;
+        }
+        .login-box input:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 15px var(--shadow);
         }
         .login-box button {
-            background: var(--primary, #cc0000);
+            background: var(--primary);
             font-weight: bold;
             border: none;
             cursor: pointer;
-            transition: 0.2s;
+            transition: 0.3s;
         }
         .login-box button:hover {
+            transform: scale(1.02);
             filter: brightness(1.2);
         }
         .login-error {
@@ -123,135 +190,161 @@
             margin-top: 10px;
             font-size: 0.9rem;
         }
+        /* ===== هدر ===== */
         .header {
             display: flex;
             align-items: center;
-            gap: 15px;
-            border-bottom: 2px solid var(--gold, #d4a017);
+            gap: 20px;
+            border-bottom: 3px solid var(--gold);
             padding-bottom: 15px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             flex-wrap: wrap;
         }
-        .logo-placeholder {
-            width: 70px;
-            height: 70px;
-            background: var(--bg, #0a0a0a);
+        .logo {
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
-            border: 2px solid var(--primary, #cc0000);
+            border: 3px solid var(--gold);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
-            color: var(--gold, #d4a017);
+            overflow: hidden;
+            flex-shrink: 0;
+            background: var(--bg);
+            transition: 0.3s;
         }
-        .logo-placeholder img {
+        .logo img {
             width: 100%;
             height: 100%;
             object-fit: contain;
+        }
+        .logo-placeholder {
+            font-size: 2.5rem;
+            color: var(--gold);
         }
         .header-text {
             flex: 1;
         }
         .header-text h1 {
-            font-size: 2rem;
+            font-size: 2.2rem;
             color: #fff;
-            letter-spacing: 2px;
-            text-shadow: 0 0 10px var(--primary, #cc0000);
+            text-shadow: 0 0 30px var(--shadow);
         }
         .header-text h1 span {
-            color: var(--gold, #d4a017);
+            color: var(--gold);
         }
         .header-text p {
             color: #aaa;
-            font-size: 0.9rem;
-            font-weight: bold;
-            border-right: 3px solid var(--secondary, #2a6b3c);
-            padding-right: 10px;
+            font-size: 0.95rem;
+            border-right: 4px solid var(--secondary);
+            padding-right: 12px;
         }
         .logout-btn {
-            background: #222;
-            border: none;
-            color: #fff;
-            padding: 8px 16px;
-            border-radius: 10px;
+            background: var(--bg);
+            border: 2px solid var(--border);
+            color: var(--text);
+            padding: 10px 20px;
+            border-radius: 15px;
             cursor: pointer;
-            font-size: 0.9rem;
-            transition: 0.2s;
+            font-size: 0.95rem;
+            transition: 0.3s;
+            font-weight: bold;
         }
         .logout-btn:hover {
-            background: var(--primary, #cc0000);
+            background: var(--primary);
+            border-color: var(--gold);
+            transform: scale(1.05);
         }
+        /* ===== منوی جدید (مثل minecraft.ir) ===== */
         .navbar {
-            background: var(--card-bg, #161616);
-            border-radius: 15px;
-            padding: 10px;
-            margin-bottom: 25px;
-            border-right: 4px solid var(--gold, #d4a017);
-            border-bottom: 2px solid var(--primary, #cc0000);
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 10px;
             justify-content: center;
+            margin-bottom: 25px;
+            padding: 10px;
+            background: var(--bg);
+            border-radius: 20px;
+            border: 1px solid var(--border);
         }
         .nav-btn {
-            background: var(--bg, #0a0a0a);
-            border: 2px solid transparent;
-            color: #ccc;
-            padding: 10px 18px;
-            border-radius: 12px;
+            background: var(--card-bg);
+            border: 2px solid var(--border);
+            color: var(--text);
+            padding: 14px 22px;
+            border-radius: 16px;
             font-size: 0.95rem;
             font-weight: bold;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-family: 'Vazirmatn', Tahoma, sans-serif;
+            gap: 10px;
+            min-width: 80px;
+            justify-content: center;
+            font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
+        }
+        .nav-btn .icon {
+            font-size: 1.6rem;
         }
         .nav-btn:hover {
-            background: var(--bg, #0a0a0a);
-            color: #fff;
-            border-color: var(--gold, #d4a017);
+            transform: translateY(-3px);
+            border-color: var(--gold);
+            box-shadow: 0 8px 25px var(--shadow);
         }
         .nav-btn.active {
-            background: var(--primary, #cc0000);
+            background: var(--primary);
+            border-color: var(--gold);
+            box-shadow: 0 0 30px var(--shadow);
             color: #fff;
-            border-color: var(--gold, #d4a017);
-            box-shadow: 0 0 20px rgba(200, 0, 0, 0.4);
         }
-        .nav-icon {
-            font-size: 1.3rem;
+        .theme-toggle-btn {
+            background: var(--gold);
+            color: #000;
+            border-color: var(--gold);
         }
+        .theme-toggle-btn:hover {
+            background: var(--gold);
+            filter: brightness(1.2);
+        }
+        /* ===== تب‌ها ===== */
         .tab-content {
             display: none;
-            animation: fadeIn 0.3s;
+            animation: fadeIn 0.5s ease;
         }
         .tab-content.active {
             display: block;
         }
         @keyframes fadeIn {
             from {
-                opacity: 0.4;
-                transform: translateY(5px);
+                opacity: 0;
+                transform: translateY(20px);
             }
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
+        /* ===== کارت‌ها ===== */
         .card {
-            background: var(--card-bg, #161616);
-            padding: 18px;
-            border-radius: 15px;
+            background: var(--card-bg);
+            padding: 22px;
+            border-radius: 20px;
             margin-bottom: 20px;
-            border-right: 4px solid var(--primary, #cc0000);
+            border-right: 5px solid var(--primary);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            transition: 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-2px);
         }
         .card h3 {
-            color: var(--gold, #d4a017);
-            margin-bottom: 10px;
+            color: var(--gold);
+            font-size: 1.4rem;
+            margin-bottom: 15px;
         }
         .card h4 {
-            color: var(--secondary, #2a6b3c);
+            color: var(--secondary);
             margin: 10px 0;
         }
         input,
@@ -259,29 +352,32 @@
         button,
         select {
             width: 100%;
-            padding: 10px;
-            margin: 6px 0;
-            border: 1px solid var(--border, #2a2a2a);
-            border-radius: 10px;
-            background: var(--bg, #0a0a0a);
-            color: #fff;
+            padding: 12px;
+            margin: 8px 0;
+            border: 2px solid var(--border);
+            border-radius: 14px;
+            background: var(--bg);
+            color: var(--text);
             font-size: 1rem;
+            transition: 0.3s;
         }
         input:focus,
         textarea:focus,
         select:focus {
-            outline: 1px solid var(--gold, #d4a017);
-            border-color: var(--gold, #d4a017);
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 20px var(--shadow);
         }
         button {
-            background: var(--primary, #cc0000);
+            background: var(--primary);
             font-weight: bold;
             border: none;
             cursor: pointer;
-            transition: 0.2s;
+            transition: 0.3s;
         }
         button:hover {
-            filter: brightness(1.2);
+            transform: scale(1.02);
+            filter: brightness(1.15);
         }
         button.danger {
             background: #333;
@@ -290,13 +386,13 @@
             background: #555;
         }
         button.success {
-            background: var(--secondary, #2a6b3c);
+            background: var(--secondary);
         }
         button.success:hover {
             filter: brightness(1.2);
         }
         button.warning {
-            background: var(--gold, #d4a017);
+            background: var(--gold);
             color: #000;
         }
         button.warning:hover {
@@ -304,54 +400,61 @@
         }
         .item-list {
             margin-top: 15px;
-            border-top: 1px solid var(--border, #2a2a2a);
+            border-top: 1px solid var(--border);
             padding-top: 10px;
         }
         .item-row {
-            background: var(--bg, #0a0a0a);
-            padding: 10px 12px;
-            border-radius: 10px;
+            background: var(--bg);
+            padding: 12px 16px;
+            border-radius: 14px;
             margin: 8px 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            border-right: 2px solid var(--secondary, #2a6b3c);
+            border-right: 3px solid var(--secondary);
+            transition: 0.3s;
+        }
+        .item-row:hover {
+            transform: translateX(-4px);
         }
         .item-row .info {
             flex: 1;
         }
         .item-row .actions button {
             width: auto;
-            padding: 4px 12px;
-            margin: 0 3px;
-            background: #333;
+            padding: 6px 14px;
+            margin: 0 4px;
+            background: #444;
             font-size: 0.8rem;
+            border-radius: 10px;
         }
         .item-row .actions button:hover {
-            background: var(--primary, #cc0000);
+            background: var(--primary);
         }
         .badge {
-            background: var(--gold, #d4a017);
+            background: var(--gold);
             color: #000;
-            padding: 2px 12px;
+            padding: 4px 14px;
             border-radius: 30px;
             font-size: 0.8rem;
+            font-weight: bold;
         }
         .badge-red {
-            background: var(--primary, #cc0000);
-            padding: 2px 12px;
+            background: var(--primary);
+            padding: 4px 14px;
             border-radius: 30px;
             font-size: 0.8rem;
+            font-weight: bold;
         }
         .avg-box {
-            background: var(--bg, #0a0a0a);
-            padding: 10px;
-            border-radius: 10px;
+            background: var(--bg);
+            padding: 14px;
+            border-radius: 14px;
             text-align: center;
-            font-size: 1.2rem;
-            border: 1px solid var(--secondary, #2a6b3c);
-            margin-top: 10px;
+            font-size: 1.3rem;
+            border: 2px solid var(--secondary);
+            margin-top: 15px;
         }
         table {
             width: 100%;
@@ -359,33 +462,33 @@
         }
         th,
         td {
-            padding: 8px;
-            border: 1px solid var(--border, #2a2a2a);
+            padding: 10px;
+            border: 1px solid var(--border);
             text-align: center;
         }
         th {
-            background: var(--bg, #0a0a0a);
-            color: var(--gold, #d4a017);
+            background: var(--bg);
+            color: var(--gold);
         }
         .small-input {
             width: 100%;
-            padding: 5px;
-            background: var(--bg, #0a0a0a);
-            border: 1px solid var(--border, #2a2a2a);
-            color: #fff;
-            border-radius: 5px;
+            padding: 6px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-radius: 8px;
             text-align: center;
         }
         .footer {
             text-align: center;
             margin-top: 30px;
             padding-top: 15px;
-            border-top: 1px solid #222;
+            border-top: 1px solid var(--border);
             color: #555;
             font-size: 0.8rem;
         }
         .footer strong {
-            color: var(--gold, #d4a017);
+            color: var(--gold);
         }
         .hidden {
             display: none;
@@ -393,45 +496,46 @@
         .permission-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 10px;
-            margin: 10px 0;
+            gap: 12px;
+            margin: 12px 0;
         }
         .permission-item {
-            background: var(--bg, #0a0a0a);
-            padding: 8px;
-            border-radius: 8px;
+            background: var(--bg);
+            padding: 10px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
         .permission-item input[type="checkbox"] {
             width: auto;
             margin: 0;
-            accent-color: var(--primary, #cc0000);
+            accent-color: var(--primary);
         }
         .notification-banner {
-            background: var(--primary, #cc0000);
+            background: var(--primary);
             color: #fff;
-            padding: 12px;
-            border-radius: 10px;
-            margin-bottom: 15px;
+            padding: 14px;
+            border-radius: 14px;
+            margin-bottom: 20px;
             display: none;
             animation: fadeIn 0.5s;
+            border-right: 4px solid var(--gold);
         }
         .settings-group {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            gap: 18px;
         }
         .settings-group .full-width {
             grid-column: 1 / -1;
         }
         .message-item {
-            border-bottom: 1px solid var(--border, #2a2a2a);
-            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+            padding: 12px 0;
         }
         .message-item .sender {
-            color: var(--gold, #d4a017);
+            color: var(--gold);
             font-weight: bold;
         }
         .message-item .time {
@@ -442,29 +546,31 @@
         .survey-option {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             margin: 8px 0;
         }
         .survey-option input[type="radio"] {
             width: auto;
         }
         .file-upload-area {
-            border: 2px dashed var(--border, #2a2a2a);
-            padding: 20px;
+            border: 3px dashed var(--border);
+            padding: 25px;
             text-align: center;
-            border-radius: 10px;
-            margin: 10px 0;
+            border-radius: 16px;
+            margin: 12px 0;
             cursor: pointer;
+            transition: 0.3s;
         }
         .file-upload-area:hover {
-            border-color: var(--gold, #d4a017);
+            border-color: var(--gold);
+            background: var(--bg);
         }
         .news-item {
-            border-bottom: 1px solid var(--border, #2a2a2a);
-            padding: 15px 0;
+            border-bottom: 1px solid var(--border);
+            padding: 18px 0;
         }
         .news-item .title {
-            color: var(--gold, #d4a017);
+            color: var(--gold);
             font-size: 1.2rem;
             font-weight: bold;
         }
@@ -473,32 +579,134 @@
             font-size: 0.8rem;
         }
         .news-item .content {
-            margin-top: 8px;
+            margin-top: 10px;
             color: #ccc;
+            line-height: 1.8;
         }
+        /* ===== پیام‌های سفارشی ===== */
+        .toast-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 380px;
+            width: 100%;
+        }
+        .toast {
+            background: var(--card-bg);
+            border-right: 6px solid var(--primary);
+            padding: 16px 22px;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+            color: var(--text);
+            font-size: 0.95rem;
+            animation: slideIn 0.4s ease;
+            border: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+            transition: opacity 0.3s;
+            cursor: pointer;
+        }
+        .toast.success {
+            border-right-color: var(--secondary);
+        }
+        .toast.error {
+            border-right-color: #ff4444;
+        }
+        .toast.warning {
+            border-right-color: var(--gold);
+        }
+        .toast .toast-title {
+            font-weight: bold;
+            color: var(--gold);
+            margin-bottom: 4px;
+            font-size: 0.9rem;
+        }
+        .toast .toast-close {
+            float: left;
+            cursor: pointer;
+            color: #666;
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            padding: 0 8px;
+        }
+        .toast .toast-close:hover {
+            color: #fff;
+        }
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(60px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        /* ===== واکنش‌گرایی ===== */
         @media (max-width: 768px) {
             .navbar {
-                flex-direction: column;
-                align-items: stretch;
+                gap: 6px;
+                padding: 8px;
             }
             .nav-btn {
-                justify-content: center;
+                padding: 10px 14px;
+                font-size: 0.8rem;
+                min-width: 60px;
+            }
+            .nav-btn .icon {
+                font-size: 1.2rem;
             }
             .header-text h1 {
-                font-size: 1.4rem;
+                font-size: 1.6rem;
             }
             .settings-group {
                 grid-template-columns: 1fr;
+            }
+            .app {
+                padding: 15px;
+            }
+            .login-box {
+                padding: 25px;
+            }
+            .toast-container {
+                bottom: 15px;
+                right: 15px;
+                left: 15px;
+                max-width: 100%;
+            }
+        }
+        @media (max-width: 480px) {
+            .nav-btn {
+                padding: 8px 10px;
+                font-size: 0.7rem;
+                min-width: 50px;
+                border-radius: 12px;
+            }
+            .nav-btn .icon {
+                font-size: 1rem;
+            }
+            .header-text h1 {
+                font-size: 1.3rem;
+            }
+            .logo {
+                width: 60px;
+                height: 60px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="app iran-theme" id="appContainer">
+    <div class="app theme-dark" id="appContainer">
+
+        <!-- ===== صفحه ورود ===== -->
         <div id="loginPage">
             <div class="login-box">
                 <h2>★ صدرا ★</h2>
-                <p style="text-align:center; color:#aaa; margin-bottom:15px;">سامانه مدیریت آموزشی</p>
+                <p class="sub">سامانه مدیریت آموزشی</p>
                 <div class="login-tabs">
                     <div class="login-tab active" data-role="student">دانش‌آموز</div>
                     <div class="login-tab" data-role="admin">کارکنان</div>
@@ -518,9 +726,14 @@
             </div>
         </div>
 
+        <!-- ===== صفحه اصلی ===== -->
         <div id="appPage">
+
+            <!-- هدر -->
             <div class="header">
-                <div class="logo-placeholder" id="logoPlaceholder">★</div>
+                <div class="logo" id="logoContainer">
+                    <img src="sadra.png" alt="لوگو" id="logoImage" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\'logo-placeholder\'>★</span>';" />
+                </div>
                 <div class="header-text">
                     <h1><span>★</span> <span id="siteTitle">صدرا</span></h1>
                     <p id="siteSlogan">سامانه مدیریت آموزشی • جهاد علمی</p>
@@ -528,48 +741,84 @@
                 <button class="logout-btn" onclick="logout()">خروج</button>
             </div>
 
+            <!-- منوی جدید (مثل minecraft.ir) -->
             <div class="navbar" id="mainNavbar">
-                <button class="nav-btn active" data-tab="home" onclick="switchTab('home')">🏠 خانه</button>
-                <button class="nav-btn" data-tab="grades" onclick="switchTab('grades')">📊 نمرات</button>
-                <button class="nav-btn" data-tab="reports" onclick="switchTab('reports')">📋 کارنامه</button>
-                <button class="nav-btn" data-tab="schedule" onclick="switchTab('schedule')">🗓️ زمانبندی</button>
-                <button class="nav-btn" data-tab="tasks" onclick="switchTab('tasks')">✅ تمرین</button>
-                <button class="nav-btn" data-tab="discipline" onclick="switchTab('discipline')">⚖️ انضباطی</button>
-                <button class="nav-btn" data-tab="messages" onclick="switchTab('messages')">💬 پیام‌ها</button>
-                <button class="nav-btn" data-tab="survey" onclick="switchTab('survey')">📊 نظرسنجی</button>
-                <button class="nav-btn" data-tab="attendance" onclick="switchTab('attendance')">📋 غیبت‌ها</button>
-                <button class="nav-btn" data-tab="files" onclick="switchTab('files')">📁 فایل‌ها</button>
-                <button class="nav-btn" data-tab="news" onclick="switchTab('news')">📰 اخبار</button>
-                <button class="nav-btn" data-tab="profile" onclick="switchTab('profile')">👤 پروفایل</button>
-                <button class="nav-btn" data-tab="adminPanel" onclick="switchTab('adminPanel')">🔧 مدیریت</button>
-                <button class="nav-btn" data-tab="settings" onclick="switchTab('settings')">⚙️ تنظیمات</button>
+                <button class="nav-btn active" data-tab="home" onclick="switchTab('home')">
+                    <span class="icon">🏠</span> خانه
+                </button>
+                <button class="nav-btn" data-tab="grades" onclick="switchTab('grades')">
+                    <span class="icon">📊</span> نمرات
+                </button>
+                <button class="nav-btn" data-tab="reports" onclick="switchTab('reports')">
+                    <span class="icon">📋</span> کارنامه
+                </button>
+                <button class="nav-btn" data-tab="schedule" onclick="switchTab('schedule')">
+                    <span class="icon">🗓️</span> زمانبندی
+                </button>
+                <button class="nav-btn" data-tab="tasks" onclick="switchTab('tasks')">
+                    <span class="icon">✅</span> تمرین
+                </button>
+                <button class="nav-btn" data-tab="discipline" onclick="switchTab('discipline')">
+                    <span class="icon">⚖️</span> انضباطی
+                </button>
+                <button class="nav-btn" data-tab="messages" onclick="switchTab('messages')">
+                    <span class="icon">💬</span> پیام‌ها
+                </button>
+                <button class="nav-btn" data-tab="survey" onclick="switchTab('survey')">
+                    <span class="icon">📊</span> نظرسنجی
+                </button>
+                <button class="nav-btn" data-tab="attendance" onclick="switchTab('attendance')">
+                    <span class="icon">📋</span> غیبت‌ها
+                </button>
+                <button class="nav-btn" data-tab="files" onclick="switchTab('files')">
+                    <span class="icon">📁</span> فایل‌ها
+                </button>
+                <button class="nav-btn" data-tab="news" onclick="switchTab('news')">
+                    <span class="icon">📰</span> اخبار
+                </button>
+                <button class="nav-btn" data-tab="profile" onclick="switchTab('profile')">
+                    <span class="icon">👤</span> پروفایل
+                </button>
+                <button class="nav-btn" data-tab="adminPanel" onclick="switchTab('adminPanel')">
+                    <span class="icon">🔧</span> مدیریت
+                </button>
+                <button class="nav-btn" data-tab="settings" onclick="switchTab('settings')">
+                    <span class="icon">⚙️</span> تنظیمات
+                </button>
+                <!-- دکمه تغییر تم -->
+                <button class="nav-btn theme-toggle-btn" onclick="cycleTheme()">
+                    <span class="icon">🎨</span> تغییر تم
+                </button>
             </div>
 
+            <!-- اعلان -->
             <div id="notificationBanner" class="notification-banner">
                 <strong>📢 اعلان</strong>
                 <p id="notificationText"></p>
             </div>
 
-            <!-- ===== خانه ===== -->
+            <!-- ===== تب‌ها ===== -->
+
+            <!-- خانه -->
             <div id="home" class="tab-content active">
                 <div class="card">
                     <h3>🚀 به صدرا خوش آمدی</h3>
-                    <p style="line-height:1.8; color:#ccc;" id="homeWelcome">سامانه مدیریت آموزشی با قابلیت‌های پیشرفته</p>
+                    <p style="line-height:2; color:#ccc;" id="homeWelcome">سامانه مدیریت آموزشی با قابلیت‌های پیشرفته</p>
                     <ul style="list-style:none; margin-top:15px; color:#aaa;" id="homeFeatures">
-                        <li style="margin:8px 0;">📊 مدیریت نمرات</li>
-                        <li style="margin:8px 0;">💬 پیام‌رسانی داخلی</li>
-                        <li style="margin:8px 0;">📋 مشاهده غیبت‌ها</li>
-                        <li style="margin:8px 0;">📁 آپلود فایل</li>
-                        <li style="margin:8px 0;">📰 اخبار مدرسه</li>
+                        <li style="margin:10px 0;">📊 مدیریت نمرات</li>
+                        <li style="margin:10px 0;">💬 پیام‌رسانی داخلی</li>
+                        <li style="margin:10px 0;">📋 مشاهده غیبت‌ها</li>
+                        <li style="margin:10px 0;">📁 آپلود فایل</li>
+                        <li style="margin:10px 0;">📰 اخبار مدرسه</li>
                     </ul>
-                    <div style="margin-top:20px; background:#0a0a0a; padding:10px; border-radius:10px; border-right:3px solid var(--gold, #d4a017);">
-                        <span style="color:var(--gold, #d4a017);">★</span>
+                    <div style="margin-top:20px; background:var(--bg); padding:15px; border-radius:14px; border-right:4px solid var(--gold);">
+                        <span style="color:var(--gold);">★</span>
                         <span style="color:#aaa;">«سربازان علم، آینده را می‌سازند»</span>
                     </div>
                 </div>
             </div>
 
-            <!-- ===== نمرات (همانند قبل) ===== -->
+            <!-- نمرات -->
             <div id="grades" class="tab-content">
                 <div class="card">
                     <h3>📊 نمرات</h3>
@@ -578,25 +827,27 @@
                 </div>
             </div>
 
-            <!-- ===== کارنامه با نمودار ===== -->
+            <!-- کارنامه با نمودار -->
             <div id="reports" class="tab-content">
                 <div class="card">
                     <h3>📋 کارنامه و گزارشات</h3>
-                    <select id="reportStudentSelect" style="width:auto; margin-bottom:15px;">
+                    <select id="reportStudentSelect" style="width:100%; margin-bottom:15px;">
                         <option value="">انتخاب دانش‌آموز...</option>
                     </select>
-                    <button onclick="generateReport()" class="success">📄 نمایش کارنامه</button>
-                    <button onclick="downloadPDF()" class="warning">📥 خروجی PDF</button>
-                    <div id="reportContainer" style="background:var(--bg, #0a0a0a); padding:20px; border-radius:15px; min-height:200px; margin-top:15px;">
+                    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                        <button onclick="generateReport()" class="success" style="flex:1; min-width:120px;">📄 نمایش کارنامه</button>
+                        <button onclick="downloadPDF()" class="warning" style="flex:1; min-width:120px;">📥 خروجی PDF</button>
+                    </div>
+                    <div id="reportContainer" style="background:var(--bg); padding:20px; border-radius:16px; min-height:200px; margin-top:15px;">
                         <p style="color:#aaa; text-align:center;">لطفاً یک دانش‌آموز را انتخاب کنید.</p>
                     </div>
-                    <div style="margin-top:20px;">
+                    <div style="margin-top:25px;">
                         <canvas id="gradeChart" width="400" height="200"></canvas>
                     </div>
                 </div>
             </div>
 
-            <!-- ===== زمانبندی (همانند قبل) ===== -->
+            <!-- زمانبندی -->
             <div id="schedule" class="tab-content">
                 <div class="card">
                     <h3>🗓️ زمانبندی هفتگی</h3>
@@ -618,7 +869,7 @@
                 </div>
             </div>
 
-            <!-- ===== تمرین (همانند قبل) ===== -->
+            <!-- تمرین -->
             <div id="tasks" class="tab-content">
                 <div class="card">
                     <h3>✅ تمرین‌ها</h3>
@@ -632,7 +883,7 @@
                 </div>
             </div>
 
-            <!-- ===== انضباطی (همانند قبل) ===== -->
+            <!-- انضباطی -->
             <div id="discipline" class="tab-content">
                 <div class="card">
                     <h3>⚖️ ثبت منفی انضباطی</h3>
@@ -646,22 +897,22 @@
                 </div>
             </div>
 
-            <!-- ===== پیام‌ها ===== -->
+            <!-- پیام‌ها -->
             <div id="messages" class="tab-content">
                 <div class="card">
                     <h3>💬 پیام‌ها</h3>
                     <div id="messageList" style="max-height:400px; overflow-y:auto; margin-bottom:15px;"></div>
-                    <div style="display:flex; gap:10px;">
-                        <select id="messageRecipient" style="flex:1;">
+                    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                        <select id="messageRecipient" style="flex:1; min-width:150px;">
                             <option value="">انتخاب گیرنده...</option>
                         </select>
-                        <input type="text" id="messageText" placeholder="متن پیام..." style="flex:2;">
-                        <button onclick="sendMessage()" style="width:auto; padding:6px 18px;">ارسال</button>
+                        <input type="text" id="messageText" placeholder="متن پیام..." style="flex:2; min-width:200px;">
+                        <button onclick="sendMessage()" style="width:auto; padding:8px 24px;">ارسال</button>
                     </div>
                 </div>
             </div>
 
-            <!-- ===== نظرسنجی ===== -->
+            <!-- نظرسنجی -->
             <div id="survey" class="tab-content">
                 <div class="card">
                     <h3>📊 نظرسنجی ناشناس</h3>
@@ -681,7 +932,7 @@
                 </div>
             </div>
 
-            <!-- ===== غیبت‌ها ===== -->
+            <!-- غیبت‌ها -->
             <div id="attendance" class="tab-content">
                 <div class="card">
                     <h3>📋 غیبت‌ها</h3>
@@ -699,19 +950,20 @@
                 </div>
             </div>
 
-            <!-- ===== فایل‌ها ===== -->
+            <!-- فایل‌ها -->
             <div id="files" class="tab-content">
                 <div class="card">
                     <h3>📁 فایل‌ها</h3>
                     <div class="file-upload-area" onclick="document.getElementById('fileInput').click()">
-                        <p>📤 برای آپلود فایل کلیک کنید</p>
+                        <p style="font-size:1.2rem;">📤 برای آپلود فایل کلیک کنید</p>
+                        <p style="color:#666; font-size:0.8rem;">فایل‌های جزوه، تکلیف و ...</p>
                         <input type="file" id="fileInput" style="display:none;" onchange="uploadFile(this)">
                     </div>
                     <div class="item-list" id="fileList"></div>
                 </div>
             </div>
 
-            <!-- ===== اخبار ===== -->
+            <!-- اخبار -->
             <div id="news" class="tab-content">
                 <div class="card">
                     <h3>📰 اخبار مدرسه</h3>
@@ -727,7 +979,7 @@
                 </div>
             </div>
 
-            <!-- ===== پروفایل ===== -->
+            <!-- پروفایل -->
             <div id="profile" class="tab-content">
                 <div class="card">
                     <h3>👤 پروفایل کاربری</h3>
@@ -738,20 +990,20 @@
                 </div>
             </div>
 
-            <!-- ===== مدیریت (همانند قبل) ===== -->
+            <!-- مدیریت -->
             <div id="adminPanel" class="tab-content">
                 <div class="card">
                     <h3>🔧 پنل مدیریت</h3>
                     <div id="adminDashboard">
-                        <div style="display:flex; flex-wrap:wrap; gap:5px; margin-bottom:15px;">
-                            <button onclick="showSection('addStudentSection')" class="success" style="width:auto; padding:6px 18px;" id="btnAddStudent">➕ دانش‌آموز</button>
-                            <button onclick="showSection('addStaffSection')" class="success" style="width:auto; padding:6px 18px;" id="btnAddStaff">➕ کارکنان</button>
-                            <button onclick="showSection('addGradeSection')" class="success" style="width:auto; padding:6px 18px;" id="btnAddGrade">📊 نمره</button>
-                            <button onclick="showSection('managePermissionsSection')" class="warning" style="width:auto; padding:6px 18px;" id="btnPermissions">🔑 دسترسی‌ها</button>
-                            <button onclick="showSection('viewAllSection')" style="width:auto; padding:6px 18px;">📋 همه</button>
-                            <button onclick="sendNotification()" class="warning" style="width:auto; padding:6px 18px;">📢 اعلان</button>
+                        <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:15px;">
+                            <button onclick="showSection('addStudentSection')" class="success" style="width:auto; padding:8px 20px;" id="btnAddStudent">➕ دانش‌آموز</button>
+                            <button onclick="showSection('addStaffSection')" class="success" style="width:auto; padding:8px 20px;" id="btnAddStaff">➕ کارکنان</button>
+                            <button onclick="showSection('addGradeSection')" class="success" style="width:auto; padding:8px 20px;" id="btnAddGrade">📊 نمره</button>
+                            <button onclick="showSection('managePermissionsSection')" class="warning" style="width:auto; padding:8px 20px;" id="btnPermissions">🔑 دسترسی‌ها</button>
+                            <button onclick="showSection('viewAllSection')" style="width:auto; padding:8px 20px;">📋 همه</button>
+                            <button onclick="sendNotification()" class="warning" style="width:auto; padding:8px 20px;">📢 اعلان</button>
                         </div>
-                        <div id="addStudentSection" class="hidden card" style="border-right-color:var(--secondary, #2a6b3c);">
+                        <div id="addStudentSection" class="hidden card" style="border-right-color:var(--secondary);">
                             <h4>افزودن دانش‌آموز جدید</h4>
                             <input type="text" id="newStudentNationalId" placeholder="کد ملی">
                             <input type="text" id="newStudentMobile" placeholder="شماره موبایل">
@@ -759,7 +1011,7 @@
                             <button onclick="addStudent()" class="success">ذخیره</button>
                             <button onclick="hideSection('addStudentSection')">لغو</button>
                         </div>
-                        <div id="addStaffSection" class="hidden card" style="border-right-color:var(--secondary, #2a6b3c);">
+                        <div id="addStaffSection" class="hidden card" style="border-right-color:var(--secondary);">
                             <h4>افزودن کارمند جدید</h4>
                             <input type="text" id="newStaffUsername" placeholder="نام کاربری">
                             <input type="password" id="newStaffPassword" placeholder="رمز عبور">
@@ -774,7 +1026,7 @@
                             <button onclick="addStaff()" class="success">ذخیره</button>
                             <button onclick="hideSection('addStaffSection')">لغو</button>
                         </div>
-                        <div id="addGradeSection" class="hidden card" style="border-right-color:var(--secondary, #2a6b3c);">
+                        <div id="addGradeSection" class="hidden card" style="border-right-color:var(--secondary);">
                             <h4>افزودن نمره</h4>
                             <select id="newGradeStudentSelect"><option value="">انتخاب دانش‌آموز...</option></select>
                             <input type="text" id="newGradeLesson" placeholder="نام درس">
@@ -783,7 +1035,7 @@
                             <button onclick="addGrade()" class="success">ذخیره</button>
                             <button onclick="hideSection('addGradeSection')">لغو</button>
                         </div>
-                        <div id="managePermissionsSection" class="hidden card" style="border-right-color:#b8860b;">
+                        <div id="managePermissionsSection" class="hidden card" style="border-right-color:var(--gold);">
                             <h4>مدیریت دسترسی‌ها</h4>
                             <p style="color:#aaa;">انتخاب معاون و تنظیم دسترسی‌های او</p>
                             <select id="permissionTargetSelect" onchange="loadPermissions(this.value)"><option value="">انتخاب معاون...</option></select>
@@ -799,21 +1051,18 @@
                 </div>
             </div>
 
-            <!-- ===== تنظیمات (همانند قبل) ===== -->
+            <!-- تنظیمات -->
             <div id="settings" class="tab-content">
                 <div class="card">
                     <h3>⚙️ تنظیمات سایت</h3>
                     <div class="settings-group">
                         <div class="full-width"><label>شعار سایت</label><input type="text" id="settingSlogan" placeholder="شعار سایت را وارد کنید"></div>
-                        <div><label>رنگ اصلی</label><select id="settingTheme" onchange="applyTheme(this.value)">
-                                <option value="iran-theme">ایرانی-انقلابی</option>
-                                <option value="theme-dark">تیره (کلاسیک)</option>
-                                <option value="theme-red">قرمز</option>
-                                <option value="theme-green">سبز</option>
-                                <option value="theme-blue">آبی</option>
-                            </select></div>
-                        <div><label>لوگو (آپلود عکس)</label><input type="file" id="settingLogo" accept="image/*" onchange="uploadLogo(this)"></div>
                         <div class="full-width"><label>عنوان سایت</label><input type="text" id="settingTitle" placeholder="عنوان سایت را وارد کنید"></div>
+                        <div class="full-width">
+                            <label>آپلود لوگو (Favicon & PWA)</label>
+                            <input type="file" id="settingLogo" accept="image/*" onchange="uploadLogo(this)">
+                            <p style="color:#666; font-size:0.8rem;">عکس با نام `sadra.png` در پوشه‌ی اصلی ذخیره خواهد شد.</p>
+                        </div>
                         <div class="full-width"><button onclick="saveSettings()" class="success">💾 ذخیره تنظیمات</button></div>
                     </div>
                 </div>
@@ -822,6 +1071,9 @@
             <div class="footer"><strong>★</strong> صدرا · سامانه مدیریت آموزشی <strong>★</strong></div>
         </div>
     </div>
+
+    <!-- ===== کانتینر پیام‌های سفارشی ===== -->
+    <div class="toast-container" id="toastContainer"></div>
 
     <script>
         // ===== تنظیمات Supabase =====
@@ -843,36 +1095,92 @@
         let newsData = [];
         let notifications = JSON.parse(localStorage.getItem('sadra_notifications')) || [];
         let siteSettings = JSON.parse(localStorage.getItem('sadra_settings')) || {
-            theme: 'iran-theme',
+            theme: 'theme-dark',
             slogan: 'سامانه مدیریت آموزشی • جهاد علمی',
             title: 'صدرا',
             logo: ''
         };
         let chartInstance = null;
+        const themeList = ['theme-dark', 'theme-red', 'theme-green', 'theme-blue', 'theme-gold'];
+        let currentThemeIndex = 0;
 
-        // ===== بارگذاری داده‌ها از Supabase =====
-        async function loadAllData() {
-            const { data: users } = await supabase_js.from('users').select('*');
-            if (users) usersData = users;
-            const { data: grades } = await supabase_js.from('grades').select('*');
-            if (grades) gradesData = grades;
-            const { data: disciplines } = await supabase_js.from('disciplines').select('*');
-            if (disciplines) disciplineRecords = disciplines;
-            const { data: tasks } = await supabase_js.from('tasks').select('*');
-            if (tasks) tasksData = tasks;
-            const { data: messages } = await supabase_js.from('messages').select('*');
-            if (messages) messagesData = messages;
-            const { data: surveys } = await supabase_js.from('surveys').select('*');
-            if (surveys) surveysData = surveys;
-            const { data: attendances } = await supabase_js.from('attendances').select('*');
-            if (attendances) attendancesData = attendances;
-            const { data: files } = await supabase_js.from('files').select('*');
-            if (files) filesData = files;
-            const { data: news } = await supabase_js.from('news').select('*');
-            if (news) newsData = news;
+        // ===== پیام‌های سفارشی =====
+        function showToast(message, type = 'info', duration = 4000) {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            const titles = {
+                info: '📢 اطلاع',
+                success: '✅ موفق',
+                error: '❌ خطا',
+                warning: '⚠️ هشدار'
+            };
+            toast.innerHTML = `
+                        <div class="toast-title">${titles[type] || 'اطلاع'}</div>
+                        <button class="toast-close" onclick="this.parentElement.remove()">✕</button>
+                        <div>${message}</div>
+                    `;
+            container.appendChild(toast);
+
+            let timer = setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, duration);
+
+            toast.addEventListener('mouseenter', () => {
+                clearTimeout(timer);
+            });
+            toast.addEventListener('mouseleave', () => {
+                timer = setTimeout(() => {
+                    toast.style.opacity = '0';
+                    setTimeout(() => toast.remove(), 300);
+                }, duration);
+            });
         }
 
-        // ===== توابع ورود و خروج =====
+        // ===== تم =====
+        function applyTheme(theme) {
+            const app = document.getElementById('appContainer');
+            app.className = 'app ' + theme;
+            siteSettings.theme = theme;
+            localStorage.setItem('sadra_settings', JSON.stringify(siteSettings));
+            currentThemeIndex = themeList.indexOf(theme);
+            if (currentThemeIndex === -1) currentThemeIndex = 0;
+        }
+
+        function cycleTheme() {
+            currentThemeIndex = (currentThemeIndex + 1) % themeList.length;
+            applyTheme(themeList[currentThemeIndex]);
+            showToast('تم به ' + themeList[currentThemeIndex].replace('theme-', '') + ' تغییر کرد', 'success', 2000);
+        }
+
+        // ===== بارگذاری داده‌ها =====
+        async function loadAllData() {
+            try {
+                const { data: users } = await supabase_js.from('users').select('*');
+                if (users) usersData = users;
+                const { data: grades } = await supabase_js.from('grades').select('*');
+                if (grades) gradesData = grades;
+                const { data: disciplines } = await supabase_js.from('disciplines').select('*');
+                if (disciplines) disciplineRecords = disciplines;
+                const { data: tasks } = await supabase_js.from('tasks').select('*');
+                if (tasks) tasksData = tasks;
+                const { data: messages } = await supabase_js.from('messages').select('*');
+                if (messages) messagesData = messages;
+                const { data: surveys } = await supabase_js.from('surveys').select('*');
+                if (surveys) surveysData = surveys;
+                const { data: attendances } = await supabase_js.from('attendances').select('*');
+                if (attendances) attendancesData = attendances;
+                const { data: files } = await supabase_js.from('files').select('*');
+                if (files) filesData = files;
+                const { data: news } = await supabase_js.from('news').select('*');
+                if (news) newsData = news;
+            } catch (e) {
+                showToast('خطا در بارگذاری داده‌ها: ' + e.message, 'error');
+            }
+        }
+
+        // ===== ورود و خروج =====
         document.querySelectorAll('.login-tab').forEach(tab => {
             tab.addEventListener('click', function() {
                 document.querySelectorAll('.login-tab').forEach(t => t.classList.remove('active'));
@@ -888,13 +1196,16 @@
             const id = document.getElementById('loginNationalId').value.trim();
             const mobile = document.getElementById('loginMobile').value.trim();
             const errorEl = document.getElementById('loginError');
-            if (!id || !mobile) { errorEl.textContent = 'لطفاً کد ملی و شماره موبایل را وارد کنید.'; return; }
+            if (!id || !mobile) { errorEl.textContent = 'لطفاً کد ملی و شماره موبایل را وارد کنید.';
+                showToast('لطفاً کد ملی و شماره موبایل را وارد کنید', 'warning'); return; }
             if (usersData.length === 0) await loadAllData();
             const user = usersData.find(u => u.id == id && u.mobile === mobile);
-            if (!user) { errorEl.textContent = 'کد ملی یا شماره موبایل اشتباه است.'; return; }
+            if (!user) { errorEl.textContent = 'کد ملی یا شماره موبایل اشتباه است.';
+                showToast('کد ملی یا شماره موبایل اشتباه است', 'error'); return; }
             userRole = 'student';
             currentUser = user;
             enterApp();
+            showToast('خوش آمدی ' + user.name, 'success');
         }
 
         function loginStaff() {
@@ -905,13 +1216,16 @@
                 userRole = 'owner';
                 currentUser = { id: 'owner', name: 'مدیر اصلی', username: 'Mreza0098' };
                 enterApp();
+                showToast('خوش آمدید مدیر اصلی', 'success');
                 return;
             }
             const staff = usersData.find(u => u.username === username && u.password === password);
-            if (!staff) { errorEl.textContent = 'نام کاربری یا رمز عبور اشتباه است.'; return; }
+            if (!staff) { errorEl.textContent = 'نام کاربری یا رمز عبور اشتباه است.';
+                showToast('نام کاربری یا رمز عبور اشتباه است', 'error'); return; }
             currentUser = staff;
             userRole = staff.role;
             enterApp();
+            showToast('خوش آمدید ' + staff.name, 'success');
         }
 
         function enterApp() {
@@ -921,16 +1235,17 @@
             document.getElementById('siteTitle').textContent = siteSettings.title;
             document.getElementById('siteSlogan').textContent = siteSettings.slogan;
             if (siteSettings.logo) {
-                document.getElementById('logoPlaceholder').innerHTML = `<img src="${siteSettings.logo}" alt="لوگو">`;
+                document.getElementById('logoImage').src = siteSettings.logo;
+                document.getElementById('logoImage').style.display = 'block';
             }
 
             let displayName = '';
-            if (userRole === 'student') displayName = `خوش آمدی، ${currentUser.name}`;
+            if (userRole === 'student') displayName = 'خوش آمدی، ' + currentUser.name;
             else if (userRole === 'owner') displayName = 'مدیر اصلی - خوش آمدید';
-            else if (userRole === 'manager') displayName = `مدیر - ${currentUser.name}`;
-            else if (userRole === 'deputy') displayName = `معاون - ${currentUser.name}`;
-            else if (userRole === 'teacher') displayName = `معلم - ${currentUser.name}`;
-            else if (userRole === 'observer') displayName = `مدیر کل - ${currentUser.name}`;
+            else if (userRole === 'manager') displayName = 'مدیر - ' + currentUser.name;
+            else if (userRole === 'deputy') displayName = 'معاون - ' + currentUser.name;
+            else if (userRole === 'teacher') displayName = 'معلم - ' + currentUser.name;
+            else if (userRole === 'observer') displayName = 'مدیر کل - ' + currentUser.name;
             document.getElementById('userDisplayName').textContent = displayName;
 
             const isObserver = (userRole === 'observer');
@@ -970,6 +1285,7 @@
             document.getElementById('loginPassword').value = '';
             document.getElementById('loginError').textContent = '';
             document.getElementById('adminLoginError').textContent = '';
+            showToast('خارج شدید', 'info');
         }
 
         // ===== توابع کمکی =====
@@ -991,13 +1307,12 @@
                 usersData.filter(u => u.role === 'student').forEach(u => {
                     const option = document.createElement('option');
                     option.value = u.id;
-                    option.textContent = `${u.name} (${u.id})`;
+                    option.textContent = u.name + ' (' + u.id + ')';
                     select.appendChild(option);
                 });
                 if (currentVal) select.value = currentVal;
             });
 
-            // پر کردن لیست گیرندگان پیام
             const msgSelect = document.getElementById('messageRecipient');
             if (msgSelect) {
                 const currentVal = msgSelect.value;
@@ -1006,7 +1321,7 @@
                     if (u.id !== currentUser.id) {
                         const option = document.createElement('option');
                         option.value = u.id;
-                        option.textContent = `${u.name} (${u.role})`;
+                        option.textContent = u.name + ' (' + u.role + ')';
                         msgSelect.appendChild(option);
                     }
                 });
@@ -1018,43 +1333,21 @@
             const features = document.getElementById('homeFeatures');
             let html = '';
             if (userRole === 'student') {
-                html = `
-                            <li style="margin:8px 0;">📊 مشاهده نمرات</li>
-                            <li style="margin:8px 0;">💬 پیام‌رسانی</li>
-                            <li style="margin:8px 0;">📋 مشاهده غیبت‌ها</li>
-                            <li style="margin:8px 0;">📁 مشاهده فایل‌ها</li>
-                            <li style="margin:8px 0;">📰 مشاهده اخبار</li>
-                        `;
+                html =
+                    `<li style="margin:10px 0;">📊 مشاهده نمرات</li><li style="margin:10px 0;">💬 پیام‌رسانی</li><li style="margin:10px 0;">📋 مشاهده غیبت‌ها</li><li style="margin:10px 0;">📁 مشاهده فایل‌ها</li><li style="margin:10px 0;">📰 مشاهده اخبار</li>`;
             } else if (userRole === 'teacher') {
-                html = `
-                            <li style="margin:8px 0;">📊 ثبت نمرات</li>
-                            <li style="margin:8px 0;">💬 ارسال پیام</li>
-                            <li style="margin:8px 0;">📋 ثبت غیبت</li>
-                            <li style="margin:8px 0;">📁 آپلود فایل</li>
-                            <li style="margin:8px 0;">📰 ثبت خبر</li>
-                        `;
+                html =
+                    `<li style="margin:10px 0;">📊 ثبت نمرات</li><li style="margin:10px 0;">💬 ارسال پیام</li><li style="margin:10px 0;">📋 ثبت غیبت</li><li style="margin:10px 0;">📁 آپلود فایل</li><li style="margin:10px 0;">📰 ثبت خبر</li>`;
             } else if (userRole === 'deputy') {
-                html = `
-                            <li style="margin:8px 0;">📊 مدیریت نمرات</li>
-                            <li style="margin:8px 0;">💬 مدیریت پیام‌ها</li>
-                            <li style="margin:8px 0;">📋 مدیریت غیبت</li>
-                            <li style="margin:8px 0;">📁 مدیریت فایل‌ها</li>
-                            <li style="margin:8px 0;">📰 مدیریت اخبار</li>
-                        `;
+                html =
+                    `<li style="margin:10px 0;">📊 مدیریت نمرات</li><li style="margin:10px 0;">💬 مدیریت پیام‌ها</li><li style="margin:10px 0;">📋 مدیریت غیبت</li><li style="margin:10px 0;">📁 مدیریت فایل‌ها</li><li style="margin:10px 0;">📰 مدیریت اخبار</li>`;
             } else {
-                html = `
-                            <li style="margin:8px 0;">📊 مدیریت کامل نمرات</li>
-                            <li style="margin:8px 0;">💬 مدیریت پیام‌ها</li>
-                            <li style="margin:8px 0;">📋 مدیریت غیبت</li>
-                            <li style="margin:8px 0;">📁 مدیریت فایل‌ها</li>
-                            <li style="margin:8px 0;">📰 مدیریت اخبار</li>
-                            <li style="margin:8px 0;">👥 مدیریت کاربران</li>
-                        `;
+                html =
+                    `<li style="margin:10px 0;">📊 مدیریت کامل نمرات</li><li style="margin:10px 0;">💬 مدیریت پیام‌ها</li><li style="margin:10px 0;">📋 مدیریت غیبت</li><li style="margin:10px 0;">📁 مدیریت فایل‌ها</li><li style="margin:10px 0;">📰 مدیریت اخبار</li><li style="margin:10px 0;">👥 مدیریت کاربران</li>`;
             }
             features.innerHTML = html;
         }
 
-        // ===== تابع سوئیچ تب =====
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
             const target = document.getElementById(tabId);
@@ -1068,7 +1361,6 @@
             });
         }
 
-        // ===== نمایش فرم‌ها =====
         function showForm(formId) {
             document.getElementById(formId).classList.remove('hidden');
         }
@@ -1077,11 +1369,10 @@
             document.getElementById(formId).classList.add('hidden');
         }
 
-        // ===== نمایش بخش‌های مدیریت =====
         function showSection(sectionId) {
             if (userRole === 'observer') {
                 if (sectionId !== 'viewAllSection') {
-                    alert('شما به عنوان مدیر کل، فقط دسترسی مشاهده دارید.');
+                    showToast('شما به عنوان مدیر کل، فقط دسترسی مشاهده دارید.', 'warning');
                     return;
                 }
             }
@@ -1091,15 +1382,17 @@
             const section = document.getElementById(sectionId);
             if (section) {
                 section.classList.toggle('hidden');
-                if (sectionId === 'managePermissionsSection') { populatePermissionSelect(); const select = document
-                        .getElementById('permissionTargetSelect'); if (select.value) loadPermissions(select.value); }
+                if (sectionId === 'managePermissionsSection') { populatePermissionSelect();
+                    loadPermissions(document.getElementById('permissionTargetSelect').value); }
                 if (sectionId === 'addStaffSection') updateTeacherLessonCheckboxes();
                 if (sectionId === 'addGradeSection') populateStudentSelects();
             }
         }
 
-        function hideSection(sectionId) { const section = document.getElementById(sectionId); if (section) section.classList.add(
-                'hidden'); }
+        function hideSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) section.classList.add('hidden');
+        }
 
         function updateTeacherLessonCheckboxes() {
             const section = document.getElementById('teacherLessonSection');
@@ -1117,7 +1410,7 @@
             } else section.classList.add('hidden');
         }
 
-        // ===== توابع نمرات (همانند قبل) =====
+        // ===== نمرات =====
         function renderUserData() {
             if (!currentUser) return;
             if (userRole === 'student') {
@@ -1174,21 +1467,25 @@
         }
 
         async function addGrade() {
-            if (!hasGradePermission()) { alert('شما مجوز افزودن نمره را ندارید.'); return; }
+            if (!hasGradePermission()) { showToast('شما مجوز افزودن نمره را ندارید.', 'warning'); return; }
             const student_id = document.getElementById('newGradeStudentSelect').value;
             const lesson = document.getElementById('newGradeLesson').value.trim();
             const score = parseFloat(document.getElementById('newGradeScore').value);
             const date = document.getElementById('newGradeDate').value || new Date().toISOString().split('T')[0];
-            if (!student_id || !lesson || isNaN(score) || score < 0 || score > 20) { alert(
-                'لطفاً اطلاعات را به درستی وارد کنید.'); return; }
+            if (!student_id || !lesson || isNaN(score) || score < 0 || score > 20) {
+                showToast('لطفاً اطلاعات را به درستی وارد کنید.', 'warning');
+                return;
+            }
             if (userRole === 'teacher') {
                 const teacherLessons = currentUser.lessons || [];
-                if (!teacherLessons.includes(lesson)) { alert(
-                    `شما فقط می‌توانید برای درس‌های خود (${teacherLessons.join(', ')}) نمره ثبت کنید.`); return; }
+                if (!teacherLessons.includes(lesson)) {
+                    showToast('شما فقط می‌توانید برای درس‌های خود (' + teacherLessons.join(', ') + ') نمره ثبت کنید.', 'warning');
+                    return;
+                }
             }
             const { error } = await supabase_js.from('grades').insert([{ student_id, lesson, score, date,
                 teacher_id: currentUser.id }]);
-            if (error) { alert('خطا در ثبت نمره: ' + error.message); return; }
+            if (error) { showToast('خطا در ثبت نمره: ' + error.message, 'error'); return; }
             await loadAllData();
             document.getElementById('newGradeLesson').value = '';
             document.getElementById('newGradeScore').value = '';
@@ -1196,7 +1493,7 @@
             document.getElementById('newGradeStudentSelect').value = '';
             renderUserData();
             if (hasAdminAccess()) renderAdminPanel();
-            alert('نمره با موفقیت ثبت شد.');
+            showToast('نمره با موفقیت ثبت شد.', 'success');
         }
 
         function hasGradePermission() {
@@ -1211,30 +1508,33 @@
             if (!hasGradePermission()) return;
             if (confirm('آیا از حذف این نمره اطمینان دارید؟')) {
                 const { error } = await supabase_js.from('grades').delete().eq('id', id);
-                if (error) { alert('خطا در حذف نمره: ' + error.message); return; }
+                if (error) { showToast('خطا در حذف نمره: ' + error.message, 'error'); return; }
                 await loadAllData();
                 renderUserData();
                 if (hasAdminAccess()) renderAdminPanel();
+                showToast('نمره با موفقیت حذف شد.', 'success');
             }
         }
 
-        // ===== توابع انضباطی (همانند قبل) =====
+        // ===== انضباطی =====
         async function addDiscipline() {
-            if (!hasDisciplinePermission()) { alert('شما مجوز ثبت منفی انضباطی را ندارید.'); return; }
+            if (!hasDisciplinePermission()) { showToast('شما مجوز ثبت منفی انضباطی را ندارید.', 'warning'); return; }
             const student_id = document.getElementById('disciplineStudentSelect').value;
             const value = parseInt(document.getElementById('disciplineValue').value);
             const reason = document.getElementById('disciplineReason').value.trim() || 'بدون توضیح';
-            if (!student_id || isNaN(value) || value < 1 || value > 10) { alert(
-                'لطفاً دانش‌آموز و مقدار منفی (۱ تا ۱۰) را انتخاب کنید.'); return; }
+            if (!student_id || isNaN(value) || value < 1 || value > 10) {
+                showToast('لطفاً دانش‌آموز و مقدار منفی (۱ تا ۱۰) را انتخاب کنید.', 'warning');
+                return;
+            }
             const { error } = await supabase_js.from('disciplines').insert([{ student_id, value, reason,
                 date: new Date().toISOString().split('T')[0], teacher_id: currentUser.id }]);
-            if (error) { alert('خطا در ثبت انضباطی: ' + error.message); return; }
+            if (error) { showToast('خطا در ثبت انضباطی: ' + error.message, 'error'); return; }
             await loadAllData();
             document.getElementById('disciplineStudentSelect').value = '';
             document.getElementById('disciplineValue').value = '';
             document.getElementById('disciplineReason').value = '';
             renderDisciplineList();
-            alert('منفی انضباطی با موفقیت ثبت شد.');
+            showToast('منفی انضباطی با موفقیت ثبت شد.', 'success');
         }
 
         function hasDisciplinePermission() {
@@ -1247,7 +1547,7 @@
         function renderDisciplineList() {
             const list = document.getElementById('disciplineList');
             if (disciplineRecords.length === 0) { list.innerHTML =
-                '<p style="color:#666; text-align:center;">هیچ رکورد انضباطی ثبت نشده است.</p>'; return; }
+                    '<p style="color:#666; text-align:center;">هیچ رکورد انضباطی ثبت نشده است.</p>'; return; }
             let html = '';
             let filtered = disciplineRecords;
             if (userRole === 'student') filtered = disciplineRecords.filter(d => d.student_id == currentUser.id);
@@ -1255,38 +1555,39 @@
             filtered.forEach(d => {
                 const name = getUserName(d.student_id);
                 html +=
-                    `<div class="item-row"><div class="info"><strong>${name}</strong> — <span class="badge-red">-${d.value}</span> ${d.reason ? `— ${d.reason}` : ''} <span style="color:#666; font-size:0.8rem;">(${d.date})</span>${userRole !== 'student' ? `<span style="color:#666; font-size:0.8rem;">ثبت: ${getUserName(d.teacher_id)}</span>` : ''}</div>${userRole !== 'student' && userRole !== 'observer' ? `<div class="actions"><button onclick="deleteDiscipline(${d.id})" class="danger">🗑️</button></div>` : ''}</div>`;
+                    `<div class="item-row"><div class="info"><strong>${name}</strong> — <span class="badge-red">-${d.value}</span> ${d.reason ? '— ' + d.reason : ''} <span style="color:#666; font-size:0.8rem;">(${d.date})</span>${userRole !== 'student' ? '<span style="color:#666; font-size:0.8rem;">ثبت: ' + getUserName(d.teacher_id) + '</span>' : ''}</div>${userRole !== 'student' && userRole !== 'observer' ? '<div class="actions"><button onclick="deleteDiscipline(' + d.id + ')" class="danger">🗑️</button></div>' : ''}</div>`;
             });
             list.innerHTML = html;
         }
 
         async function deleteDiscipline(id) {
-            if (userRole === 'observer') { alert('شما به عنوان مدیر کل، مجوز حذف ندارید.'); return; }
+            if (userRole === 'observer') { showToast('شما به عنوان مدیر کل، مجوز حذف ندارید.', 'warning'); return; }
             if (confirm('آیا از حذف این رکورد انضباطی اطمینان دارید؟')) {
                 const { error } = await supabase_js.from('disciplines').delete().eq('id', id);
-                if (error) { alert('خطا در حذف: ' + error.message); return; }
+                if (error) { showToast('خطا در حذف: ' + error.message, 'error'); return; }
                 await loadAllData();
                 renderDisciplineList();
+                showToast('رکورد انضباطی با موفقیت حذف شد.', 'success');
             }
         }
 
-        // ===== توابع تمرین (همانند قبل) =====
+        // ===== تمرین =====
         async function addTask() {
-            if (!hasTaskPermission()) { alert('شما مجوز افزودن تمرین را ندارید.'); return; }
+            if (!hasTaskPermission()) { showToast('شما مجوز افزودن تمرین را ندارید.', 'warning'); return; }
             const title = document.getElementById('taskTitle').value.trim();
             const due = document.getElementById('taskDue').value || '۱۴۰۴/۰۱/۰۱';
             let student_id = document.getElementById('taskStudentSelect').value;
-            if (!title) { alert('عنوان تمرین را بنویس.'); return; }
+            if (!title) { showToast('عنوان تمرین را بنویس.', 'warning'); return; }
             if (!student_id) student_id = 'all';
             const { error } = await supabase_js.from('tasks').insert([{ title, due, done: false, student_id,
                 creator_id: currentUser.id }]);
-            if (error) { alert('خطا در ثبت تمرین: ' + error.message); return; }
+            if (error) { showToast('خطا در ثبت تمرین: ' + error.message, 'error'); return; }
             await loadAllData();
             document.getElementById('taskTitle').value = '';
             document.getElementById('taskDue').value = '';
             document.getElementById('taskStudentSelect').value = '';
             renderTasks();
-            alert('تمرین با موفقیت ثبت شد.');
+            showToast('تمرین با موفقیت ثبت شد.', 'success');
         }
 
         function hasTaskPermission() {
@@ -1299,7 +1600,7 @@
         function renderTasks() {
             const list = document.getElementById('taskList');
             if (tasksData.length === 0) { list.innerHTML =
-                '<p style="color:#666; text-align:center;">هیچ تمرینی ثبت نشده است.</p>'; return; }
+                    '<p style="color:#666; text-align:center;">هیچ تمرینی ثبت نشده است.</p>'; return; }
             let filtered = tasksData;
             if (userRole === 'student') filtered = tasksData.filter(t => t.student_id === currentUser.id || t
                 .student_id === 'all');
@@ -1308,47 +1609,48 @@
             filtered.forEach(t => {
                 const target = t.student_id === 'all' ? 'همه دانش‌آموزان' : getUserName(t.student_id);
                 html +=
-                    `<div class="item-row"><div class="info"><strong>${t.title}</strong> — ${t.due || 'بدون تاریخ'}${t.student_id !== 'all' ? `<span style="color:#666; font-size:0.8rem;">برای: ${target}</span>` : ''}<span class="badge">${t.done ? '✅ انجام شده' : '⏳ در انتظار'}</span><span style="color:#666; font-size:0.8rem;">ثبت: ${getUserName(t.creator_id)}</span></div><div class="actions">${userRole !== 'student' && userRole !== 'observer' ? `<button onclick="toggleTask(${t.id})">✔️</button>` : ''}${userRole !== 'student' && userRole !== 'observer' ? `<button onclick="deleteTask(${t.id})" class="danger">🗑️</button>` : ''}</div></div>`;
+                    `<div class="item-row"><div class="info"><strong>${t.title}</strong> — ${t.due || 'بدون تاریخ'}${t.student_id !== 'all' ? '<span style="color:#666; font-size:0.8rem;">برای: ' + target + '</span>' : ''}<span class="badge">${t.done ? '✅ انجام شده' : '⏳ در انتظار'}</span><span style="color:#666; font-size:0.8rem;">ثبت: ${getUserName(t.creator_id)}</span></div><div class="actions">${userRole !== 'student' && userRole !== 'observer' ? '<button onclick="toggleTask(' + t.id + ')">✔️</button>' : ''}${userRole !== 'student' && userRole !== 'observer' ? '<button onclick="deleteTask(' + t.id + ')" class="danger">🗑️</button>' : ''}</div></div>`;
             });
             list.innerHTML = html;
         }
 
         async function toggleTask(id) {
-            if (userRole === 'observer') { alert('شما به عنوان مدیر کل، مجوز تغییر وضعیت ندارید.'); return; }
+            if (userRole === 'observer') { showToast('شما به عنوان مدیر کل، مجوز تغییر وضعیت ندارید.', 'warning'); return; }
             const task = tasksData.find(t => t.id === id);
             if (!task) return;
             const { error } = await supabase_js.from('tasks').update({ done: !task.done }).eq('id', id);
-            if (error) { alert('خطا در تغییر وضعیت: ' + error.message); return; }
+            if (error) { showToast('خطا در تغییر وضعیت: ' + error.message, 'error'); return; }
             await loadAllData();
             renderTasks();
         }
 
         async function deleteTask(id) {
-            if (userRole === 'observer') { alert('شما به عنوان مدیر کل، مجوز حذف ندارید.'); return; }
+            if (userRole === 'observer') { showToast('شما به عنوان مدیر کل، مجوز حذف ندارید.', 'warning'); return; }
             if (confirm('این تمرین حذف شود؟')) {
                 const { error } = await supabase_js.from('tasks').delete().eq('id', id);
-                if (error) { alert('خطا در حذف: ' + error.message); return; }
+                if (error) { showToast('خطا در حذف: ' + error.message, 'error'); return; }
                 await loadAllData();
                 renderTasks();
+                showToast('تمرین با موفقیت حذف شد.', 'success');
             }
         }
 
-        // ===== توابع پیام‌رسانی =====
+        // ===== پیام‌ها =====
         async function sendMessage() {
             const recipient_id = document.getElementById('messageRecipient').value;
             const text = document.getElementById('messageText').value.trim();
-            if (!recipient_id || !text) { alert('لطفاً گیرنده و متن پیام را وارد کنید.'); return; }
+            if (!recipient_id || !text) { showToast('لطفاً گیرنده و متن پیام را وارد کنید.', 'warning'); return; }
             const { error } = await supabase_js.from('messages').insert([{
                 sender_id: currentUser.id,
                 recipient_id: recipient_id,
                 text: text,
                 timestamp: new Date().toISOString()
             }]);
-            if (error) { alert('خطا در ارسال پیام: ' + error.message); return; }
+            if (error) { showToast('خطا در ارسال پیام: ' + error.message, 'error'); return; }
             await loadAllData();
             document.getElementById('messageText').value = '';
             renderMessages();
-            alert('پیام با موفقیت ارسال شد.');
+            showToast('پیام با موفقیت ارسال شد.', 'success');
         }
 
         function renderMessages() {
@@ -1378,13 +1680,13 @@
             list.innerHTML = html;
         }
 
-        // ===== توابع نظرسنجی =====
+        // ===== نظرسنجی =====
         function addSurveyOption() {
             const container = document.getElementById('surveyOptions');
             const input = document.createElement('input');
             input.type = 'text';
             input.className = 'survey-option-input';
-            input.placeholder = `گزینه ${container.children.length + 1}`;
+            input.placeholder = 'گزینه ' + (container.children.length + 1);
             container.appendChild(input);
         }
 
@@ -1396,7 +1698,7 @@
                 const val = inp.value.trim();
                 if (val) options.push(val);
             });
-            if (!question || options.length < 2) { alert('لطفاً سوال و حداقل ۲ گزینه وارد کنید.'); return; }
+            if (!question || options.length < 2) { showToast('لطفاً سوال و حداقل ۲ گزینه وارد کنید.', 'warning'); return; }
             const { error } = await supabase_js.from('surveys').insert([{
                 question: question,
                 options: options,
@@ -1405,13 +1707,13 @@
                 is_anonymous: true,
                 timestamp: new Date().toISOString()
             }]);
-            if (error) { alert('خطا در ثبت نظرسنجی: ' + error.message); return; }
+            if (error) { showToast('خطا در ثبت نظرسنجی: ' + error.message, 'error'); return; }
             await loadAllData();
             document.getElementById('surveyQuestion').value = '';
             document.querySelectorAll('.survey-option-input').forEach(inp => inp.value = '');
             hideForm('surveyForm');
             renderSurveys();
-            alert('نظرسنجی با موفقیت ثبت شد.');
+            showToast('نظرسنجی با موفقیت ثبت شد.', 'success');
         }
 
         async function voteSurvey(surveyId, optionIndex) {
@@ -1419,9 +1721,10 @@
             if (!survey) return;
             survey.votes[optionIndex] = (survey.votes[optionIndex] || 0) + 1;
             const { error } = await supabase_js.from('surveys').update({ votes: survey.votes }).eq('id', surveyId);
-            if (error) { alert('خطا در ثبت رای: ' + error.message); return; }
+            if (error) { showToast('خطا در ثبت رای: ' + error.message, 'error'); return; }
             await loadAllData();
             renderSurveys();
+            showToast('رای شما ثبت شد.', 'success');
         }
 
         function renderSurveys() {
@@ -1453,25 +1756,25 @@
             list.innerHTML = html;
         }
 
-        // ===== توابع غیبت =====
+        // ===== غیبت‌ها =====
         async function addAttendance() {
-            if (!hasAttendancePermission()) { alert('شما مجوز ثبت غیبت را ندارید.'); return; }
+            if (!hasAttendancePermission()) { showToast('شما مجوز ثبت غیبت را ندارید.', 'warning'); return; }
             const student_id = document.getElementById('attendanceStudentSelect').value;
             const date = document.getElementById('attendanceDate').value || new Date().toISOString().split('T')[0];
             const status = document.getElementById('attendanceStatus').value;
-            if (!student_id) { alert('لطفاً دانش‌آموز را انتخاب کنید.'); return; }
+            if (!student_id) { showToast('لطفاً دانش‌آموز را انتخاب کنید.', 'warning'); return; }
             const { error } = await supabase_js.from('attendances').insert([{
                 student_id: student_id,
                 date: date,
                 status: status,
                 teacher_id: currentUser.id
             }]);
-            if (error) { alert('خطا در ثبت غیبت: ' + error.message); return; }
+            if (error) { showToast('خطا در ثبت غیبت: ' + error.message, 'error'); return; }
             await loadAllData();
             document.getElementById('attendanceStudentSelect').value = '';
             document.getElementById('attendanceDate').value = '';
             renderAttendance();
-            alert('غیبت با موفقیت ثبت شد.');
+            showToast('غیبت با موفقیت ثبت شد.', 'success');
         }
 
         function hasAttendancePermission() {
@@ -1498,25 +1801,26 @@
                 html += `<div class="item-row">
                             <div class="info">
                                 <strong>${name}</strong> — ${a.date} — <span class="${a.status === 'absent' ? 'badge-red' : 'badge'}">${statusMap[a.status]}</span>
-                                ${userRole !== 'student' ? `<span style="color:#666; font-size:0.8rem;">ثبت: ${getUserName(a.teacher_id)}</span>` : ''}
+                                ${userRole !== 'student' ? '<span style="color:#666; font-size:0.8rem;">ثبت: ' + getUserName(a.teacher_id) + '</span>' : ''}
                             </div>
-                            ${userRole !== 'student' ? `<div class="actions"><button onclick="deleteAttendance(${a.id})" class="danger">🗑️</button></div>` : ''}
+                            ${userRole !== 'student' ? '<div class="actions"><button onclick="deleteAttendance(' + a.id + ')" class="danger">🗑️</button></div>' : ''}
                         </div>`;
             });
             list.innerHTML = html;
         }
 
         async function deleteAttendance(id) {
-            if (userRole === 'observer') { alert('شما به عنوان مدیر کل، مجوز حذف ندارید.'); return; }
+            if (userRole === 'observer') { showToast('شما به عنوان مدیر کل، مجوز حذف ندارید.', 'warning'); return; }
             if (confirm('آیا از حذف این رکورد غیبت اطمینان دارید؟')) {
                 const { error } = await supabase_js.from('attendances').delete().eq('id', id);
-                if (error) { alert('خطا در حذف: ' + error.message); return; }
+                if (error) { showToast('خطا در حذف: ' + error.message, 'error'); return; }
                 await loadAllData();
                 renderAttendance();
+                showToast('رکورد غیبت با موفقیت حذف شد.', 'success');
             }
         }
 
-        // ===== توابع فایل‌ها =====
+        // ===== فایل‌ها =====
         async function uploadFile(input) {
             const file = input.files[0];
             if (!file) return;
@@ -1531,10 +1835,10 @@
                     uploader_id: currentUser.id,
                     timestamp: new Date().toISOString()
                 }]);
-                if (error) { alert('خطا در آپلود فایل: ' + error.message); return; }
+                if (error) { showToast('خطا در آپلود فایل: ' + error.message, 'error'); return; }
                 await loadAllData();
                 renderFiles();
-                alert('فایل با موفقیت آپلود شد.');
+                showToast('فایل با موفقیت آپلود شد.', 'success');
             };
             reader.readAsDataURL(file);
         }
@@ -1556,7 +1860,7 @@
                             </div>
                             <div class="actions">
                                 <a href="${f.content}" download="${f.name}" class="nav-btn" style="padding:4px 12px; background:var(--primary, #cc0000); text-decoration:none; color:white; border-radius:8px;">📥 دانلود</a>
-                                ${userRole !== 'student' ? `<button onclick="deleteFile(${f.id})" class="danger">🗑️</button>` : ''}
+                                ${userRole !== 'student' ? '<button onclick="deleteFile(' + f.id + ')" class="danger">🗑️</button>' : ''}
                             </div>
                         </div>`;
             });
@@ -1564,34 +1868,35 @@
         }
 
         async function deleteFile(id) {
-            if (userRole === 'observer') { alert('شما به عنوان مدیر کل، مجوز حذف ندارید.'); return; }
+            if (userRole === 'observer') { showToast('شما به عنوان مدیر کل، مجوز حذف ندارید.', 'warning'); return; }
             if (confirm('آیا از حذف این فایل اطمینان دارید؟')) {
                 const { error } = await supabase_js.from('files').delete().eq('id', id);
-                if (error) { alert('خطا در حذف: ' + error.message); return; }
+                if (error) { showToast('خطا در حذف: ' + error.message, 'error'); return; }
                 await loadAllData();
                 renderFiles();
+                showToast('فایل با موفقیت حذف شد.', 'success');
             }
         }
 
-        // ===== توابع اخبار =====
+        // ===== اخبار =====
         async function addNews() {
-            if (!hasNewsPermission()) { alert('شما مجوز ثبت خبر را ندارید.'); return; }
+            if (!hasNewsPermission()) { showToast('شما مجوز ثبت خبر را ندارید.', 'warning'); return; }
             const title = document.getElementById('newsTitle').value.trim();
             const content = document.getElementById('newsContent').value.trim();
-            if (!title || !content) { alert('لطفاً عنوان و متن خبر را وارد کنید.'); return; }
+            if (!title || !content) { showToast('لطفاً عنوان و متن خبر را وارد کنید.', 'warning'); return; }
             const { error } = await supabase_js.from('news').insert([{
                 title: title,
                 content: content,
                 creator_id: currentUser.id,
                 timestamp: new Date().toISOString()
             }]);
-            if (error) { alert('خطا در ثبت خبر: ' + error.message); return; }
+            if (error) { showToast('خطا در ثبت خبر: ' + error.message, 'error'); return; }
             await loadAllData();
             document.getElementById('newsTitle').value = '';
             document.getElementById('newsContent').value = '';
             hideForm('newsForm');
             renderNews();
-            alert('خبر با موفقیت ثبت شد.');
+            showToast('خبر با موفقیت ثبت شد.', 'success');
         }
 
         function hasNewsPermission() {
@@ -1616,19 +1921,20 @@
                             <div class="title">${n.title}</div>
                             <div class="date">${date} — ثبت: ${creator}</div>
                             <div class="content">${n.content}</div>
-                            ${userRole !== 'student' ? `<button onclick="deleteNews(${n.id})" class="danger" style="width:auto; padding:4px 12px; margin-top:10px;">🗑️ حذف</button>` : ''}
+                            ${userRole !== 'student' ? '<button onclick="deleteNews(' + n.id + ')" class="danger" style="width:auto; padding:4px 12px; margin-top:10px;">🗑️ حذف</button>' : ''}
                         </div>`;
             });
             list.innerHTML = html;
         }
 
         async function deleteNews(id) {
-            if (userRole === 'observer') { alert('شما به عنوان مدیر کل، مجوز حذف ندارید.'); return; }
+            if (userRole === 'observer') { showToast('شما به عنوان مدیر کل، مجوز حذف ندارید.', 'warning'); return; }
             if (confirm('آیا از حذف این خبر اطمینان دارید؟')) {
                 const { error } = await supabase_js.from('news').delete().eq('id', id);
-                if (error) { alert('خطا در حذف: ' + error.message); return; }
+                if (error) { showToast('خطا در حذف: ' + error.message, 'error'); return; }
                 await loadAllData();
                 renderNews();
+                showToast('خبر با موفقیت حذف شد.', 'success');
             }
         }
 
@@ -1643,7 +1949,7 @@
             }
             const isVerified = user.verified || false;
             info.innerHTML = `
-                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
                             <div><strong>نام:</strong> ${user.name}</div>
                             <div><strong>نقش:</strong> ${user.role}</div>
                             <div><strong>کد ملی:</strong> ${user.id}</div>
@@ -1660,57 +1966,60 @@
         }
 
         async function verifyProfile() {
-            if (userRole !== 'owner' && userRole !== 'manager') { alert('شما مجوز تایید پروفایل را ندارید.'); return; }
+            if (userRole !== 'owner' && userRole !== 'manager') { showToast('شما مجوز تایید پروفایل را ندارید.', 'warning'); return; }
             const { error } = await supabase_js.from('users').update({ verified: true }).eq('id', currentUser.id);
-            if (error) { alert('خطا در تایید پروفایل: ' + error.message); return; }
+            if (error) { showToast('خطا در تایید پروفایل: ' + error.message, 'error'); return; }
             await loadAllData();
             renderProfile();
-            alert('پروفایل با موفقیت تایید شد.');
+            showToast('پروفایل با موفقیت تایید شد.', 'success');
         }
 
         // ===== کارنامه با نمودار =====
         function generateReport() {
             const studentId = document.getElementById('reportStudentSelect').value;
-            if (!studentId) { alert('لطفاً یک دانش‌آموز را انتخاب کنید.'); return; }
+            if (!studentId) { showToast('لطفاً یک دانش‌آموز را انتخاب کنید.', 'warning'); return; }
             const student = usersData.find(u => u.id == studentId);
-            if (!student) { alert('دانش‌آموز یافت نشد.'); return; }
+            if (!student) { showToast('دانش‌آموز یافت نشد.', 'error'); return; }
             const studentGrades = gradesData.filter(g => g.student_id == studentId);
             const studentDisciplines = disciplineRecords.filter(d => d.student_id == studentId);
             const studentAttendances = attendancesData.filter(a => a.student_id == studentId);
 
-            let html = `<div id="reportContent" style="direction:rtl;">`;
-            html += `<h2 style="color:var(--gold, #d4a017); text-align:center;">★ کارنامه تحصیلی ★</h2>`;
-            html += `<h3 style="text-align:center; color:#aaa;">${student.name} — کد ملی: ${student.id}</h3>`;
-            html += `<hr style="border-color:#333; margin:15px 0;">`;
+            let html = '<div id="reportContent" style="direction:rtl;">';
+            html += '<h2 style="color:var(--gold, #d4a017); text-align:center;">★ کارنامه تحصیلی ★</h2>';
+            html += '<h3 style="text-align:center; color:#aaa;">' + student.name + ' — کد ملی: ' + student.id + '</h3>';
+            html += '<hr style="border-color:#333; margin:15px 0;">';
 
             if (studentGrades.length > 0) {
-                html += `<h4 style="color:var(--secondary, #2a6b3c);">📊 نمرات</h4>`;
+                html += '<h4 style="color:var(--secondary, #2a6b3c);">📊 نمرات</h4>';
                 html +=
-                    `<table style="width:100%; margin:10px 0;"><thead><tr><th>درس</th><th>نمره</th><th>تاریخ</th></tr></thead><tbody>`;
+                    '<table style="width:100%; margin:10px 0;"><thead><tr><th>درس</th><th>نمره</th><th>تاریخ</th></tr></thead><tbody>';
                 let sum = 0;
                 studentGrades.forEach(g => {
                     sum += g.score;
-                    html += `<tr><td>${g.lesson}</td><td>${g.score}</td><td>${g.date || 'بدون تاریخ'}</td></tr>`;
+                    html += '<tr><td>' + g.lesson + '</td><td>' + g.score + '</td><td>' + (g.date || 'بدون تاریخ') +
+                        '</td></tr>';
                 });
-                html += `</tbody></table>`;
-                html += `<div style="text-align:center; background:var(--bg, #0a0a0a); padding:10px; border-radius:10px; margin:10px 0;">`;
-                html += `معدل کل: <strong style="color:var(--gold, #d4a017);">${(sum / studentGrades.length).toFixed(2)}</strong> (از ${studentGrades.length} نمره)`;
-                html += `</div>`;
+                html += '</tbody></table>';
+                html += '<div style="text-align:center; background:var(--bg, #0a0a0a); padding:10px; border-radius:10px; margin:10px 0;">';
+                html += 'معدل کل: <strong style="color:var(--gold, #d4a017);">' + (sum / studentGrades.length).toFixed(
+                    2) + '</strong> (از ' + studentGrades.length + ' نمره)';
+                html += '</div>';
             } else {
-                html += `<p style="color:#666;">نمره‌ای ثبت نشده است.</p>`;
+                html += '<p style="color:#666;">نمره‌ای ثبت نشده است.</p>';
             }
 
             if (studentDisciplines.length > 0) {
-                html += `<h4 style="color:var(--primary, #cc0000); margin-top:20px;">⚖️ سوابق انضباطی</h4>`;
+                html += '<h4 style="color:var(--primary, #cc0000); margin-top:20px;">⚖️ سوابق انضباطی</h4>';
                 html +=
-                    `<table style="width:100%; margin:10px 0;"><thead><tr><th>مقدار</th><th>توضیح</th><th>تاریخ</th><th>ثبت کننده</th></tr></thead><tbody>`;
+                    '<table style="width:100%; margin:10px 0;"><thead><tr><th>مقدار</th><th>توضیح</th><th>تاریخ</th><th>ثبت کننده</th></tr></thead><tbody>';
                 studentDisciplines.forEach(d => {
-                    html +=
-                        `<tr><td><span class="badge-red">-${d.value}</span></td><td>${d.reason || 'بدون توضیح'}</td><td>${d.date}</td><td>${getUserName(d.teacher_id)}</td></tr>`;
+                    html += '<tr><td><span class="badge-red">-' + d.value + '</span></td><td>' + (d.reason ||
+                        'بدون توضیح') + '</td><td>' + d.date + '</td><td>' + getUserName(d.teacher_id) +
+                        '</td></tr>';
                 });
-                html += `</tbody></table>`;
+                html += '</tbody></table>';
             } else {
-                html += `<p style="color:#666; margin-top:10px;">هیچ رکورد انضباطی ثبت نشده است.</p>`;
+                html += '<p style="color:#666; margin-top:10px;">هیچ رکورد انضباطی ثبت نشده است.</p>';
             }
 
             if (studentAttendances.length > 0) {
@@ -1718,23 +2027,25 @@
                 const absent = studentAttendances.filter(a => a.status === 'absent').length;
                 const present = studentAttendances.filter(a => a.status === 'present').length;
                 const excused = studentAttendances.filter(a => a.status === 'excused').length;
-                html += `<h4 style="color:var(--secondary, #2a6b3c); margin-top:20px;">📋 حضور و غیاب</h4>`;
-                html += `<table style="width:100%; margin:10px 0;"><thead><tr><th>وضعیت</th><th>تعداد</th></tr></thead><tbody>`;
-                html += `<tr><td>✅ حاضر</td><td>${present}</td></tr>`;
-                html += `<tr><td>❌ غایب</td><td>${absent}</td></tr>`;
-                html += `<tr><td>⚠️ موجه</td><td>${excused}</td></tr>`;
-                html += `</tbody></table>`;
-                html += `<div style="text-align:center; background:var(--bg, #0a0a0a); padding:10px; border-radius:10px; margin:10px 0;">`;
+                html += '<h4 style="color:var(--secondary, #2a6b3c); margin-top:20px;">📋 حضور و غیاب</h4>';
+                html += '<table style="width:100%; margin:10px 0;"><thead><tr><th>وضعیت</th><th>تعداد</th></tr></thead><tbody>';
+                html += '<tr><td>✅ حاضر</td><td>' + present + '</td></tr>';
+                html += '<tr><td>❌ غایب</td><td>' + absent + '</td></tr>';
+                html += '<tr><td>⚠️ موجه</td><td>' + excused + '</td></tr>';
+                html += '</tbody></table>';
+                html += '<div style="text-align:center; background:var(--bg, #0a0a0a); padding:10px; border-radius:10px; margin:10px 0;">';
                 const attendanceRate = total > 0 ? ((present + excused) / total * 100).toFixed(1) : 0;
-                html += `نرخ حضور: <strong style="color:var(--gold, #d4a017);">${attendanceRate}%</strong> (از ${total} روز)`;
-                html += `</div>`;
+                html += 'نرخ حضور: <strong style="color:var(--gold, #d4a017);">' + attendanceRate + '%</strong> (از ' +
+                    total + ' روز)';
+                html += '</div>';
             } else {
-                html += `<p style="color:#666; margin-top:10px;">هیچ رکورد حضور و غیاب ثبت نشده است.</p>`;
+                html += '<p style="color:#666; margin-top:10px;">هیچ رکورد حضور و غیاب ثبت نشده است.</p>';
             }
 
-            html += `<hr style="border-color:#333; margin:15px 0;">`;
-            html += `<p style="text-align:center; color:#555; font-size:0.8rem;">تاریخ: ${new Date().toLocaleDateString('fa-IR')}</p>`;
-            html += `</div>`;
+            html += '<hr style="border-color:#333; margin:15px 0;">';
+            html += '<p style="text-align:center; color:#555; font-size:0.8rem;">تاریخ: ' + new Date().toLocaleDateString(
+                'fa-IR') + '</p>';
+            html += '</div>';
             document.getElementById('reportContainer').innerHTML = html;
 
             // نمودار
@@ -1750,22 +2061,24 @@
                             data: studentGrades.map(g => g.score),
                             backgroundColor: 'rgba(204, 0, 0, 0.6)',
                             borderColor: 'rgba(204, 0, 0, 1)',
-                            borderWidth: 1
+                            borderWidth: 2,
+                            borderRadius: 6
                         }]
                     },
                     options: {
+                        responsive: true,
                         scales: {
                             y: {
                                 beginAtZero: true,
                                 max: 20,
-                                ticks: { color: '#aaa' }
+                                ticks: { color: '#aaa', stepSize: 2 }
                             },
                             x: {
                                 ticks: { color: '#aaa' }
                             }
                         },
                         plugins: {
-                            legend: { labels: { color: '#aaa' } }
+                            legend: { labels: { color: '#aaa', font: { size: 14 } } }
                         }
                     }
                 });
@@ -1774,22 +2087,24 @@
                 if (chartInstance) chartInstance.destroy();
                 chartInstance = null;
             }
+            showToast('کارنامه با موفقیت تولید شد.', 'success');
         }
 
         function downloadPDF() {
             const element = document.getElementById('reportContent');
-            if (!element) { alert('لطفاً ابتدا کارنامه را تولید کنید.'); return; }
+            if (!element) { showToast('لطفاً ابتدا کارنامه را تولید کنید.', 'warning'); return; }
             const opt = {
                 margin: 10,
-                filename: `کارنامه_${document.getElementById('reportStudentSelect').value}.pdf`,
+                filename: 'کارنامه_' + document.getElementById('reportStudentSelect').value + '.pdf',
                 image: { type: 'jpeg', quality: 0.98 },
                 html2canvas: { scale: 2, useCORS: true },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
             html2pdf().set(opt).from(element).save();
+            showToast('دانلود PDF شروع شد.', 'success');
         }
 
-        // ===== توابع مدیریت (همانند قبل) =====
+        // ===== مدیریت =====
         function renderAdminPanel() {
             if (!hasAdminAccess()) return;
             const gradeList = document.getElementById('adminGradeList');
@@ -1800,7 +2115,7 @@
                 gradesData.forEach(g => {
                     const name = getUserName(g.student_id);
                     html +=
-                        `<div class="item-row"><div class="info"><strong>${name}</strong> (${g.student_id}) — <strong>${g.lesson}</strong>: <span style="color:var(--primary, #cc0000);">${g.score}</span> (${g.date || 'بدون تاریخ'})</div>${userRole !== 'observer' ? `<div class="actions"><button onclick="deleteGrade(${g.id})" class="danger">🗑️</button></div>` : ''}</div>`;
+                        `<div class="item-row"><div class="info"><strong>${name}</strong> (${g.student_id}) — <strong>${g.lesson}</strong>: <span style="color:var(--primary, #cc0000);">${g.score}</span> (${g.date || 'بدون تاریخ'})</div>${userRole !== 'observer' ? '<div class="actions"><button onclick="deleteGrade(' + g.id + ')" class="danger">🗑️</button></div>' : ''}</div>`;
                 });
                 gradeList.innerHTML = html;
             }
@@ -1813,7 +2128,7 @@
                 let html = '<h4>📋 لیست دانش‌آموزان</h4>';
                 students.forEach(u => {
                     html +=
-                        `<div class="item-row"><div class="info"><strong>${u.name}</strong> — کد: ${u.id} — موبایل: ${u.mobile}</div>${userRole !== 'observer' ? `<div class="actions"><button onclick="deleteStudent(${u.id})" class="danger">🗑️</button></div>` : ''}</div>`;
+                        `<div class="item-row"><div class="info"><strong>${u.name}</strong> — کد: ${u.id} — موبایل: ${u.mobile}</div>${userRole !== 'observer' ? '<div class="actions"><button onclick="deleteStudent(' + u.id + ')" class="danger">🗑️</button></div>' : ''}</div>`;
                 });
                 userList.innerHTML = html;
             }
@@ -1828,11 +2143,11 @@
                     const roleMap = { manager: 'مدیر', deputy: 'معاون', teacher: 'معلم', observer: 'مدیر کل' };
                     const roleName = roleMap[s.role] || s.role;
                     let extraInfo = '';
-                    if (s.role === 'teacher') extraInfo = ` — درس‌ها: ${(s.lessons || []).join(', ')}`;
+                    if (s.role === 'teacher') extraInfo = ' — درس‌ها: ' + (s.lessons || []).join(', ');
                     if (s.role === 'deputy') {
                         const perms = s.permissions || {};
                         const activePerms = Object.keys(perms).filter(k => perms[k]);
-                        extraInfo = ` — دسترسی‌ها: ${activePerms.length > 0 ? activePerms.join(', ') : 'هیچ'}`;
+                        extraInfo = ' — دسترسی‌ها: ' + (activePerms.length > 0 ? activePerms.join(', ') : 'هیچ');
                     }
                     let passwordDisplay = '';
                     if (userRole === 'observer') {
@@ -1843,7 +2158,7 @@
                         passwordDisplay = s.password || 'ندارد';
                     }
                     html +=
-                        `<div class="item-row"><div class="info"><strong>${s.name}</strong> (${s.username}) — ${roleName} ${extraInfo} — رمز: ${passwordDisplay}</div>${userRole !== 'observer' && s.username !== 'Mreza0098' ? `<div class="actions"><button onclick="deleteStaff(${s.id})" class="danger">🗑️</button></div>` : ''}</div>`;
+                        `<div class="item-row"><div class="info"><strong>${s.name}</strong> (${s.username}) — ${roleName} ${extraInfo} — رمز: ${passwordDisplay}</div>${userRole !== 'observer' && s.username !== 'Mreza0098' ? '<div class="actions"><button onclick="deleteStaff(' + s.id + ')" class="danger">🗑️</button></div>' : ''}</div>`;
                 });
                 staffList.innerHTML = html;
             }
@@ -1856,7 +2171,7 @@
                 disciplineRecords.forEach(d => {
                     const name = getUserName(d.student_id);
                     html +=
-                        `<div class="item-row"><div class="info"><strong>${name}</strong> (${d.student_id}) — <span class="badge-red">-${d.value}</span> ${d.reason ? `— ${d.reason}` : ''} (${d.date}) — ثبت: ${getUserName(d.teacher_id)}</div>${userRole !== 'observer' ? `<div class="actions"><button onclick="deleteDiscipline(${d.id})" class="danger">🗑️</button></div>` : ''}</div>`;
+                        `<div class="item-row"><div class="info"><strong>${name}</strong> (${d.student_id}) — <span class="badge-red">-${d.value}</span> ${d.reason ? '— ' + d.reason : ''} (${d.date}) — ثبت: ${getUserName(d.teacher_id)}</div>${userRole !== 'observer' ? '<div class="actions"><button onclick="deleteDiscipline(' + d.id + ')" class="danger">🗑️</button></div>' : ''}</div>`;
                 });
                 disciplineList.innerHTML = html;
             }
@@ -1869,15 +2184,15 @@
         }
 
         async function addStudent() {
-            if (userRole === 'observer') { alert('شما به عنوان مدیر کل، مجوز افزودن ندارید.'); return; }
-            if (!hasManageUsersPermission()) { alert('شما مجوز مدیریت کاربران را ندارید.'); return; }
+            if (userRole === 'observer') { showToast('شما به عنوان مدیر کل، مجوز افزودن ندارید.', 'warning'); return; }
+            if (!hasManageUsersPermission()) { showToast('شما مجوز مدیریت کاربران را ندارید.', 'warning'); return; }
             const id = document.getElementById('newStudentNationalId').value.trim();
             const mobile = document.getElementById('newStudentMobile').value.trim();
             const name = document.getElementById('newStudentName').value.trim();
-            if (!id || !mobile || !name) { alert('لطفاً همه فیلدها را پر کنید.'); return; }
-            if (usersData.find(u => u.id == id)) { alert('این کد ملی قبلاً ثبت شده است.'); return; }
+            if (!id || !mobile || !name) { showToast('لطفاً همه فیلدها را پر کنید.', 'warning'); return; }
+            if (usersData.find(u => u.id == id)) { showToast('این کد ملی قبلاً ثبت شده است.', 'warning'); return; }
             const { error } = await supabase_js.from('users').insert([{ id, mobile, name, role: 'student' }]);
-            if (error) { alert('خطا در افزودن دانش‌آموز: ' + error.message); return; }
+            if (error) { showToast('خطا در افزودن دانش‌آموز: ' + error.message, 'error'); return; }
             await loadAllData();
             document.getElementById('newStudentNationalId').value = '';
             document.getElementById('newStudentMobile').value = '';
@@ -1885,18 +2200,19 @@
             hideSection('addStudentSection');
             renderAdminPanel();
             populateStudentSelects();
-            alert('دانش‌آموز با موفقیت افزوده شد.');
+            showToast('دانش‌آموز با موفقیت افزوده شد.', 'success');
         }
 
         async function deleteStudent(id) {
-            if (userRole === 'observer') { alert('شما به عنوان مدیر کل، مجوز حذف ندارید.'); return; }
+            if (userRole === 'observer') { showToast('شما به عنوان مدیر کل، مجوز حذف ندارید.', 'warning'); return; }
             if (!hasManageUsersPermission()) return;
             if (confirm('آیا از حذف این دانش‌آموز اطمینان دارید؟')) {
                 const { error } = await supabase_js.from('users').delete().eq('id', id);
-                if (error) { alert('خطا در حذف: ' + error.message); return; }
+                if (error) { showToast('خطا در حذف: ' + error.message, 'error'); return; }
                 await loadAllData();
                 renderAdminPanel();
                 populateStudentSelects();
+                showToast('دانش‌آموز با موفقیت حذف شد.', 'success');
             }
         }
 
@@ -1907,26 +2223,28 @@
         }
 
         async function addStaff() {
-            if (userRole === 'observer') { alert('شما به عنوان مدیر کل، مجوز افزودن ندارید.'); return; }
-            if (!hasManageStaffPermission()) { alert('شما مجوز مدیریت کارکنان را ندارید.'); return; }
+            if (userRole === 'observer') { showToast('شما به عنوان مدیر کل، مجوز افزودن ندارید.', 'warning'); return; }
+            if (!hasManageStaffPermission()) { showToast('شما مجوز مدیریت کارکنان را ندارید.', 'warning'); return; }
             const username = document.getElementById('newStaffUsername').value.trim();
             const password = document.getElementById('newStaffPassword').value.trim();
             const name = document.getElementById('newStaffName').value.trim();
             const role = document.getElementById('newStaffRole').value;
-            if (!username || !password || !name) { alert('لطفاً همه فیلدها را پر کنید.'); return; }
-            if (username === 'Mreza0098' || usersData.find(u => u.username === username)) { alert(
-                'این نام کاربری قبلاً ثبت شده است.'); return; }
+            if (!username || !password || !name) { showToast('لطفاً همه فیلدها را پر کنید.', 'warning'); return; }
+            if (username === 'Mreza0098' || usersData.find(u => u.username === username)) {
+                showToast('این نام کاربری قبلاً ثبت شده است.', 'warning');
+                return;
+            }
             const newStaff = { username, password, name, role };
             if (role === 'teacher') {
                 const selectedLessons = [];
                 document.querySelectorAll('#teacherLessonCheckboxes input:checked').forEach(cb => { selectedLessons.push(cb
                         .value); });
-                if (selectedLessons.length === 0) { alert('لطفاً حداقل یک درس برای معلم انتخاب کنید.'); return; }
+                if (selectedLessons.length === 0) { showToast('لطفاً حداقل یک درس برای معلم انتخاب کنید.', 'warning'); return; }
                 newStaff.lessons = selectedLessons;
             }
             if (role === 'deputy') newStaff.permissions = {};
             const { error } = await supabase_js.from('users').insert([newStaff]);
-            if (error) { alert('خطا در افزودن کارمند: ' + error.message); return; }
+            if (error) { showToast('خطا در افزودن کارمند: ' + error.message, 'error'); return; }
             await loadAllData();
             document.getElementById('newStaffUsername').value = '';
             document.getElementById('newStaffPassword').value = '';
@@ -1935,19 +2253,20 @@
             document.getElementById('teacherLessonSection').classList.add('hidden');
             hideSection('addStaffSection');
             renderAdminPanel();
-            alert('کارمند با موفقیت افزوده شد.');
+            showToast('کارمند با موفقیت افزوده شد.', 'success');
         }
 
         async function deleteStaff(id) {
-            if (userRole === 'observer') { alert('شما به عنوان مدیر کل، مجوز حذف ندارید.'); return; }
+            if (userRole === 'observer') { showToast('شما به عنوان مدیر کل، مجوز حذف ندارید.', 'warning'); return; }
             if (!hasManageStaffPermission()) return;
             const staff = usersData.find(u => u.id === id);
-            if (staff.username === 'Mreza0098') { alert('نمی‌توانید مدیر اصلی را حذف کنید.'); return; }
-            if (confirm(`آیا از حذف ${staff.name} اطمینان دارید؟`)) {
+            if (staff.username === 'Mreza0098') { showToast('نمی‌توانید مدیر اصلی را حذف کنید.', 'warning'); return; }
+            if (confirm('آیا از حذف ' + staff.name + ' اطمینان دارید؟')) {
                 const { error } = await supabase_js.from('users').delete().eq('id', id);
-                if (error) { alert('خطا در حذف: ' + error.message); return; }
+                if (error) { showToast('خطا در حذف: ' + error.message, 'error'); return; }
                 await loadAllData();
                 renderAdminPanel();
+                showToast('کارمند با موفقیت حذف شد.', 'success');
             }
         }
 
@@ -1958,7 +2277,7 @@
             return false;
         }
 
-        // ===== توابع دسترسی‌ها =====
+        // ===== دسترسی‌ها =====
         function populatePermissionSelect() {
             const select = document.getElementById('permissionTargetSelect');
             if (!select) return;
@@ -1967,7 +2286,7 @@
             usersData.filter(s => s.role === 'deputy').forEach(s => {
                 const option = document.createElement('option');
                 option.value = s.id;
-                option.textContent = `${s.name} (${s.username})`;
+                option.textContent = s.name + ' (' + s.username + ')';
                 select.appendChild(option);
             });
             if (currentVal) select.value = currentVal;
@@ -1991,39 +2310,33 @@
         }
 
         async function savePermissions() {
-            if (userRole === 'observer') { alert('شما به عنوان مدیر کل، مجوز تغییر دسترسی ندارید.'); return; }
-            if (userRole !== 'owner') { alert('فقط مدیر اصلی می‌تواند دسترسی‌ها را تنظیم کند.'); return; }
+            if (userRole === 'observer') { showToast('شما به عنوان مدیر کل، مجوز تغییر دسترسی ندارید.', 'warning'); return; }
+            if (userRole !== 'owner') { showToast('فقط مدیر اصلی می‌تواند دسترسی‌ها را تنظیم کند.', 'warning'); return; }
             const id = document.getElementById('permissionTargetSelect').value;
-            if (!id) { alert('لطفاً یک معاون انتخاب کنید.'); return; }
+            if (!id) { showToast('لطفاً یک معاون انتخاب کنید.', 'warning'); return; }
             const perms = {};
             document.querySelectorAll('#permissionGrid input[type="checkbox"]').forEach(cb => {
                 const key = cb.id.replace('perm_', '');
                 perms[key] = cb.checked;
             });
             const { error } = await supabase_js.from('users').update({ permissions: perms }).eq('id', id);
-            if (error) { alert('خطا در ذخیره دسترسی‌ها: ' + error.message); return; }
+            if (error) { showToast('خطا در ذخیره دسترسی‌ها: ' + error.message, 'error'); return; }
             await loadAllData();
-            alert('دسترسی‌ها با موفقیت ذخیره شد.');
+            showToast('دسترسی‌ها با موفقیت ذخیره شد.', 'success');
             renderAdminPanel();
         }
 
-        // ===== توابع تنظیمات =====
-        function applyTheme(theme) {
-            const container = document.getElementById('appContainer');
-            container.className = 'app ' + theme;
-            siteSettings.theme = theme;
-            localStorage.setItem('sadra_settings', JSON.stringify(siteSettings));
-        }
-
+        // ===== تنظیمات =====
         function uploadLogo(input) {
             const file = input.files[0];
             if (!file) return;
             const reader = new FileReader();
             reader.onload = function(e) {
                 siteSettings.logo = e.target.result;
-                document.getElementById('logoPlaceholder').innerHTML = `<img src="${e.target.result}" alt="لوگو">`;
+                document.getElementById('logoImage').src = e.target.result;
+                document.getElementById('logoImage').style.display = 'block';
                 localStorage.setItem('sadra_settings', JSON.stringify(siteSettings));
-                alert('لوگو با موفقیت آپلود شد.');
+                showToast('لوگو با موفقیت آپلود شد.', 'success');
             };
             reader.readAsDataURL(file);
         }
@@ -2036,17 +2349,17 @@
             if (title) { siteSettings.title = title;
                 document.getElementById('siteTitle').textContent = title; }
             localStorage.setItem('sadra_settings', JSON.stringify(siteSettings));
-            alert('تنظیمات با موفقیت ذخیره شد.');
+            showToast('تنظیمات با موفقیت ذخیره شد.', 'success');
         }
 
         function loadSettings() {
             document.getElementById('settingSlogan').value = siteSettings.slogan || '';
             document.getElementById('settingTitle').value = siteSettings.title || '';
-            document.getElementById('settingTheme').value = siteSettings.theme || 'iran-theme';
-            applyTheme(siteSettings.theme);
             if (siteSettings.logo) {
-                document.getElementById('logoPlaceholder').innerHTML = `<img src="${siteSettings.logo}" alt="لوگو">`;
+                document.getElementById('logoImage').src = siteSettings.logo;
+                document.getElementById('logoImage').style.display = 'block';
             }
+            applyTheme(siteSettings.theme);
         }
 
         // ===== اعلان‌ها =====
@@ -2061,27 +2374,27 @@
         }
 
         function sendNotification() {
-            if (userRole === 'observer') { alert('شما به عنوان مدیر کل، مجوز ارسال اعلان ندارید.'); return; }
+            if (userRole === 'observer') { showToast('شما به عنوان مدیر کل، مجوز ارسال اعلان ندارید.', 'warning'); return; }
             const message = prompt('متن اعلان را وارد کنید:');
             if (!message) return;
             notifications.push({ message, date: new Date().toISOString(), sender: currentUser.name });
             localStorage.setItem('sadra_notifications', JSON.stringify(notifications));
-            alert('اعلان با موفقیت ارسال شد.');
+            showToast('اعلان با موفقیت ارسال شد.', 'success');
             showNotification();
         }
 
         // ===== زمانبندی و یادداشت =====
         function getStorageKey(prefix) {
             const id = userRole === 'student' ? currentUser.id : currentUser.username;
-            return `sadra_${prefix}_${id}`;
+            return 'sadra_' + prefix + '_' + id;
         }
 
         function saveSchedule() {
             const inputs = document.querySelectorAll('#scheduleTable .small-input');
             const data = {};
-            inputs.forEach(inp => { data[`day${inp.dataset.day}_time${inp.dataset.time}`] = inp.value; });
+            inputs.forEach(inp => { data['day' + inp.dataset.day + '_time' + inp.dataset.time] = inp.value; });
             localStorage.setItem(getStorageKey('schedule'), JSON.stringify(data));
-            alert('⏳ زمانبندی ذخیره شد.');
+            showToast('⏳ زمانبندی ذخیره شد.', 'success');
         }
 
         function loadSchedule() {
@@ -2089,7 +2402,7 @@
             if (!saved) return;
             const data = JSON.parse(saved);
             document.querySelectorAll('#scheduleTable .small-input').forEach(inp => {
-                const key = `day${inp.dataset.day}_time${inp.dataset.time}`;
+                const key = 'day' + inp.dataset.day + '_time' + inp.dataset.time;
                 if (data[key]) inp.value = data[key];
             });
         }
@@ -2111,11 +2424,12 @@
 
         function addNote() {
             const text = document.getElementById('noteText').value.trim();
-            if (!text) { alert('لطفاً متن یادداشت را بنویس.'); return; }
+            if (!text) { showToast('لطفاً متن یادداشت را بنویس.', 'warning'); return; }
             notes.push({ text });
             document.getElementById('noteText').value = '';
             localStorage.setItem(getStorageKey('notes'), JSON.stringify(notes));
             renderNotes();
+            showToast('یادداشت با موفقیت افزوده شد.', 'success');
         }
 
         function deleteNote(index) {
@@ -2123,6 +2437,7 @@
                 notes.splice(index, 1);
                 localStorage.setItem(getStorageKey('notes'), JSON.stringify(notes));
                 renderNotes();
+                showToast('یادداشت با موفقیت حذف شد.', 'success');
             }
         }
 
@@ -2136,7 +2451,7 @@
                                     return cache.addAll([
                                         '/sadra/',
                                         '/sadra/sadra.html',
-                                        '/sadra/icon.png'
+                                        '/sadra/sadra.png'
                                     ]);
                                 })
                             );
@@ -2173,7 +2488,7 @@
         (async function init() {
             await loadAllData();
             loadSettings();
-            console.log('🚀 صدرا با همه‌ی قابلیت‌های جدید آماده است!');
+            console.log('🚀 صدرا با همه‌ی قابلیت‌های حرفه‌ای آماده است!');
             console.log('👥 کاربران:', usersData);
             console.log('📊 نمرات:', gradesData);
             console.log('⚖️ انضباطی:', disciplineRecords);
