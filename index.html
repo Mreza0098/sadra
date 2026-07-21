@@ -4,45 +4,42 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>صدرا - سامانه مدیریت آموزشی</title>
-    <!-- ====== PWA META TAGS (همه در یک فایل) ====== -->
-    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIlx1MDYzM1x1MDY0NFx1MDYyOFx1MDYyNyAtIFx1MDYzM1x1MDYyN1x1MDY0N1x1MDYyYVx1MDYyOVx1MDYyNyBcdTA2NDVcdTA2MjhcdTA2MzFcdTA2NDdcdTA2MjdcdTA2MjkiLAogICJzaG9ydF9uYW1lIjogIlx1MDYzM1x1MDY0NFx1MDYyOFx1MDYyNyIsCiAgImRlc2NyaXB0aW9uIjogIlx1MDYzM1x1MDYyN1x1MDY0N1x1MDYyYVx1MDYyOVx1MDYyNyBcdTA2NDVcdTA2MjhcdTA2MzFcdTA2NDdcdTA2MjdcdTA2MjkgXHUwNjI4XHUwNjI3XHUwNjI4XHUwNjI5XHUwNjI3IiLAogICJzdGFydF91cmwiOiAiL3NhZHJhLyIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiIzBhMGEwYSIsCiAgInRoZW1lX2NvbG9yIjogIiNjYzAwMDAiLAogICJpY29ucyI6IFsKICAgIHsKICAgICAgInNyYyI6ICJpY29uLnBuZyIsCiAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICAgInR5cGUiOiAiaW1hZ2UvcG5nIgogICAgfSwKICAgIHsKICAgICAgInNyYyI6ICJpY29uLnBuZyIsCiAgICAgICJzaXplcyI6ICI1MTJ4NTEyIiwKICAgICAgInR5cGUiOiAiaW1hZ2UvcG5nIgogICAgfQogIF0sCiAgImxhbmciOiAiZmEiLAogICJkaXIiOiAicnRsIgp9" />
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIlx1MDYzM1x1MDY0NFx1MDYyOFx1MDYyNyAtIFx1MDYzM1x1MDYyN1x1MDY0N1x1MDYyYVx1MDYyOVx1MDYyNyBcdTA2NDVcdTA2MjhcdTA2MzFcdTA2NDdcdTA2MjdcdTA2MjkiLAogICJzaG9ydF9uYW1lIjogIlx1MDYzM1x1MDY0NFx1MDYyOFx1MDYyNyIsCiAgImRlc2NyaXB0aW9uIjogIlx1MDYzM1x1MDYyN1x1MDY0N1x1MDYyYVx1MDYyOVx1MDYyNyBcdTA2NDVcdTA2MjhcdTA2MzFcdTA2NDdcdTA2MjdcdTA2MjkgXHUwNjI4XHUwNjI3XHUwNjI4XHUwNjI5XHUwNjI3IiLAogICJzdGFydF91cmwiOiAiLyIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiIzBhMGEwYSIsCiAgInRoZW1lX2NvbG9yIjogIiNjYzAwMDAiLAogICJpY29ucyI6IFsKICAgIHsKICAgICAgInNyYyI6ICJpY29uLnBuZyIsCiAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICAgInR5cGUiOiAiaW1hZ2UvcG5nIgogICAgfSwKICAgIHsKICAgICAgInNyYyI6ICJpY29uLnBuZyIsCiAgICAgICJzaXplcyI6ICI1MTJ4NTEyIiwKICAgICAgInR5cGUiOiAiaW1hZ2UvcG5nIgogICAgfQogIF0sCiAgImxhbmciOiAiZmEiLAogICJkaXIiOiAicnRsIgp9" />
     <meta name="theme-color" content="#cc0000" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <link rel="apple-touch-icon" href="icon.png" />
-    <!-- ====== STYLES ====== -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js">
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js">
+    </script>
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" />
     <style>
-        /* ====== تمام استایل‌های قبلی (کامل) ====== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
+            font-family: 'Vazirmatn', Tahoma, sans-serif;
         }
         body {
             background: #0a0a0a;
             color: #eee;
-            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            min-height: 100vh;
             padding: 20px;
         }
-        .app-container {
+        .app {
             max-width: 1100px;
             width: 100%;
             background: #111;
             border-radius: 20px;
             padding: 20px;
-            box-shadow: 0 0 40px rgba(0, 100, 0, 0.25);
             border: 1px solid #2a6b3c;
+            box-shadow: 0 0 40px rgba(0, 100, 0, 0.25);
         }
-        .theme-iran {
+        .iran-theme {
             --primary: #cc0000;
             --secondary: #2a6b3c;
             --gold: #d4a017;
@@ -209,7 +206,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
+            font-family: 'Vazirmatn', Tahoma, sans-serif;
         }
         .nav-btn:hover {
             background: var(--bg, #0a0a0a);
@@ -429,6 +426,56 @@
         .settings-group .full-width {
             grid-column: 1 / -1;
         }
+        .message-item {
+            border-bottom: 1px solid var(--border, #2a2a2a);
+            padding: 10px 0;
+        }
+        .message-item .sender {
+            color: var(--gold, #d4a017);
+            font-weight: bold;
+        }
+        .message-item .time {
+            color: #666;
+            font-size: 0.8rem;
+            float: left;
+        }
+        .survey-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 8px 0;
+        }
+        .survey-option input[type="radio"] {
+            width: auto;
+        }
+        .file-upload-area {
+            border: 2px dashed var(--border, #2a2a2a);
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+        .file-upload-area:hover {
+            border-color: var(--gold, #d4a017);
+        }
+        .news-item {
+            border-bottom: 1px solid var(--border, #2a2a2a);
+            padding: 15px 0;
+        }
+        .news-item .title {
+            color: var(--gold, #d4a017);
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        .news-item .date {
+            color: #666;
+            font-size: 0.8rem;
+        }
+        .news-item .content {
+            margin-top: 8px;
+            color: #ccc;
+        }
         @media (max-width: 768px) {
             .navbar {
                 flex-direction: column;
@@ -447,7 +494,7 @@
     </style>
 </head>
 <body>
-    <div class="app-container theme-iran" id="appContainer">
+    <div class="app iran-theme" id="appContainer">
         <div id="loginPage">
             <div class="login-box">
                 <h2>★ صدرا ★</h2>
@@ -482,33 +529,20 @@
             </div>
 
             <div class="navbar" id="mainNavbar">
-                <button class="nav-btn active" data-tab="home" onclick="switchTab('home')">
-                    <span class="nav-icon">🏠</span> خانه
-                </button>
-                <button class="nav-btn" data-tab="grades" onclick="switchTab('grades')">
-                    <span class="nav-icon">📊</span> نمرات
-                </button>
-                <button class="nav-btn" data-tab="reports" onclick="switchTab('reports')">
-                    <span class="nav-icon">📋</span> کارنامه
-                </button>
-                <button class="nav-btn" data-tab="schedule" onclick="switchTab('schedule')">
-                    <span class="nav-icon">🗓️</span> زمانبندی
-                </button>
-                <button class="nav-btn" data-tab="tasks" onclick="switchTab('tasks')">
-                    <span class="nav-icon">✅</span> تمرین‌ها
-                </button>
-                <button class="nav-btn" data-tab="discipline" onclick="switchTab('discipline')">
-                    <span class="nav-icon">⚖️</span> انضباطی
-                </button>
-                <button class="nav-btn" data-tab="adminPanel" onclick="switchTab('adminPanel')">
-                    <span class="nav-icon">🔧</span> مدیریت
-                </button>
-                <button class="nav-btn" data-tab="notes" onclick="switchTab('notes')">
-                    <span class="nav-icon">📝</span> یادداشت
-                </button>
-                <button class="nav-btn" data-tab="settings" onclick="switchTab('settings')">
-                    <span class="nav-icon">⚙️</span> تنظیمات
-                </button>
+                <button class="nav-btn active" data-tab="home" onclick="switchTab('home')">🏠 خانه</button>
+                <button class="nav-btn" data-tab="grades" onclick="switchTab('grades')">📊 نمرات</button>
+                <button class="nav-btn" data-tab="reports" onclick="switchTab('reports')">📋 کارنامه</button>
+                <button class="nav-btn" data-tab="schedule" onclick="switchTab('schedule')">🗓️ زمانبندی</button>
+                <button class="nav-btn" data-tab="tasks" onclick="switchTab('tasks')">✅ تمرین</button>
+                <button class="nav-btn" data-tab="discipline" onclick="switchTab('discipline')">⚖️ انضباطی</button>
+                <button class="nav-btn" data-tab="messages" onclick="switchTab('messages')">💬 پیام‌ها</button>
+                <button class="nav-btn" data-tab="survey" onclick="switchTab('survey')">📊 نظرسنجی</button>
+                <button class="nav-btn" data-tab="attendance" onclick="switchTab('attendance')">📋 غیبت‌ها</button>
+                <button class="nav-btn" data-tab="files" onclick="switchTab('files')">📁 فایل‌ها</button>
+                <button class="nav-btn" data-tab="news" onclick="switchTab('news')">📰 اخبار</button>
+                <button class="nav-btn" data-tab="profile" onclick="switchTab('profile')">👤 پروفایل</button>
+                <button class="nav-btn" data-tab="adminPanel" onclick="switchTab('adminPanel')">🔧 مدیریت</button>
+                <button class="nav-btn" data-tab="settings" onclick="switchTab('settings')">⚙️ تنظیمات</button>
             </div>
 
             <div id="notificationBanner" class="notification-banner">
@@ -516,24 +550,26 @@
                 <p id="notificationText"></p>
             </div>
 
-            <!-- ====== تمام تب‌های قبلی (کامل) ====== -->
+            <!-- ===== خانه ===== -->
             <div id="home" class="tab-content active">
                 <div class="card">
                     <h3>🚀 به صدرا خوش آمدی</h3>
-                    <p style="line-height:1.8; color:#ccc;" id="homeWelcome">این سامانه برای مدیریت امور آموزشی شما طراحی شده.</p>
+                    <p style="line-height:1.8; color:#ccc;" id="homeWelcome">سامانه مدیریت آموزشی با قابلیت‌های پیشرفته</p>
                     <ul style="list-style:none; margin-top:15px; color:#aaa;" id="homeFeatures">
-                        <li style="margin:8px 0;">📊 مشاهده نمرات</li>
-                        <li style="margin:8px 0;">🗓️ زمانبندی درسی هفتگی</li>
-                        <li style="margin:8px 0;">📝 یادداشت‌های مهم</li>
-                        <li style="margin:8px 0;">✅ مدیریت تکالیف</li>
+                        <li style="margin:8px 0;">📊 مدیریت نمرات</li>
+                        <li style="margin:8px 0;">💬 پیام‌رسانی داخلی</li>
+                        <li style="margin:8px 0;">📋 مشاهده غیبت‌ها</li>
+                        <li style="margin:8px 0;">📁 آپلود فایل</li>
+                        <li style="margin:8px 0;">📰 اخبار مدرسه</li>
                     </ul>
                     <div style="margin-top:20px; background:#0a0a0a; padding:10px; border-radius:10px; border-right:3px solid var(--gold, #d4a017);">
                         <span style="color:var(--gold, #d4a017);">★</span>
-                        <span style="color:#aaa;" id="footerSlogan">«سربازان علم، آینده را می‌سازند»</span>
+                        <span style="color:#aaa;">«سربازان علم، آینده را می‌سازند»</span>
                     </div>
                 </div>
             </div>
 
+            <!-- ===== نمرات (همانند قبل) ===== -->
             <div id="grades" class="tab-content">
                 <div class="card">
                     <h3>📊 نمرات</h3>
@@ -542,6 +578,25 @@
                 </div>
             </div>
 
+            <!-- ===== کارنامه با نمودار ===== -->
+            <div id="reports" class="tab-content">
+                <div class="card">
+                    <h3>📋 کارنامه و گزارشات</h3>
+                    <select id="reportStudentSelect" style="width:auto; margin-bottom:15px;">
+                        <option value="">انتخاب دانش‌آموز...</option>
+                    </select>
+                    <button onclick="generateReport()" class="success">📄 نمایش کارنامه</button>
+                    <button onclick="downloadPDF()" class="warning">📥 خروجی PDF</button>
+                    <div id="reportContainer" style="background:var(--bg, #0a0a0a); padding:20px; border-radius:15px; min-height:200px; margin-top:15px;">
+                        <p style="color:#aaa; text-align:center;">لطفاً یک دانش‌آموز را انتخاب کنید.</p>
+                    </div>
+                    <div style="margin-top:20px;">
+                        <canvas id="gradeChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== زمانبندی (همانند قبل) ===== -->
             <div id="schedule" class="tab-content">
                 <div class="card">
                     <h3>🗓️ زمانبندی هفتگی</h3>
@@ -563,15 +618,7 @@
                 </div>
             </div>
 
-            <div id="notes" class="tab-content">
-                <div class="card">
-                    <h3>📝 یادداشت‌ها</h3>
-                    <textarea id="noteText" rows="4" placeholder="متن یادداشت را اینجا بنویس..."></textarea>
-                    <button onclick="addNote()">➕ افزودن یادداشت</button>
-                    <div class="item-list" id="noteList"></div>
-                </div>
-            </div>
-
+            <!-- ===== تمرین (همانند قبل) ===== -->
             <div id="tasks" class="tab-content">
                 <div class="card">
                     <h3>✅ تمرین‌ها</h3>
@@ -585,6 +632,7 @@
                 </div>
             </div>
 
+            <!-- ===== انضباطی (همانند قبل) ===== -->
             <div id="discipline" class="tab-content">
                 <div class="card">
                     <h3>⚖️ ثبت منفی انضباطی</h3>
@@ -598,22 +646,99 @@
                 </div>
             </div>
 
-            <div id="reports" class="tab-content">
+            <!-- ===== پیام‌ها ===== -->
+            <div id="messages" class="tab-content">
                 <div class="card">
-                    <h3>📋 کارنامه و گزارشات</h3>
-                    <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:15px;">
-                        <select id="reportStudentSelect" style="width:auto; flex:2; min-width:200px;">
-                            <option value="">انتخاب دانش‌آموز...</option>
+                    <h3>💬 پیام‌ها</h3>
+                    <div id="messageList" style="max-height:400px; overflow-y:auto; margin-bottom:15px;"></div>
+                    <div style="display:flex; gap:10px;">
+                        <select id="messageRecipient" style="flex:1;">
+                            <option value="">انتخاب گیرنده...</option>
                         </select>
-                        <button onclick="generateReport()" class="success" style="width:auto; padding:6px 18px;">📄 نمایش کارنامه</button>
-                        <button onclick="downloadPDF()" class="warning" style="width:auto; padding:6px 18px;">📥 خروجی PDF</button>
-                    </div>
-                    <div id="reportContainer" style="background:var(--bg, #0a0a0a); padding:20px; border-radius:15px; min-height:200px;">
-                        <p style="color:#aaa; text-align:center;">لطفاً یک دانش‌آموز را انتخاب کنید.</p>
+                        <input type="text" id="messageText" placeholder="متن پیام..." style="flex:2;">
+                        <button onclick="sendMessage()" style="width:auto; padding:6px 18px;">ارسال</button>
                     </div>
                 </div>
             </div>
 
+            <!-- ===== نظرسنجی ===== -->
+            <div id="survey" class="tab-content">
+                <div class="card">
+                    <h3>📊 نظرسنجی ناشناس</h3>
+                    <div id="surveyList"></div>
+                    <div id="surveyForm" class="hidden">
+                        <h4>نظرسنجی جدید</h4>
+                        <input type="text" id="surveyQuestion" placeholder="سوال نظرسنجی">
+                        <div id="surveyOptions">
+                            <input type="text" class="survey-option-input" placeholder="گزینه ۱">
+                            <input type="text" class="survey-option-input" placeholder="گزینه ۲">
+                        </div>
+                        <button onclick="addSurveyOption()" class="success" style="width:auto; padding:6px 18px; margin:5px;">➕ افزودن گزینه</button>
+                        <button onclick="createSurvey()" class="success">ثبت نظرسنجی</button>
+                        <button onclick="hideForm('surveyForm')">لغو</button>
+                    </div>
+                    <button onclick="showForm('surveyForm')" class="success" style="width:auto; padding:6px 18px;">➕ نظرسنجی جدید</button>
+                </div>
+            </div>
+
+            <!-- ===== غیبت‌ها ===== -->
+            <div id="attendance" class="tab-content">
+                <div class="card">
+                    <h3>📋 غیبت‌ها</h3>
+                    <div id="attendanceManagement">
+                        <select id="attendanceStudentSelect"><option value="">انتخاب دانش‌آموز...</option></select>
+                        <input type="date" id="attendanceDate">
+                        <select id="attendanceStatus">
+                            <option value="present">حاضر</option>
+                            <option value="absent">غایب</option>
+                            <option value="excused">موجه</option>
+                        </select>
+                        <button onclick="addAttendance()" class="success">ثبت غیبت</button>
+                    </div>
+                    <div class="item-list" id="attendanceList"></div>
+                </div>
+            </div>
+
+            <!-- ===== فایل‌ها ===== -->
+            <div id="files" class="tab-content">
+                <div class="card">
+                    <h3>📁 فایل‌ها</h3>
+                    <div class="file-upload-area" onclick="document.getElementById('fileInput').click()">
+                        <p>📤 برای آپلود فایل کلیک کنید</p>
+                        <input type="file" id="fileInput" style="display:none;" onchange="uploadFile(this)">
+                    </div>
+                    <div class="item-list" id="fileList"></div>
+                </div>
+            </div>
+
+            <!-- ===== اخبار ===== -->
+            <div id="news" class="tab-content">
+                <div class="card">
+                    <h3>📰 اخبار مدرسه</h3>
+                    <div id="newsList"></div>
+                    <div id="newsForm" class="hidden">
+                        <h4>خبر جدید</h4>
+                        <input type="text" id="newsTitle" placeholder="عنوان خبر">
+                        <textarea id="newsContent" rows="4" placeholder="متن خبر..."></textarea>
+                        <button onclick="addNews()" class="success">ثبت خبر</button>
+                        <button onclick="hideForm('newsForm')">لغو</button>
+                    </div>
+                    <button onclick="showForm('newsForm')" class="success" style="width:auto; padding:6px 18px;">➕ خبر جدید</button>
+                </div>
+            </div>
+
+            <!-- ===== پروفایل ===== -->
+            <div id="profile" class="tab-content">
+                <div class="card">
+                    <h3>👤 پروفایل کاربری</h3>
+                    <div id="profileInfo"></div>
+                    <div id="profileVerification" class="hidden">
+                        <button onclick="verifyProfile()" class="success">✅ تایید پروفایل</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== مدیریت (همانند قبل) ===== -->
             <div id="adminPanel" class="tab-content">
                 <div class="card">
                     <h3>🔧 پنل مدیریت</h3>
@@ -674,13 +799,14 @@
                 </div>
             </div>
 
+            <!-- ===== تنظیمات (همانند قبل) ===== -->
             <div id="settings" class="tab-content">
                 <div class="card">
                     <h3>⚙️ تنظیمات سایت</h3>
                     <div class="settings-group">
                         <div class="full-width"><label>شعار سایت</label><input type="text" id="settingSlogan" placeholder="شعار سایت را وارد کنید"></div>
                         <div><label>رنگ اصلی</label><select id="settingTheme" onchange="applyTheme(this.value)">
-                                <option value="theme-iran">ایرانی-انقلابی</option>
+                                <option value="iran-theme">ایرانی-انقلابی</option>
                                 <option value="theme-dark">تیره (کلاسیک)</option>
                                 <option value="theme-red">قرمز</option>
                                 <option value="theme-green">سبز</option>
@@ -698,25 +824,33 @@
     </div>
 
     <script>
-        // ===== تمام کدهای جاوااسکریپت کامل (همانند قبل) =====
+        // ===== تنظیمات Supabase =====
         const SUPABASE_URL = 'https://cyyfagessadtzzqcgero.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN5eWZhZ2Vzc2FkdHp6cWNnZXJvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ0MzY4NTYsImV4cCI6MjEwMDAxMjg1Nn0.ryER3Az8letoQDAoJhqAoYylRjgXrIBX0tKFMCLFLJ8';
         const supabase_js = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+        // ===== متغیرهای عمومی =====
         let currentUser = null;
         let userRole = null;
         let usersData = [];
         let gradesData = [];
         let disciplineRecords = [];
         let tasksData = [];
+        let messagesData = [];
+        let surveysData = [];
+        let attendancesData = [];
+        let filesData = [];
+        let newsData = [];
         let notifications = JSON.parse(localStorage.getItem('sadra_notifications')) || [];
         let siteSettings = JSON.parse(localStorage.getItem('sadra_settings')) || {
-            theme: 'theme-iran',
+            theme: 'iran-theme',
             slogan: 'سامانه مدیریت آموزشی • جهاد علمی',
             title: 'صدرا',
             logo: ''
         };
+        let chartInstance = null;
 
+        // ===== بارگذاری داده‌ها از Supabase =====
         async function loadAllData() {
             const { data: users } = await supabase_js.from('users').select('*');
             if (users) usersData = users;
@@ -726,8 +860,19 @@
             if (disciplines) disciplineRecords = disciplines;
             const { data: tasks } = await supabase_js.from('tasks').select('*');
             if (tasks) tasksData = tasks;
+            const { data: messages } = await supabase_js.from('messages').select('*');
+            if (messages) messagesData = messages;
+            const { data: surveys } = await supabase_js.from('surveys').select('*');
+            if (surveys) surveysData = surveys;
+            const { data: attendances } = await supabase_js.from('attendances').select('*');
+            if (attendances) attendancesData = attendances;
+            const { data: files } = await supabase_js.from('files').select('*');
+            if (files) filesData = files;
+            const { data: news } = await supabase_js.from('news').select('*');
+            if (news) newsData = news;
         }
 
+        // ===== توابع ورود و خروج =====
         document.querySelectorAll('.login-tab').forEach(tab => {
             tab.addEventListener('click', function() {
                 document.querySelectorAll('.login-tab').forEach(t => t.classList.remove('active'));
@@ -775,7 +920,6 @@
             applyTheme(siteSettings.theme);
             document.getElementById('siteTitle').textContent = siteSettings.title;
             document.getElementById('siteSlogan').textContent = siteSettings.slogan;
-            document.getElementById('footerSlogan').textContent = siteSettings.slogan;
             if (siteSettings.logo) {
                 document.getElementById('logoPlaceholder').innerHTML = `<img src="${siteSettings.logo}" alt="لوگو">`;
             }
@@ -806,11 +950,12 @@
                 renderAdminPanel();
             if (userRole === 'owner' || userRole === 'observer' || userRole === 'manager' || userRole === 'deputy' || userRole ===
                 'teacher') renderDisciplineList();
-            if (userRole === 'teacher') {
-                const teacherLessons = currentUser.lessons || [];
-                if (teacherLessons.length > 0) document.getElementById('newGradeLesson').placeholder =
-                    `درس‌های شما: ${teacherLessons.join(', ')}`;
-            }
+            renderMessages();
+            renderSurveys();
+            renderAttendance();
+            renderFiles();
+            renderNews();
+            renderProfile();
             showNotification();
         }
 
@@ -827,6 +972,7 @@
             document.getElementById('adminLoginError').textContent = '';
         }
 
+        // ===== توابع کمکی =====
         function getUserName(id) {
             if (id === 'owner') return 'مدیر اصلی';
             const user = usersData.find(u => u.id == id);
@@ -834,7 +980,9 @@
         }
 
         function populateStudentSelects() {
-            const selects = ['taskStudentSelect', 'disciplineStudentSelect', 'newGradeStudentSelect', 'reportStudentSelect'];
+            const selects = ['taskStudentSelect', 'disciplineStudentSelect', 'newGradeStudentSelect', 'reportStudentSelect',
+                'attendanceStudentSelect'
+            ];
             selects.forEach(id => {
                 const select = document.getElementById(id);
                 if (!select) return;
@@ -848,58 +996,132 @@
                 });
                 if (currentVal) select.value = currentVal;
             });
+
+            // پر کردن لیست گیرندگان پیام
+            const msgSelect = document.getElementById('messageRecipient');
+            if (msgSelect) {
+                const currentVal = msgSelect.value;
+                msgSelect.innerHTML = '<option value="">انتخاب گیرنده...</option>';
+                usersData.forEach(u => {
+                    if (u.id !== currentUser.id) {
+                        const option = document.createElement('option');
+                        option.value = u.id;
+                        option.textContent = `${u.name} (${u.role})`;
+                        msgSelect.appendChild(option);
+                    }
+                });
+                if (currentVal) msgSelect.value = currentVal;
+            }
         }
 
         function updateHomeFeatures() {
             const features = document.getElementById('homeFeatures');
             let html = '';
             if (userRole === 'student') {
-                html =
-                    `<li style="margin:8px 0;">📊 مشاهده نمرات</li><li style="margin:8px 0;">🗓️ زمانبندی درسی هفتگی</li><li style="margin:8px 0;">📝 یادداشت‌های مهم</li><li style="margin:8px 0;">✅ مدیریت تکالیف</li>`;
+                html = `
+                            <li style="margin:8px 0;">📊 مشاهده نمرات</li>
+                            <li style="margin:8px 0;">💬 پیام‌رسانی</li>
+                            <li style="margin:8px 0;">📋 مشاهده غیبت‌ها</li>
+                            <li style="margin:8px 0;">📁 مشاهده فایل‌ها</li>
+                            <li style="margin:8px 0;">📰 مشاهده اخبار</li>
+                        `;
             } else if (userRole === 'teacher') {
-                html =
-                    `<li style="margin:8px 0;">📊 ثبت و مدیریت نمرات درس‌های خود</li><li style="margin:8px 0;">✅ ثبت تمرین برای دانش‌آموزان</li><li style="margin:8px 0;">⚖️ ثبت منفی انضباطی</li>`;
+                html = `
+                            <li style="margin:8px 0;">📊 ثبت نمرات</li>
+                            <li style="margin:8px 0;">💬 ارسال پیام</li>
+                            <li style="margin:8px 0;">📋 ثبت غیبت</li>
+                            <li style="margin:8px 0;">📁 آپلود فایل</li>
+                            <li style="margin:8px 0;">📰 ثبت خبر</li>
+                        `;
             } else if (userRole === 'deputy') {
-                const perms = currentUser.permissions || {};
-                html =
-                    `<li style="margin:8px 0;">📊 ${perms.manageGrades ? 'مدیریت نمرات' : 'مشاهده نمرات'}</li><li style="margin:8px 0;">✅ ${perms.manageTasks ? 'مدیریت تمرین‌ها' : 'مشاهده تمرین‌ها'}</li><li style="margin:8px 0;">⚖️ ${perms.manageDiscipline ? 'مدیریت انضباطی' : 'مشاهده انضباطی'}</li>${perms.manageUsers ? '<li style="margin:8px 0;">👥 مدیریت کاربران</li>' : ''}${perms.manageStaff ? '<li style="margin:8px 0;">🔧 مدیریت کارکنان</li>' : ''}`;
-            } else if (userRole === 'observer') {
-                html =
-                    `<li style="margin:8px 0;">📊 مشاهده نمرات</li><li style="margin:8px 0;">✅ مشاهده تمرین‌ها</li><li style="margin:8px 0;">⚖️ مشاهده انضباطی</li><li style="margin:8px 0;">👥 مشاهده کاربران</li><li style="margin:8px 0;">⚙️ تنظیمات سایت</li>`;
+                html = `
+                            <li style="margin:8px 0;">📊 مدیریت نمرات</li>
+                            <li style="margin:8px 0;">💬 مدیریت پیام‌ها</li>
+                            <li style="margin:8px 0;">📋 مدیریت غیبت</li>
+                            <li style="margin:8px 0;">📁 مدیریت فایل‌ها</li>
+                            <li style="margin:8px 0;">📰 مدیریت اخبار</li>
+                        `;
             } else {
-                html =
-                    `<li style="margin:8px 0;">📊 مدیریت نمرات</li><li style="margin:8px 0;">✅ مدیریت تمرین‌ها</li><li style="margin:8px 0;">⚖️ مدیریت انضباطی</li><li style="margin:8px 0;">👥 مدیریت کاربران</li><li style="margin:8px 0;">🔧 مدیریت کارکنان</li>`;
+                html = `
+                            <li style="margin:8px 0;">📊 مدیریت کامل نمرات</li>
+                            <li style="margin:8px 0;">💬 مدیریت پیام‌ها</li>
+                            <li style="margin:8px 0;">📋 مدیریت غیبت</li>
+                            <li style="margin:8px 0;">📁 مدیریت فایل‌ها</li>
+                            <li style="margin:8px 0;">📰 مدیریت اخبار</li>
+                            <li style="margin:8px 0;">👥 مدیریت کاربران</li>
+                        `;
             }
             features.innerHTML = html;
-            const welcome = document.getElementById('homeWelcome');
-            if (userRole === 'student') welcome.textContent = 'به پنل دانش‌آموزی خوش آمدی.';
-            else if (userRole === 'teacher') welcome.textContent = 'به پنل معلمی خوش آمدید.';
-            else if (userRole === 'deputy') welcome.textContent = 'به پنل معاونت خوش آمدید.';
-            else if (userRole === 'manager') welcome.textContent = 'به پنل مدیریت خوش آمدید.';
-            else if (userRole === 'owner') welcome.textContent = 'به پنل مدیر اصلی خوش آمدید.';
-            else if (userRole === 'observer') welcome.textContent = 'به پنل مدیریت کل خوش آمدید.';
         }
 
+        // ===== تابع سوئیچ تب =====
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+            const target = document.getElementById(tabId);
+            if (target) target.classList.add('active');
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.tab === tabId) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        // ===== نمایش فرم‌ها =====
+        function showForm(formId) {
+            document.getElementById(formId).classList.remove('hidden');
+        }
+
+        function hideForm(formId) {
+            document.getElementById(formId).classList.add('hidden');
+        }
+
+        // ===== نمایش بخش‌های مدیریت =====
+        function showSection(sectionId) {
+            if (userRole === 'observer') {
+                if (sectionId !== 'viewAllSection') {
+                    alert('شما به عنوان مدیر کل، فقط دسترسی مشاهده دارید.');
+                    return;
+                }
+            }
+            document.querySelectorAll('#adminDashboard .card:not(.card:first-child)').forEach(c => {
+                if (c.id !== sectionId && !c.classList.contains('hidden')) c.classList.add('hidden');
+            });
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.classList.toggle('hidden');
+                if (sectionId === 'managePermissionsSection') { populatePermissionSelect(); const select = document
+                        .getElementById('permissionTargetSelect'); if (select.value) loadPermissions(select.value); }
+                if (sectionId === 'addStaffSection') updateTeacherLessonCheckboxes();
+                if (sectionId === 'addGradeSection') populateStudentSelects();
+            }
+        }
+
+        function hideSection(sectionId) { const section = document.getElementById(sectionId); if (section) section.classList.add(
+                'hidden'); }
+
+        function updateTeacherLessonCheckboxes() {
+            const section = document.getElementById('teacherLessonSection');
+            const container = document.getElementById('teacherLessonCheckboxes');
+            const role = document.getElementById('newStaffRole').value;
+            if (role === 'teacher') {
+                section.classList.remove('hidden');
+                const lessons = ['ریاضی', 'علوم', 'فارسی', 'انگلیسی', 'تاریخ', 'جغرافیا', 'دینی', 'هنر', 'شیمی', 'فیزیک', 'زیست'];
+                let html = '';
+                lessons.forEach(lesson => {
+                    html +=
+                        `<div class="permission-item"><input type="checkbox" value="${lesson}" id="lesson_${lesson}"><label for="lesson_${lesson}">${lesson}</label></div>`;
+                });
+                container.innerHTML = html;
+            } else section.classList.add('hidden');
+        }
+
+        // ===== توابع نمرات (همانند قبل) =====
         function renderUserData() {
             if (!currentUser) return;
             if (userRole === 'student') {
-                const userGrades = gradesData.filter(g => g.student_id == currentUser.id);
-                const list = document.getElementById('gradeList');
-                if (userGrades.length === 0) {
-                    list.innerHTML = '<p style="color:#666; text-align:center;">نمره‌ای ثبت نشده است.</p>';
-                    document.getElementById('avgBox').innerHTML = 'معدل کل: ۰.۰۰';
-                } else {
-                    let html = '',
-                        sum = 0;
-                    userGrades.forEach(g => {
-                        sum += g.score;
-                        html +=
-                            `<div class="item-row"><div class="info"><strong>${g.lesson}</strong> — <span style="color:var(--primary, #cc0000);">${g.score}</span> <span style="color:#666; font-size:0.8rem;">(${g.date || 'بدون تاریخ'})</span></div></div>`;
-                    });
-                    list.innerHTML = html;
-                    document.getElementById('avgBox').innerHTML =
-                        `معدل کل: <strong style="color:var(--gold, #d4a017);">${(sum / userGrades.length).toFixed(2)}</strong> (از ${userGrades.length} نمره)`;
-                }
+                renderStudentGrades();
             } else {
                 let filteredGrades = [];
                 if (userRole === 'teacher') {
@@ -931,45 +1153,1015 @@
             renderTasks();
         }
 
-        // ===== بقیه توابع جاوااسکریپت (همانند قبل) =====
-        // (addGrade, addDiscipline, addTask, generateReport, renderAdminPanel, addStudent, addStaff, savePermissions, ...)
+        function renderStudentGrades() {
+            const userGrades = gradesData.filter(g => g.student_id == currentUser.id);
+            const list = document.getElementById('gradeList');
+            if (userGrades.length === 0) {
+                list.innerHTML = '<p style="color:#666; text-align:center;">نمره‌ای ثبت نشده است.</p>';
+                document.getElementById('avgBox').innerHTML = 'معدل کل: ۰.۰۰';
+            } else {
+                let html = '',
+                    sum = 0;
+                userGrades.forEach(g => {
+                    sum += g.score;
+                    html +=
+                        `<div class="item-row"><div class="info"><strong>${g.lesson}</strong> — <span style="color:var(--primary, #cc0000);">${g.score}</span> <span style="color:#666; font-size:0.8rem;">(${g.date || 'بدون تاریخ'})</span></div></div>`;
+                });
+                list.innerHTML = html;
+                document.getElementById('avgBox').innerHTML =
+                    `معدل کل: <strong style="color:var(--gold, #d4a017);">${(sum / userGrades.length).toFixed(2)}</strong> (از ${userGrades.length} نمره)`;
+            }
+        }
 
-        // ===== سرویس‌کارگر (Service Worker) درون فایل اصلی =====
+        async function addGrade() {
+            if (!hasGradePermission()) { alert('شما مجوز افزودن نمره را ندارید.'); return; }
+            const student_id = document.getElementById('newGradeStudentSelect').value;
+            const lesson = document.getElementById('newGradeLesson').value.trim();
+            const score = parseFloat(document.getElementById('newGradeScore').value);
+            const date = document.getElementById('newGradeDate').value || new Date().toISOString().split('T')[0];
+            if (!student_id || !lesson || isNaN(score) || score < 0 || score > 20) { alert(
+                'لطفاً اطلاعات را به درستی وارد کنید.'); return; }
+            if (userRole === 'teacher') {
+                const teacherLessons = currentUser.lessons || [];
+                if (!teacherLessons.includes(lesson)) { alert(
+                    `شما فقط می‌توانید برای درس‌های خود (${teacherLessons.join(', ')}) نمره ثبت کنید.`); return; }
+            }
+            const { error } = await supabase_js.from('grades').insert([{ student_id, lesson, score, date,
+                teacher_id: currentUser.id }]);
+            if (error) { alert('خطا در ثبت نمره: ' + error.message); return; }
+            await loadAllData();
+            document.getElementById('newGradeLesson').value = '';
+            document.getElementById('newGradeScore').value = '';
+            document.getElementById('newGradeDate').value = '';
+            document.getElementById('newGradeStudentSelect').value = '';
+            renderUserData();
+            if (hasAdminAccess()) renderAdminPanel();
+            alert('نمره با موفقیت ثبت شد.');
+        }
+
+        function hasGradePermission() {
+            if (userRole === 'owner' || userRole === 'manager') return true;
+            if (userRole === 'teacher') { const teacherLessons = currentUser.lessons || []; return teacherLessons.length >
+                    0; }
+            if (userRole === 'deputy') return currentUser.permissions?.manageGrades || false;
+            return false;
+        }
+
+        async function deleteGrade(id) {
+            if (!hasGradePermission()) return;
+            if (confirm('آیا از حذف این نمره اطمینان دارید؟')) {
+                const { error } = await supabase_js.from('grades').delete().eq('id', id);
+                if (error) { alert('خطا در حذف نمره: ' + error.message); return; }
+                await loadAllData();
+                renderUserData();
+                if (hasAdminAccess()) renderAdminPanel();
+            }
+        }
+
+        // ===== توابع انضباطی (همانند قبل) =====
+        async function addDiscipline() {
+            if (!hasDisciplinePermission()) { alert('شما مجوز ثبت منفی انضباطی را ندارید.'); return; }
+            const student_id = document.getElementById('disciplineStudentSelect').value;
+            const value = parseInt(document.getElementById('disciplineValue').value);
+            const reason = document.getElementById('disciplineReason').value.trim() || 'بدون توضیح';
+            if (!student_id || isNaN(value) || value < 1 || value > 10) { alert(
+                'لطفاً دانش‌آموز و مقدار منفی (۱ تا ۱۰) را انتخاب کنید.'); return; }
+            const { error } = await supabase_js.from('disciplines').insert([{ student_id, value, reason,
+                date: new Date().toISOString().split('T')[0], teacher_id: currentUser.id }]);
+            if (error) { alert('خطا در ثبت انضباطی: ' + error.message); return; }
+            await loadAllData();
+            document.getElementById('disciplineStudentSelect').value = '';
+            document.getElementById('disciplineValue').value = '';
+            document.getElementById('disciplineReason').value = '';
+            renderDisciplineList();
+            alert('منفی انضباطی با موفقیت ثبت شد.');
+        }
+
+        function hasDisciplinePermission() {
+            if (userRole === 'owner' || userRole === 'manager') return true;
+            if (userRole === 'teacher') return true;
+            if (userRole === 'deputy') return currentUser.permissions?.manageDiscipline || false;
+            return false;
+        }
+
+        function renderDisciplineList() {
+            const list = document.getElementById('disciplineList');
+            if (disciplineRecords.length === 0) { list.innerHTML =
+                '<p style="color:#666; text-align:center;">هیچ رکورد انضباطی ثبت نشده است.</p>'; return; }
+            let html = '';
+            let filtered = disciplineRecords;
+            if (userRole === 'student') filtered = disciplineRecords.filter(d => d.student_id == currentUser.id);
+            else if (userRole === 'teacher') filtered = disciplineRecords.filter(d => d.teacher_id === currentUser.id);
+            filtered.forEach(d => {
+                const name = getUserName(d.student_id);
+                html +=
+                    `<div class="item-row"><div class="info"><strong>${name}</strong> — <span class="badge-red">-${d.value}</span> ${d.reason ? `— ${d.reason}` : ''} <span style="color:#666; font-size:0.8rem;">(${d.date})</span>${userRole !== 'student' ? `<span style="color:#666; font-size:0.8rem;">ثبت: ${getUserName(d.teacher_id)}</span>` : ''}</div>${userRole !== 'student' && userRole !== 'observer' ? `<div class="actions"><button onclick="deleteDiscipline(${d.id})" class="danger">🗑️</button></div>` : ''}</div>`;
+            });
+            list.innerHTML = html;
+        }
+
+        async function deleteDiscipline(id) {
+            if (userRole === 'observer') { alert('شما به عنوان مدیر کل، مجوز حذف ندارید.'); return; }
+            if (confirm('آیا از حذف این رکورد انضباطی اطمینان دارید؟')) {
+                const { error } = await supabase_js.from('disciplines').delete().eq('id', id);
+                if (error) { alert('خطا در حذف: ' + error.message); return; }
+                await loadAllData();
+                renderDisciplineList();
+            }
+        }
+
+        // ===== توابع تمرین (همانند قبل) =====
+        async function addTask() {
+            if (!hasTaskPermission()) { alert('شما مجوز افزودن تمرین را ندارید.'); return; }
+            const title = document.getElementById('taskTitle').value.trim();
+            const due = document.getElementById('taskDue').value || '۱۴۰۴/۰۱/۰۱';
+            let student_id = document.getElementById('taskStudentSelect').value;
+            if (!title) { alert('عنوان تمرین را بنویس.'); return; }
+            if (!student_id) student_id = 'all';
+            const { error } = await supabase_js.from('tasks').insert([{ title, due, done: false, student_id,
+                creator_id: currentUser.id }]);
+            if (error) { alert('خطا در ثبت تمرین: ' + error.message); return; }
+            await loadAllData();
+            document.getElementById('taskTitle').value = '';
+            document.getElementById('taskDue').value = '';
+            document.getElementById('taskStudentSelect').value = '';
+            renderTasks();
+            alert('تمرین با موفقیت ثبت شد.');
+        }
+
+        function hasTaskPermission() {
+            if (userRole === 'owner' || userRole === 'manager') return true;
+            if (userRole === 'teacher') return true;
+            if (userRole === 'deputy') return currentUser.permissions?.manageTasks || false;
+            return false;
+        }
+
+        function renderTasks() {
+            const list = document.getElementById('taskList');
+            if (tasksData.length === 0) { list.innerHTML =
+                '<p style="color:#666; text-align:center;">هیچ تمرینی ثبت نشده است.</p>'; return; }
+            let filtered = tasksData;
+            if (userRole === 'student') filtered = tasksData.filter(t => t.student_id === currentUser.id || t
+                .student_id === 'all');
+            else if (userRole === 'teacher') filtered = tasksData.filter(t => t.creator_id === currentUser.id);
+            let html = '';
+            filtered.forEach(t => {
+                const target = t.student_id === 'all' ? 'همه دانش‌آموزان' : getUserName(t.student_id);
+                html +=
+                    `<div class="item-row"><div class="info"><strong>${t.title}</strong> — ${t.due || 'بدون تاریخ'}${t.student_id !== 'all' ? `<span style="color:#666; font-size:0.8rem;">برای: ${target}</span>` : ''}<span class="badge">${t.done ? '✅ انجام شده' : '⏳ در انتظار'}</span><span style="color:#666; font-size:0.8rem;">ثبت: ${getUserName(t.creator_id)}</span></div><div class="actions">${userRole !== 'student' && userRole !== 'observer' ? `<button onclick="toggleTask(${t.id})">✔️</button>` : ''}${userRole !== 'student' && userRole !== 'observer' ? `<button onclick="deleteTask(${t.id})" class="danger">🗑️</button>` : ''}</div></div>`;
+            });
+            list.innerHTML = html;
+        }
+
+        async function toggleTask(id) {
+            if (userRole === 'observer') { alert('شما به عنوان مدیر کل، مجوز تغییر وضعیت ندارید.'); return; }
+            const task = tasksData.find(t => t.id === id);
+            if (!task) return;
+            const { error } = await supabase_js.from('tasks').update({ done: !task.done }).eq('id', id);
+            if (error) { alert('خطا در تغییر وضعیت: ' + error.message); return; }
+            await loadAllData();
+            renderTasks();
+        }
+
+        async function deleteTask(id) {
+            if (userRole === 'observer') { alert('شما به عنوان مدیر کل، مجوز حذف ندارید.'); return; }
+            if (confirm('این تمرین حذف شود؟')) {
+                const { error } = await supabase_js.from('tasks').delete().eq('id', id);
+                if (error) { alert('خطا در حذف: ' + error.message); return; }
+                await loadAllData();
+                renderTasks();
+            }
+        }
+
+        // ===== توابع پیام‌رسانی =====
+        async function sendMessage() {
+            const recipient_id = document.getElementById('messageRecipient').value;
+            const text = document.getElementById('messageText').value.trim();
+            if (!recipient_id || !text) { alert('لطفاً گیرنده و متن پیام را وارد کنید.'); return; }
+            const { error } = await supabase_js.from('messages').insert([{
+                sender_id: currentUser.id,
+                recipient_id: recipient_id,
+                text: text,
+                timestamp: new Date().toISOString()
+            }]);
+            if (error) { alert('خطا در ارسال پیام: ' + error.message); return; }
+            await loadAllData();
+            document.getElementById('messageText').value = '';
+            renderMessages();
+            alert('پیام با موفقیت ارسال شد.');
+        }
+
+        function renderMessages() {
+            const list = document.getElementById('messageList');
+            let filtered = messagesData;
+            if (userRole === 'student') {
+                filtered = messagesData.filter(m => m.recipient_id === currentUser.id || m.sender_id === currentUser.id);
+            } else {
+                filtered = messagesData.filter(m => m.recipient_id === currentUser.id || m.sender_id === currentUser.id);
+            }
+            if (filtered.length === 0) {
+                list.innerHTML = '<p style="color:#666; text-align:center;">هیچ پیامی وجود ندارد.</p>';
+                return;
+            }
+            let html = '';
+            filtered.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+            filtered.forEach(m => {
+                const sender = getUserName(m.sender_id);
+                const recipient = getUserName(m.recipient_id);
+                const time = new Date(m.timestamp).toLocaleString('fa-IR');
+                html += `<div class="message-item">
+                            <div class="sender">${sender} → ${recipient}</div>
+                            <div class="time">${time}</div>
+                            <div style="margin-top:5px; color:#ccc;">${m.text}</div>
+                        </div>`;
+            });
+            list.innerHTML = html;
+        }
+
+        // ===== توابع نظرسنجی =====
+        function addSurveyOption() {
+            const container = document.getElementById('surveyOptions');
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.className = 'survey-option-input';
+            input.placeholder = `گزینه ${container.children.length + 1}`;
+            container.appendChild(input);
+        }
+
+        async function createSurvey() {
+            const question = document.getElementById('surveyQuestion').value.trim();
+            const optionInputs = document.querySelectorAll('.survey-option-input');
+            const options = [];
+            optionInputs.forEach(inp => {
+                const val = inp.value.trim();
+                if (val) options.push(val);
+            });
+            if (!question || options.length < 2) { alert('لطفاً سوال و حداقل ۲ گزینه وارد کنید.'); return; }
+            const { error } = await supabase_js.from('surveys').insert([{
+                question: question,
+                options: options,
+                votes: options.map(() => 0),
+                creator_id: currentUser.id,
+                is_anonymous: true,
+                timestamp: new Date().toISOString()
+            }]);
+            if (error) { alert('خطا در ثبت نظرسنجی: ' + error.message); return; }
+            await loadAllData();
+            document.getElementById('surveyQuestion').value = '';
+            document.querySelectorAll('.survey-option-input').forEach(inp => inp.value = '');
+            hideForm('surveyForm');
+            renderSurveys();
+            alert('نظرسنجی با موفقیت ثبت شد.');
+        }
+
+        async function voteSurvey(surveyId, optionIndex) {
+            const survey = surveysData.find(s => s.id === surveyId);
+            if (!survey) return;
+            survey.votes[optionIndex] = (survey.votes[optionIndex] || 0) + 1;
+            const { error } = await supabase_js.from('surveys').update({ votes: survey.votes }).eq('id', surveyId);
+            if (error) { alert('خطا در ثبت رای: ' + error.message); return; }
+            await loadAllData();
+            renderSurveys();
+        }
+
+        function renderSurveys() {
+            const list = document.getElementById('surveyList');
+            if (surveysData.length === 0) {
+                list.innerHTML = '<p style="color:#666; text-align:center;">هیچ نظرسنجی ثبت نشده است.</p>';
+                return;
+            }
+            let html = '';
+            surveysData.forEach(s => {
+                const totalVotes = s.votes.reduce((a, b) => a + b, 0);
+                html += `<div class="card" style="border-right-color:var(--secondary, #2a6b3c);">
+                            <h4>${s.question}</h4>
+                            <div style="margin:10px 0;">`;
+                s.options.forEach((opt, idx) => {
+                    const percentage = totalVotes > 0 ? Math.round((s.votes[idx] / totalVotes) * 100) : 0;
+                    html += `
+                                <div class="survey-option">
+                                    <input type="radio" name="survey_${s.id}" value="${idx}" onchange="voteSurvey(${s.id}, ${idx})">
+                                    <label>${opt}</label>
+                                    <span style="color:#aaa; margin-right:10px;">${s.votes[idx] || 0} رای (${percentage}%)</span>
+                                </div>
+                            `;
+                });
+                html += `</div>
+                            <div style="color:#666; font-size:0.8rem;">تعداد کل رای‌ها: ${totalVotes}</div>
+                        </div>`;
+            });
+            list.innerHTML = html;
+        }
+
+        // ===== توابع غیبت =====
+        async function addAttendance() {
+            if (!hasAttendancePermission()) { alert('شما مجوز ثبت غیبت را ندارید.'); return; }
+            const student_id = document.getElementById('attendanceStudentSelect').value;
+            const date = document.getElementById('attendanceDate').value || new Date().toISOString().split('T')[0];
+            const status = document.getElementById('attendanceStatus').value;
+            if (!student_id) { alert('لطفاً دانش‌آموز را انتخاب کنید.'); return; }
+            const { error } = await supabase_js.from('attendances').insert([{
+                student_id: student_id,
+                date: date,
+                status: status,
+                teacher_id: currentUser.id
+            }]);
+            if (error) { alert('خطا در ثبت غیبت: ' + error.message); return; }
+            await loadAllData();
+            document.getElementById('attendanceStudentSelect').value = '';
+            document.getElementById('attendanceDate').value = '';
+            renderAttendance();
+            alert('غیبت با موفقیت ثبت شد.');
+        }
+
+        function hasAttendancePermission() {
+            if (userRole === 'owner' || userRole === 'manager') return true;
+            if (userRole === 'teacher') return true;
+            if (userRole === 'deputy') return currentUser.permissions?.manageDiscipline || false;
+            return false;
+        }
+
+        function renderAttendance() {
+            const list = document.getElementById('attendanceList');
+            let filtered = attendancesData;
+            if (userRole === 'student') {
+                filtered = attendancesData.filter(a => a.student_id == currentUser.id);
+            }
+            if (filtered.length === 0) {
+                list.innerHTML = '<p style="color:#666; text-align:center;">هیچ رکورد غیبتی ثبت نشده است.</p>';
+                return;
+            }
+            let html = '';
+            filtered.forEach(a => {
+                const name = getUserName(a.student_id);
+                const statusMap = { present: '✅ حاضر', absent: '❌ غایب', excused: '⚠️ موجه' };
+                html += `<div class="item-row">
+                            <div class="info">
+                                <strong>${name}</strong> — ${a.date} — <span class="${a.status === 'absent' ? 'badge-red' : 'badge'}">${statusMap[a.status]}</span>
+                                ${userRole !== 'student' ? `<span style="color:#666; font-size:0.8rem;">ثبت: ${getUserName(a.teacher_id)}</span>` : ''}
+                            </div>
+                            ${userRole !== 'student' ? `<div class="actions"><button onclick="deleteAttendance(${a.id})" class="danger">🗑️</button></div>` : ''}
+                        </div>`;
+            });
+            list.innerHTML = html;
+        }
+
+        async function deleteAttendance(id) {
+            if (userRole === 'observer') { alert('شما به عنوان مدیر کل، مجوز حذف ندارید.'); return; }
+            if (confirm('آیا از حذف این رکورد غیبت اطمینان دارید؟')) {
+                const { error } = await supabase_js.from('attendances').delete().eq('id', id);
+                if (error) { alert('خطا در حذف: ' + error.message); return; }
+                await loadAllData();
+                renderAttendance();
+            }
+        }
+
+        // ===== توابع فایل‌ها =====
+        async function uploadFile(input) {
+            const file = input.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = async function(e) {
+                const content = e.target.result;
+                const { error } = await supabase_js.from('files').insert([{
+                    name: file.name,
+                    type: file.type,
+                    size: file.size,
+                    content: content,
+                    uploader_id: currentUser.id,
+                    timestamp: new Date().toISOString()
+                }]);
+                if (error) { alert('خطا در آپلود فایل: ' + error.message); return; }
+                await loadAllData();
+                renderFiles();
+                alert('فایل با موفقیت آپلود شد.');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function renderFiles() {
+            const list = document.getElementById('fileList');
+            if (filesData.length === 0) {
+                list.innerHTML = '<p style="color:#666; text-align:center;">هیچ فایلی آپلود نشده است.</p>';
+                return;
+            }
+            let html = '';
+            filesData.forEach(f => {
+                const uploader = getUserName(f.uploader_id);
+                const size = (f.size / 1024).toFixed(1) + ' KB';
+                html += `<div class="item-row">
+                            <div class="info">
+                                <strong>${f.name}</strong> — ${size} — ${f.type} — <span style="color:#666; font-size:0.8rem;">${uploader}</span>
+                                <span style="color:#666; font-size:0.8rem;">${new Date(f.timestamp).toLocaleDateString('fa-IR')}</span>
+                            </div>
+                            <div class="actions">
+                                <a href="${f.content}" download="${f.name}" class="nav-btn" style="padding:4px 12px; background:var(--primary, #cc0000); text-decoration:none; color:white; border-radius:8px;">📥 دانلود</a>
+                                ${userRole !== 'student' ? `<button onclick="deleteFile(${f.id})" class="danger">🗑️</button>` : ''}
+                            </div>
+                        </div>`;
+            });
+            list.innerHTML = html;
+        }
+
+        async function deleteFile(id) {
+            if (userRole === 'observer') { alert('شما به عنوان مدیر کل، مجوز حذف ندارید.'); return; }
+            if (confirm('آیا از حذف این فایل اطمینان دارید؟')) {
+                const { error } = await supabase_js.from('files').delete().eq('id', id);
+                if (error) { alert('خطا در حذف: ' + error.message); return; }
+                await loadAllData();
+                renderFiles();
+            }
+        }
+
+        // ===== توابع اخبار =====
+        async function addNews() {
+            if (!hasNewsPermission()) { alert('شما مجوز ثبت خبر را ندارید.'); return; }
+            const title = document.getElementById('newsTitle').value.trim();
+            const content = document.getElementById('newsContent').value.trim();
+            if (!title || !content) { alert('لطفاً عنوان و متن خبر را وارد کنید.'); return; }
+            const { error } = await supabase_js.from('news').insert([{
+                title: title,
+                content: content,
+                creator_id: currentUser.id,
+                timestamp: new Date().toISOString()
+            }]);
+            if (error) { alert('خطا در ثبت خبر: ' + error.message); return; }
+            await loadAllData();
+            document.getElementById('newsTitle').value = '';
+            document.getElementById('newsContent').value = '';
+            hideForm('newsForm');
+            renderNews();
+            alert('خبر با موفقیت ثبت شد.');
+        }
+
+        function hasNewsPermission() {
+            if (userRole === 'owner' || userRole === 'manager') return true;
+            if (userRole === 'teacher') return true;
+            if (userRole === 'deputy') return currentUser.permissions?.manageStaff || false;
+            return false;
+        }
+
+        function renderNews() {
+            const list = document.getElementById('newsList');
+            if (newsData.length === 0) {
+                list.innerHTML = '<p style="color:#666; text-align:center;">هیچ خبری ثبت نشده است.</p>';
+                return;
+            }
+            let html = '';
+            const sorted = [...newsData].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+            sorted.forEach(n => {
+                const creator = getUserName(n.creator_id);
+                const date = new Date(n.timestamp).toLocaleDateString('fa-IR');
+                html += `<div class="news-item">
+                            <div class="title">${n.title}</div>
+                            <div class="date">${date} — ثبت: ${creator}</div>
+                            <div class="content">${n.content}</div>
+                            ${userRole !== 'student' ? `<button onclick="deleteNews(${n.id})" class="danger" style="width:auto; padding:4px 12px; margin-top:10px;">🗑️ حذف</button>` : ''}
+                        </div>`;
+            });
+            list.innerHTML = html;
+        }
+
+        async function deleteNews(id) {
+            if (userRole === 'observer') { alert('شما به عنوان مدیر کل، مجوز حذف ندارید.'); return; }
+            if (confirm('آیا از حذف این خبر اطمینان دارید؟')) {
+                const { error } = await supabase_js.from('news').delete().eq('id', id);
+                if (error) { alert('خطا در حذف: ' + error.message); return; }
+                await loadAllData();
+                renderNews();
+            }
+        }
+
+        // ===== پروفایل =====
+        function renderProfile() {
+            const info = document.getElementById('profileInfo');
+            if (!currentUser) return;
+            const user = usersData.find(u => u.id == currentUser.id);
+            if (!user) {
+                info.innerHTML = '<p style="color:#aaa;">اطلاعات پروفایل یافت نشد.</p>';
+                return;
+            }
+            const isVerified = user.verified || false;
+            info.innerHTML = `
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                            <div><strong>نام:</strong> ${user.name}</div>
+                            <div><strong>نقش:</strong> ${user.role}</div>
+                            <div><strong>کد ملی:</strong> ${user.id}</div>
+                            <div><strong>موبایل:</strong> ${user.mobile}</div>
+                            <div><strong>وضعیت تایید:</strong> ${isVerified ? '✅ تایید شده' : '⏳ در انتظار تایید'}</div>
+                        </div>
+                    `;
+            const verifySection = document.getElementById('profileVerification');
+            if (userRole === 'owner' || userRole === 'manager') {
+                verifySection.classList.remove('hidden');
+            } else {
+                verifySection.classList.add('hidden');
+            }
+        }
+
+        async function verifyProfile() {
+            if (userRole !== 'owner' && userRole !== 'manager') { alert('شما مجوز تایید پروفایل را ندارید.'); return; }
+            const { error } = await supabase_js.from('users').update({ verified: true }).eq('id', currentUser.id);
+            if (error) { alert('خطا در تایید پروفایل: ' + error.message); return; }
+            await loadAllData();
+            renderProfile();
+            alert('پروفایل با موفقیت تایید شد.');
+        }
+
+        // ===== کارنامه با نمودار =====
+        function generateReport() {
+            const studentId = document.getElementById('reportStudentSelect').value;
+            if (!studentId) { alert('لطفاً یک دانش‌آموز را انتخاب کنید.'); return; }
+            const student = usersData.find(u => u.id == studentId);
+            if (!student) { alert('دانش‌آموز یافت نشد.'); return; }
+            const studentGrades = gradesData.filter(g => g.student_id == studentId);
+            const studentDisciplines = disciplineRecords.filter(d => d.student_id == studentId);
+            const studentAttendances = attendancesData.filter(a => a.student_id == studentId);
+
+            let html = `<div id="reportContent" style="direction:rtl;">`;
+            html += `<h2 style="color:var(--gold, #d4a017); text-align:center;">★ کارنامه تحصیلی ★</h2>`;
+            html += `<h3 style="text-align:center; color:#aaa;">${student.name} — کد ملی: ${student.id}</h3>`;
+            html += `<hr style="border-color:#333; margin:15px 0;">`;
+
+            if (studentGrades.length > 0) {
+                html += `<h4 style="color:var(--secondary, #2a6b3c);">📊 نمرات</h4>`;
+                html +=
+                    `<table style="width:100%; margin:10px 0;"><thead><tr><th>درس</th><th>نمره</th><th>تاریخ</th></tr></thead><tbody>`;
+                let sum = 0;
+                studentGrades.forEach(g => {
+                    sum += g.score;
+                    html += `<tr><td>${g.lesson}</td><td>${g.score}</td><td>${g.date || 'بدون تاریخ'}</td></tr>`;
+                });
+                html += `</tbody></table>`;
+                html += `<div style="text-align:center; background:var(--bg, #0a0a0a); padding:10px; border-radius:10px; margin:10px 0;">`;
+                html += `معدل کل: <strong style="color:var(--gold, #d4a017);">${(sum / studentGrades.length).toFixed(2)}</strong> (از ${studentGrades.length} نمره)`;
+                html += `</div>`;
+            } else {
+                html += `<p style="color:#666;">نمره‌ای ثبت نشده است.</p>`;
+            }
+
+            if (studentDisciplines.length > 0) {
+                html += `<h4 style="color:var(--primary, #cc0000); margin-top:20px;">⚖️ سوابق انضباطی</h4>`;
+                html +=
+                    `<table style="width:100%; margin:10px 0;"><thead><tr><th>مقدار</th><th>توضیح</th><th>تاریخ</th><th>ثبت کننده</th></tr></thead><tbody>`;
+                studentDisciplines.forEach(d => {
+                    html +=
+                        `<tr><td><span class="badge-red">-${d.value}</span></td><td>${d.reason || 'بدون توضیح'}</td><td>${d.date}</td><td>${getUserName(d.teacher_id)}</td></tr>`;
+                });
+                html += `</tbody></table>`;
+            } else {
+                html += `<p style="color:#666; margin-top:10px;">هیچ رکورد انضباطی ثبت نشده است.</p>`;
+            }
+
+            if (studentAttendances.length > 0) {
+                const total = studentAttendances.length;
+                const absent = studentAttendances.filter(a => a.status === 'absent').length;
+                const present = studentAttendances.filter(a => a.status === 'present').length;
+                const excused = studentAttendances.filter(a => a.status === 'excused').length;
+                html += `<h4 style="color:var(--secondary, #2a6b3c); margin-top:20px;">📋 حضور و غیاب</h4>`;
+                html += `<table style="width:100%; margin:10px 0;"><thead><tr><th>وضعیت</th><th>تعداد</th></tr></thead><tbody>`;
+                html += `<tr><td>✅ حاضر</td><td>${present}</td></tr>`;
+                html += `<tr><td>❌ غایب</td><td>${absent}</td></tr>`;
+                html += `<tr><td>⚠️ موجه</td><td>${excused}</td></tr>`;
+                html += `</tbody></table>`;
+                html += `<div style="text-align:center; background:var(--bg, #0a0a0a); padding:10px; border-radius:10px; margin:10px 0;">`;
+                const attendanceRate = total > 0 ? ((present + excused) / total * 100).toFixed(1) : 0;
+                html += `نرخ حضور: <strong style="color:var(--gold, #d4a017);">${attendanceRate}%</strong> (از ${total} روز)`;
+                html += `</div>`;
+            } else {
+                html += `<p style="color:#666; margin-top:10px;">هیچ رکورد حضور و غیاب ثبت نشده است.</p>`;
+            }
+
+            html += `<hr style="border-color:#333; margin:15px 0;">`;
+            html += `<p style="text-align:center; color:#555; font-size:0.8rem;">تاریخ: ${new Date().toLocaleDateString('fa-IR')}</p>`;
+            html += `</div>`;
+            document.getElementById('reportContainer').innerHTML = html;
+
+            // نمودار
+            if (studentGrades.length > 0) {
+                const ctx = document.getElementById('gradeChart').getContext('2d');
+                if (chartInstance) chartInstance.destroy();
+                chartInstance = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: studentGrades.map(g => g.lesson),
+                        datasets: [{
+                            label: 'نمرات',
+                            data: studentGrades.map(g => g.score),
+                            backgroundColor: 'rgba(204, 0, 0, 0.6)',
+                            borderColor: 'rgba(204, 0, 0, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 20,
+                                ticks: { color: '#aaa' }
+                            },
+                            x: {
+                                ticks: { color: '#aaa' }
+                            }
+                        },
+                        plugins: {
+                            legend: { labels: { color: '#aaa' } }
+                        }
+                    }
+                });
+            } else {
+                const ctx = document.getElementById('gradeChart').getContext('2d');
+                if (chartInstance) chartInstance.destroy();
+                chartInstance = null;
+            }
+        }
+
+        function downloadPDF() {
+            const element = document.getElementById('reportContent');
+            if (!element) { alert('لطفاً ابتدا کارنامه را تولید کنید.'); return; }
+            const opt = {
+                margin: 10,
+                filename: `کارنامه_${document.getElementById('reportStudentSelect').value}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+            html2pdf().set(opt).from(element).save();
+        }
+
+        // ===== توابع مدیریت (همانند قبل) =====
+        function renderAdminPanel() {
+            if (!hasAdminAccess()) return;
+            const gradeList = document.getElementById('adminGradeList');
+            if (gradesData.length === 0) {
+                gradeList.innerHTML = '<p style="color:#666;">هیچ نمره‌ای ثبت نشده است.</p>';
+            } else {
+                let html = '<h4>📋 لیست نمرات</h4>';
+                gradesData.forEach(g => {
+                    const name = getUserName(g.student_id);
+                    html +=
+                        `<div class="item-row"><div class="info"><strong>${name}</strong> (${g.student_id}) — <strong>${g.lesson}</strong>: <span style="color:var(--primary, #cc0000);">${g.score}</span> (${g.date || 'بدون تاریخ'})</div>${userRole !== 'observer' ? `<div class="actions"><button onclick="deleteGrade(${g.id})" class="danger">🗑️</button></div>` : ''}</div>`;
+                });
+                gradeList.innerHTML = html;
+            }
+
+            const userList = document.getElementById('adminUserList');
+            const students = usersData.filter(u => u.role === 'student');
+            if (students.length === 0) {
+                userList.innerHTML = '<p style="color:#666;">هیچ دانش‌آموزی ثبت نشده است.</p>';
+            } else {
+                let html = '<h4>📋 لیست دانش‌آموزان</h4>';
+                students.forEach(u => {
+                    html +=
+                        `<div class="item-row"><div class="info"><strong>${u.name}</strong> — کد: ${u.id} — موبایل: ${u.mobile}</div>${userRole !== 'observer' ? `<div class="actions"><button onclick="deleteStudent(${u.id})" class="danger">🗑️</button></div>` : ''}</div>`;
+                });
+                userList.innerHTML = html;
+            }
+
+            const staffList = document.getElementById('adminStaffList');
+            const staff = usersData.filter(u => u.role !== 'student');
+            if (staff.length === 0) {
+                staffList.innerHTML = '<p style="color:#666;">هیچ کارکنی ثبت نشده است.</p>';
+            } else {
+                let html = '<h4>👥 لیست کارکنان</h4>';
+                staff.forEach(s => {
+                    const roleMap = { manager: 'مدیر', deputy: 'معاون', teacher: 'معلم', observer: 'مدیر کل' };
+                    const roleName = roleMap[s.role] || s.role;
+                    let extraInfo = '';
+                    if (s.role === 'teacher') extraInfo = ` — درس‌ها: ${(s.lessons || []).join(', ')}`;
+                    if (s.role === 'deputy') {
+                        const perms = s.permissions || {};
+                        const activePerms = Object.keys(perms).filter(k => perms[k]);
+                        extraInfo = ` — دسترسی‌ها: ${activePerms.length > 0 ? activePerms.join(', ') : 'هیچ'}`;
+                    }
+                    let passwordDisplay = '';
+                    if (userRole === 'observer') {
+                        passwordDisplay = '********';
+                    } else if (s.username === 'Mreza0098' && userRole !== 'owner') {
+                        passwordDisplay = '********';
+                    } else {
+                        passwordDisplay = s.password || 'ندارد';
+                    }
+                    html +=
+                        `<div class="item-row"><div class="info"><strong>${s.name}</strong> (${s.username}) — ${roleName} ${extraInfo} — رمز: ${passwordDisplay}</div>${userRole !== 'observer' && s.username !== 'Mreza0098' ? `<div class="actions"><button onclick="deleteStaff(${s.id})" class="danger">🗑️</button></div>` : ''}</div>`;
+                });
+                staffList.innerHTML = html;
+            }
+
+            const disciplineList = document.getElementById('adminDisciplineList');
+            if (disciplineRecords.length === 0) {
+                disciplineList.innerHTML = '<p style="color:#666;">هیچ رکورد انضباطی ثبت نشده است.</p>';
+            } else {
+                let html = '<h4>⚖️ لیست انضباطی</h4>';
+                disciplineRecords.forEach(d => {
+                    const name = getUserName(d.student_id);
+                    html +=
+                        `<div class="item-row"><div class="info"><strong>${name}</strong> (${d.student_id}) — <span class="badge-red">-${d.value}</span> ${d.reason ? `— ${d.reason}` : ''} (${d.date}) — ثبت: ${getUserName(d.teacher_id)}</div>${userRole !== 'observer' ? `<div class="actions"><button onclick="deleteDiscipline(${d.id})" class="danger">🗑️</button></div>` : ''}</div>`;
+                });
+                disciplineList.innerHTML = html;
+            }
+            populatePermissionSelect();
+        }
+
+        function hasAdminAccess() {
+            if (userRole === 'owner' || userRole === 'manager' || userRole === 'observer' || userRole === 'deputy') return true;
+            return false;
+        }
+
+        async function addStudent() {
+            if (userRole === 'observer') { alert('شما به عنوان مدیر کل، مجوز افزودن ندارید.'); return; }
+            if (!hasManageUsersPermission()) { alert('شما مجوز مدیریت کاربران را ندارید.'); return; }
+            const id = document.getElementById('newStudentNationalId').value.trim();
+            const mobile = document.getElementById('newStudentMobile').value.trim();
+            const name = document.getElementById('newStudentName').value.trim();
+            if (!id || !mobile || !name) { alert('لطفاً همه فیلدها را پر کنید.'); return; }
+            if (usersData.find(u => u.id == id)) { alert('این کد ملی قبلاً ثبت شده است.'); return; }
+            const { error } = await supabase_js.from('users').insert([{ id, mobile, name, role: 'student' }]);
+            if (error) { alert('خطا در افزودن دانش‌آموز: ' + error.message); return; }
+            await loadAllData();
+            document.getElementById('newStudentNationalId').value = '';
+            document.getElementById('newStudentMobile').value = '';
+            document.getElementById('newStudentName').value = '';
+            hideSection('addStudentSection');
+            renderAdminPanel();
+            populateStudentSelects();
+            alert('دانش‌آموز با موفقیت افزوده شد.');
+        }
+
+        async function deleteStudent(id) {
+            if (userRole === 'observer') { alert('شما به عنوان مدیر کل، مجوز حذف ندارید.'); return; }
+            if (!hasManageUsersPermission()) return;
+            if (confirm('آیا از حذف این دانش‌آموز اطمینان دارید؟')) {
+                const { error } = await supabase_js.from('users').delete().eq('id', id);
+                if (error) { alert('خطا در حذف: ' + error.message); return; }
+                await loadAllData();
+                renderAdminPanel();
+                populateStudentSelects();
+            }
+        }
+
+        function hasManageUsersPermission() {
+            if (userRole === 'owner' || userRole === 'manager') return true;
+            if (userRole === 'deputy') return currentUser.permissions?.manageUsers || false;
+            return false;
+        }
+
+        async function addStaff() {
+            if (userRole === 'observer') { alert('شما به عنوان مدیر کل، مجوز افزودن ندارید.'); return; }
+            if (!hasManageStaffPermission()) { alert('شما مجوز مدیریت کارکنان را ندارید.'); return; }
+            const username = document.getElementById('newStaffUsername').value.trim();
+            const password = document.getElementById('newStaffPassword').value.trim();
+            const name = document.getElementById('newStaffName').value.trim();
+            const role = document.getElementById('newStaffRole').value;
+            if (!username || !password || !name) { alert('لطفاً همه فیلدها را پر کنید.'); return; }
+            if (username === 'Mreza0098' || usersData.find(u => u.username === username)) { alert(
+                'این نام کاربری قبلاً ثبت شده است.'); return; }
+            const newStaff = { username, password, name, role };
+            if (role === 'teacher') {
+                const selectedLessons = [];
+                document.querySelectorAll('#teacherLessonCheckboxes input:checked').forEach(cb => { selectedLessons.push(cb
+                        .value); });
+                if (selectedLessons.length === 0) { alert('لطفاً حداقل یک درس برای معلم انتخاب کنید.'); return; }
+                newStaff.lessons = selectedLessons;
+            }
+            if (role === 'deputy') newStaff.permissions = {};
+            const { error } = await supabase_js.from('users').insert([newStaff]);
+            if (error) { alert('خطا در افزودن کارمند: ' + error.message); return; }
+            await loadAllData();
+            document.getElementById('newStaffUsername').value = '';
+            document.getElementById('newStaffPassword').value = '';
+            document.getElementById('newStaffName').value = '';
+            document.getElementById('newStaffRole').value = 'manager';
+            document.getElementById('teacherLessonSection').classList.add('hidden');
+            hideSection('addStaffSection');
+            renderAdminPanel();
+            alert('کارمند با موفقیت افزوده شد.');
+        }
+
+        async function deleteStaff(id) {
+            if (userRole === 'observer') { alert('شما به عنوان مدیر کل، مجوز حذف ندارید.'); return; }
+            if (!hasManageStaffPermission()) return;
+            const staff = usersData.find(u => u.id === id);
+            if (staff.username === 'Mreza0098') { alert('نمی‌توانید مدیر اصلی را حذف کنید.'); return; }
+            if (confirm(`آیا از حذف ${staff.name} اطمینان دارید؟`)) {
+                const { error } = await supabase_js.from('users').delete().eq('id', id);
+                if (error) { alert('خطا در حذف: ' + error.message); return; }
+                await loadAllData();
+                renderAdminPanel();
+            }
+        }
+
+        function hasManageStaffPermission() {
+            if (userRole === 'owner') return true;
+            if (userRole === 'manager') return true;
+            if (userRole === 'deputy') return currentUser.permissions?.manageStaff || false;
+            return false;
+        }
+
+        // ===== توابع دسترسی‌ها =====
+        function populatePermissionSelect() {
+            const select = document.getElementById('permissionTargetSelect');
+            if (!select) return;
+            const currentVal = select.value;
+            select.innerHTML = '<option value="">انتخاب معاون...</option>';
+            usersData.filter(s => s.role === 'deputy').forEach(s => {
+                const option = document.createElement('option');
+                option.value = s.id;
+                option.textContent = `${s.name} (${s.username})`;
+                select.appendChild(option);
+            });
+            if (currentVal) select.value = currentVal;
+            if (select.value) loadPermissions(select.value);
+        }
+
+        function loadPermissions(id) {
+            const grid = document.getElementById('permissionGrid');
+            const staff = usersData.find(s => s.id === id);
+            if (!staff || staff.role !== 'deputy') { grid.innerHTML = '<p style="color:#aaa;">معاون انتخاب شده معتبر نیست.</p>'; return; }
+            const perms = staff.permissions || {};
+            const permLabels = { viewStudents: 'مشاهده دانش‌آموزان', viewGrades: 'مشاهده نمرات', manageGrades: 'مدیریت نمرات',
+                manageTasks: 'مدیریت تمرین‌ها', manageDiscipline: 'مدیریت انضباطی', manageUsers: 'مدیریت کاربران',
+                manageStaff: 'مدیریت کارکنان' };
+            let html = '';
+            Object.keys(permLabels).forEach(key => {
+                html +=
+                    `<div class="permission-item"><input type="checkbox" id="perm_${key}" ${perms[key] ? 'checked' : ''}><label for="perm_${key}">${permLabels[key]}</label></div>`;
+            });
+            grid.innerHTML = html;
+        }
+
+        async function savePermissions() {
+            if (userRole === 'observer') { alert('شما به عنوان مدیر کل، مجوز تغییر دسترسی ندارید.'); return; }
+            if (userRole !== 'owner') { alert('فقط مدیر اصلی می‌تواند دسترسی‌ها را تنظیم کند.'); return; }
+            const id = document.getElementById('permissionTargetSelect').value;
+            if (!id) { alert('لطفاً یک معاون انتخاب کنید.'); return; }
+            const perms = {};
+            document.querySelectorAll('#permissionGrid input[type="checkbox"]').forEach(cb => {
+                const key = cb.id.replace('perm_', '');
+                perms[key] = cb.checked;
+            });
+            const { error } = await supabase_js.from('users').update({ permissions: perms }).eq('id', id);
+            if (error) { alert('خطا در ذخیره دسترسی‌ها: ' + error.message); return; }
+            await loadAllData();
+            alert('دسترسی‌ها با موفقیت ذخیره شد.');
+            renderAdminPanel();
+        }
+
+        // ===== توابع تنظیمات =====
+        function applyTheme(theme) {
+            const container = document.getElementById('appContainer');
+            container.className = 'app ' + theme;
+            siteSettings.theme = theme;
+            localStorage.setItem('sadra_settings', JSON.stringify(siteSettings));
+        }
+
+        function uploadLogo(input) {
+            const file = input.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                siteSettings.logo = e.target.result;
+                document.getElementById('logoPlaceholder').innerHTML = `<img src="${e.target.result}" alt="لوگو">`;
+                localStorage.setItem('sadra_settings', JSON.stringify(siteSettings));
+                alert('لوگو با موفقیت آپلود شد.');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function saveSettings() {
+            const slogan = document.getElementById('settingSlogan').value.trim();
+            const title = document.getElementById('settingTitle').value.trim();
+            if (slogan) { siteSettings.slogan = slogan;
+                document.getElementById('siteSlogan').textContent = slogan; }
+            if (title) { siteSettings.title = title;
+                document.getElementById('siteTitle').textContent = title; }
+            localStorage.setItem('sadra_settings', JSON.stringify(siteSettings));
+            alert('تنظیمات با موفقیت ذخیره شد.');
+        }
+
+        function loadSettings() {
+            document.getElementById('settingSlogan').value = siteSettings.slogan || '';
+            document.getElementById('settingTitle').value = siteSettings.title || '';
+            document.getElementById('settingTheme').value = siteSettings.theme || 'iran-theme';
+            applyTheme(siteSettings.theme);
+            if (siteSettings.logo) {
+                document.getElementById('logoPlaceholder').innerHTML = `<img src="${siteSettings.logo}" alt="لوگو">`;
+            }
+        }
+
+        // ===== اعلان‌ها =====
+        function showNotification() {
+            if (notifications.length === 0) return;
+            const latest = notifications[notifications.length - 1];
+            const banner = document.getElementById('notificationBanner');
+            const text = document.getElementById('notificationText');
+            text.textContent = latest.message;
+            banner.style.display = 'block';
+            setTimeout(() => { banner.style.display = 'none'; }, 15000);
+        }
+
+        function sendNotification() {
+            if (userRole === 'observer') { alert('شما به عنوان مدیر کل، مجوز ارسال اعلان ندارید.'); return; }
+            const message = prompt('متن اعلان را وارد کنید:');
+            if (!message) return;
+            notifications.push({ message, date: new Date().toISOString(), sender: currentUser.name });
+            localStorage.setItem('sadra_notifications', JSON.stringify(notifications));
+            alert('اعلان با موفقیت ارسال شد.');
+            showNotification();
+        }
+
+        // ===== زمانبندی و یادداشت =====
+        function getStorageKey(prefix) {
+            const id = userRole === 'student' ? currentUser.id : currentUser.username;
+            return `sadra_${prefix}_${id}`;
+        }
+
+        function saveSchedule() {
+            const inputs = document.querySelectorAll('#scheduleTable .small-input');
+            const data = {};
+            inputs.forEach(inp => { data[`day${inp.dataset.day}_time${inp.dataset.time}`] = inp.value; });
+            localStorage.setItem(getStorageKey('schedule'), JSON.stringify(data));
+            alert('⏳ زمانبندی ذخیره شد.');
+        }
+
+        function loadSchedule() {
+            const saved = localStorage.getItem(getStorageKey('schedule'));
+            if (!saved) return;
+            const data = JSON.parse(saved);
+            document.querySelectorAll('#scheduleTable .small-input').forEach(inp => {
+                const key = `day${inp.dataset.day}_time${inp.dataset.time}`;
+                if (data[key]) inp.value = data[key];
+            });
+        }
+
+        let notes = [];
+
+        function renderNotes() {
+            const saved = localStorage.getItem(getStorageKey('notes'));
+            notes = saved ? JSON.parse(saved) : [];
+            const list = document.getElementById('noteList');
+            if (!notes.length) { list.innerHTML = '<p style="color:#666; text-align:center;">یادداشتی وجود ندارد.</p>'; return; }
+            let html = '';
+            notes.forEach((n, i) => {
+                html +=
+                    `<div class="item-row"><div class="info">${n.text}</div><div class="actions"><button onclick="deleteNote(${i})" class="danger">🗑️</button></div></div>`;
+            });
+            list.innerHTML = html;
+        }
+
+        function addNote() {
+            const text = document.getElementById('noteText').value.trim();
+            if (!text) { alert('لطفاً متن یادداشت را بنویس.'); return; }
+            notes.push({ text });
+            document.getElementById('noteText').value = '';
+            localStorage.setItem(getStorageKey('notes'), JSON.stringify(notes));
+            renderNotes();
+        }
+
+        function deleteNote(index) {
+            if (confirm('یادداشت حذف شود؟')) {
+                notes.splice(index, 1);
+                localStorage.setItem(getStorageKey('notes'), JSON.stringify(notes));
+                renderNotes();
+            }
+        }
+
+        // ===== سرویس‌کارگر (PWA) =====
         if ('serviceWorker' in navigator) {
             const swCode = `
-                const CACHE_NAME = 'sadra-v1';
-                self.addEventListener('install', event => {
-                    event.waitUntil(
-                        caches.open(CACHE_NAME).then(cache => {
-                            return cache.addAll([
-                                '/sadra/',
-                                '/sadra/sadra.html',
-                                '/sadra/icon.png'
-                            ]);
-                        })
-                    );
-                });
-                self.addEventListener('fetch', event => {
-                    event.respondWith(
-                        caches.match(event.request).then(response => {
-                            return response || fetch(event.request);
-                        })
-                    );
-                });
-                self.addEventListener('activate', event => {
-                    event.waitUntil(
-                        caches.keys().then(cacheNames => {
-                            return Promise.all(
-                                cacheNames.map(cacheName => {
-                                    if (cacheName !== CACHE_NAME) {
-                                        return caches.delete(cacheName);
-                                    }
+                        const CACHE_NAME = 'sadra-v2';
+                        self.addEventListener('install', event => {
+                            event.waitUntil(
+                                caches.open(CACHE_NAME).then(cache => {
+                                    return cache.addAll([
+                                        '/sadra/',
+                                        '/sadra/sadra.html',
+                                        '/sadra/icon.png'
+                                    ]);
                                 })
                             );
-                        })
-                    );
-                });
-            `;
+                        });
+                        self.addEventListener('fetch', event => {
+                            event.respondWith(
+                                caches.match(event.request).then(response => {
+                                    return response || fetch(event.request);
+                                })
+                            );
+                        });
+                        self.addEventListener('activate', event => {
+                            event.waitUntil(
+                                caches.keys().then(cacheNames => {
+                                    return Promise.all(
+                                        cacheNames.map(cacheName => {
+                                            if (cacheName !== CACHE_NAME) {
+                                                return caches.delete(cacheName);
+                                            }
+                                        })
+                                    );
+                                })
+                            );
+                        });
+                    `;
             const blob = new Blob([swCode], { type: 'application/javascript' });
             const swUrl = URL.createObjectURL(blob);
             navigator.serviceWorker.register(swUrl)
@@ -977,14 +2169,20 @@
                 .catch(err => console.log('❌ خطا در ثبت Service Worker:', err));
         }
 
+        // ===== بارگذاری اولیه =====
         (async function init() {
             await loadAllData();
             loadSettings();
-            console.log('🚀 صدرا با قابلیت PWA (همه در یک فایل) آماده است!');
+            console.log('🚀 صدرا با همه‌ی قابلیت‌های جدید آماده است!');
             console.log('👥 کاربران:', usersData);
             console.log('📊 نمرات:', gradesData);
             console.log('⚖️ انضباطی:', disciplineRecords);
             console.log('✅ تمرین‌ها:', tasksData);
+            console.log('💬 پیام‌ها:', messagesData);
+            console.log('📊 نظرسنجی‌ها:', surveysData);
+            console.log('📋 غیبت‌ها:', attendancesData);
+            console.log('📁 فایل‌ها:', filesData);
+            console.log('📰 اخبار:', newsData);
         })();
     </script>
 </body>
