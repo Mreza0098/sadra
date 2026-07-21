@@ -1,16 +1,23 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>صدرا - سامانه مدیریت آموزشی</title>
+    <!-- ====== PWA META TAGS (همه در یک فایل) ====== -->
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIlx1MDYzM1x1MDY0NFx1MDYyOFx1MDYyNyAtIFx1MDYzM1x1MDYyN1x1MDY0N1x1MDYyYVx1MDYyOVx1MDYyNyBcdTA2NDVcdTA2MjhcdTA2MzFcdTA2NDdcdTA2MjdcdTA2MjkiLAogICJzaG9ydF9uYW1lIjogIlx1MDYzM1x1MDY0NFx1MDYyOFx1MDYyNyIsCiAgImRlc2NyaXB0aW9uIjogIlx1MDYzM1x1MDYyN1x1MDY0N1x1MDYyYVx1MDYyOVx1MDYyNyBcdTA2NDVcdTA2MjhcdTA2MzFcdTA2NDdcdTA2MjdcdTA2MjkgXHUwNjI4XHUwNjI3XHUwNjI4XHUwNjI5XHUwNjI3IiLAogICJzdGFydF91cmwiOiAiL3NhZHJhLyIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiIzBhMGEwYSIsCiAgInRoZW1lX2NvbG9yIjogIiNjYzAwMDAiLAogICJpY29ucyI6IFsKICAgIHsKICAgICAgInNyYyI6ICJpY29uLnBuZyIsCiAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICAgInR5cGUiOiAiaW1hZ2UvcG5nIgogICAgfSwKICAgIHsKICAgICAgInNyYyI6ICJpY29uLnBuZyIsCiAgICAgICJzaXplcyI6ICI1MTJ4NTEyIiwKICAgICAgInR5cGUiOiAiaW1hZ2UvcG5nIgogICAgfQogIF0sCiAgImxhbmciOiAiZmEiLAogICJkaXIiOiAicnRsIgp9" />
+    <meta name="theme-color" content="#cc0000" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link rel="apple-touch-icon" href="icon.png" />
+    <!-- ====== STYLES ====== -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js">
     </script>
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" />
     <style>
-        /* ===== ریست و مبنا ===== */
+        /* ====== تمام استایل‌های قبلی ====== */
         * {
             margin: 0;
             padding: 0;
@@ -177,8 +184,6 @@
         .logout-btn:hover {
             background: var(--primary, #cc0000);
         }
-
-        /* ===== منوی جدید (ساده و بدون کشویی) ===== */
         .navbar {
             background: var(--card-bg, #161616);
             border-radius: 15px;
@@ -220,8 +225,6 @@
         .nav-icon {
             font-size: 1.3rem;
         }
-
-        /* ===== بقیه استایل‌ها ===== */
         .tab-content {
             display: none;
             animation: fadeIn 0.3s;
@@ -478,7 +481,6 @@
                 <button class="logout-btn" onclick="logout()">خروج</button>
             </div>
 
-            <!-- ===== منوی جدید (ساده) ===== -->
             <div class="navbar" id="mainNavbar">
                 <button class="nav-btn active" data-tab="home" onclick="switchTab('home')">
                     <span class="nav-icon">🏠</span> خانه
@@ -514,7 +516,6 @@
                 <p id="notificationText"></p>
             </div>
 
-            <!-- تب‌ها -->
             <div id="home" class="tab-content active">
                 <div class="card">
                     <h3>🚀 به صدرا خوش آمدی</h3>
@@ -696,16 +697,11 @@
     </div>
 
     <script>
-        // ============================================================
-        // 1.  تنظیمات Supabase
-        // ============================================================
+        // ===== تمام کدهای جاوااسکریپت قبلی =====
         const SUPABASE_URL = 'https://cyyfagessadtzzqcgero.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN5eWZhZ2Vzc2FkdHp6cWNnZXJvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ0MzY4NTYsImV4cCI6MjEwMDAxMjg1Nn0.ryER3Az8letoQDAoJhqAoYylRjgXrIBX0tKFMCLFLJ8';
         const supabase_js = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        // ============================================================
-        // 2.  متغیرهای عمومی
-        // ============================================================
         let currentUser = null;
         let userRole = null;
         let usersData = [];
@@ -720,9 +716,6 @@
             logo: ''
         };
 
-        // ============================================================
-        // 3.  توابع اصلی
-        // ============================================================
         async function loadAllData() {
             const { data: users } = await supabase_js.from('users').select('*');
             if (users) usersData = users;
@@ -734,9 +727,6 @@
             if (tasks) tasksData = tasks;
         }
 
-        // ============================================================
-        // 4.  ورود و خروج
-        // ============================================================
         document.querySelectorAll('.login-tab').forEach(tab => {
             tab.addEventListener('click', function() {
                 document.querySelectorAll('.login-tab').forEach(t => t.classList.remove('active'));
@@ -800,7 +790,6 @@
 
             const isObserver = (userRole === 'observer');
 
-            // غیرفعال کردن دکمه‌های ثبت برای observer
             document.querySelectorAll('#btnAddStudent, #btnAddStaff, #btnAddGrade, #btnPermissions').forEach(btn => {
                 btn.style.display = isObserver ? 'none' : 'inline-block';
             });
@@ -837,9 +826,6 @@
             document.getElementById('adminLoginError').textContent = '';
         }
 
-        // ============================================================
-        // 5.  توابع کمکی
-        // ============================================================
         function getUserName(id) {
             if (id === 'owner') return 'مدیر اصلی';
             const user = usersData.find(u => u.id == id);
@@ -893,13 +879,26 @@
             else if (userRole === 'observer') welcome.textContent = 'به پنل مدیریت کل خوش آمدید.';
         }
 
-        // ============================================================
-        // 6.  نمایش داده‌ها
-        // ============================================================
         function renderUserData() {
             if (!currentUser) return;
             if (userRole === 'student') {
-                renderStudentGrades();
+                const userGrades = gradesData.filter(g => g.student_id == currentUser.id);
+                const list = document.getElementById('gradeList');
+                if (userGrades.length === 0) {
+                    list.innerHTML = '<p style="color:#666; text-align:center;">نمره‌ای ثبت نشده است.</p>';
+                    document.getElementById('avgBox').innerHTML = 'معدل کل: ۰.۰۰';
+                } else {
+                    let html = '',
+                        sum = 0;
+                    userGrades.forEach(g => {
+                        sum += g.score;
+                        html +=
+                            `<div class="item-row"><div class="info"><strong>${g.lesson}</strong> — <span style="color:var(--primary, #cc0000);">${g.score}</span> <span style="color:#666; font-size:0.8rem;">(${g.date || 'بدون تاریخ'})</span></div></div>`;
+                    });
+                    list.innerHTML = html;
+                    document.getElementById('avgBox').innerHTML =
+                        `معدل کل: <strong style="color:var(--gold, #d4a017);">${(sum / userGrades.length).toFixed(2)}</strong> (از ${userGrades.length} نمره)`;
+                }
             } else {
                 let filteredGrades = [];
                 if (userRole === 'teacher') {
@@ -931,29 +930,6 @@
             renderTasks();
         }
 
-        function renderStudentGrades() {
-            const userGrades = gradesData.filter(g => g.student_id == currentUser.id);
-            const list = document.getElementById('gradeList');
-            if (userGrades.length === 0) {
-                list.innerHTML = '<p style="color:#666; text-align:center;">نمره‌ای ثبت نشده است.</p>';
-                document.getElementById('avgBox').innerHTML = 'معدل کل: ۰.۰۰';
-            } else {
-                let html = '',
-                    sum = 0;
-                userGrades.forEach(g => {
-                    sum += g.score;
-                    html +=
-                        `<div class="item-row"><div class="info"><strong>${g.lesson}</strong> — <span style="color:var(--primary, #cc0000);">${g.score}</span> <span style="color:#666; font-size:0.8rem;">(${g.date || 'بدون تاریخ'})</span></div></div>`;
-                });
-                list.innerHTML = html;
-                document.getElementById('avgBox').innerHTML =
-                    `معدل کل: <strong style="color:var(--gold, #d4a017);">${(sum / userGrades.length).toFixed(2)}</strong> (از ${userGrades.length} نمره)`;
-            }
-        }
-
-        // ============================================================
-        // 7.  مدیریت نمرات
-        // ============================================================
         async function addGrade() {
             if (!hasGradePermission()) { alert('شما مجوز افزودن نمره را ندارید.'); return; }
             const student_id = document.getElementById('newGradeStudentSelect').value;
@@ -999,9 +975,6 @@
             }
         }
 
-        // ============================================================
-        // 8.  مدیریت انضباطی
-        // ============================================================
         async function addDiscipline() {
             if (!hasDisciplinePermission()) { alert('شما مجوز ثبت منفی انضباطی را ندارید.'); return; }
             const student_id = document.getElementById('disciplineStudentSelect').value;
@@ -1053,9 +1026,6 @@
             }
         }
 
-        // ============================================================
-        // 9.  مدیریت تمرین‌ها
-        // ============================================================
         async function addTask() {
             if (!hasTaskPermission()) { alert('شما مجوز افزودن تمرین را ندارید.'); return; }
             const title = document.getElementById('taskTitle').value.trim();
@@ -1118,9 +1088,6 @@
             }
         }
 
-        // ============================================================
-        // 10. کارنامه و گزارشات
-        // ============================================================
         function generateReport() {
             const studentId = document.getElementById('reportStudentSelect').value;
             if (!studentId) { alert('لطفاً یک دانش‌آموز را انتخاب کنید.'); return; }
@@ -1183,9 +1150,6 @@
             html2pdf().set(opt).from(element).save();
         }
 
-        // ============================================================
-        // 11. پنل مدیریت
-        // ============================================================
         function renderAdminPanel() {
             if (!hasAdminAccess()) return;
             const gradeList = document.getElementById('adminGradeList');
@@ -1264,9 +1228,6 @@
             return false;
         }
 
-        // ============================================================
-        // 12. مدیریت دانش‌آموزان
-        // ============================================================
         async function addStudent() {
             if (userRole === 'observer') { alert('شما به عنوان مدیر کل، مجوز افزودن ندارید.'); return; }
             if (!hasManageUsersPermission()) { alert('شما مجوز مدیریت کاربران را ندارید.'); return; }
@@ -1305,9 +1266,6 @@
             return false;
         }
 
-        // ============================================================
-        // 13. مدیریت کارکنان
-        // ============================================================
         async function addStaff() {
             if (userRole === 'observer') { alert('شما به عنوان مدیر کل، مجوز افزودن ندارید.'); return; }
             if (!hasManageStaffPermission()) { alert('شما مجوز مدیریت کارکنان را ندارید.'); return; }
@@ -1360,9 +1318,6 @@
             return false;
         }
 
-        // ============================================================
-        // 14. مدیریت دسترسی‌ها
-        // ============================================================
         function populatePermissionSelect() {
             const select = document.getElementById('permissionTargetSelect');
             if (!select) return;
@@ -1411,9 +1366,6 @@
             renderAdminPanel();
         }
 
-        // ============================================================
-        // 15. تنظیمات سایت
-        // ============================================================
         function applyTheme(theme) {
             const container = document.getElementById('appContainer');
             container.className = 'app-container ' + theme;
@@ -1456,9 +1408,6 @@
             }
         }
 
-        // ============================================================
-        // 16. اعلان‌ها
-        // ============================================================
         function showNotification() {
             if (notifications.length === 0) return;
             const latest = notifications[notifications.length - 1];
@@ -1479,17 +1428,11 @@
             showNotification();
         }
 
-        // ============================================================
-        // 17. تابع سوئیچ تب (همون منوی جدید)
-        // ============================================================
         function switchTab(tabId) {
-            // مخفی کردن همه تب‌ها
             document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
-            // نمایش تب انتخاب شده
             const target = document.getElementById(tabId);
             if (target) target.classList.add('active');
 
-            // به‌روزرسانی دکمه‌های فعال
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 btn.classList.remove('active');
                 if (btn.dataset.tab === tabId) {
@@ -1498,9 +1441,6 @@
             });
         }
 
-        // ============================================================
-        // 18. زمانبندی، یادداشت
-        // ============================================================
         function getStorageKey(prefix) {
             const id = userRole === 'student' ? currentUser.id : currentUser.username;
             return `sadra_${prefix}_${id}`;
@@ -1556,9 +1496,6 @@
             }
         }
 
-        // ============================================================
-        // 19. توابع کمکی UI
-        // ============================================================
         function showSection(sectionId) {
             if (userRole === 'observer') {
                 if (sectionId !== 'viewAllSection') {
@@ -1598,13 +1535,53 @@
             } else section.classList.add('hidden');
         }
 
-        // ============================================================
-        // 20. بارگذاری اولیه
-        // ============================================================
+        // ===== سرویس‌کارگر (Service Worker) درون فایل اصلی =====
+        if ('serviceWorker' in navigator) {
+            const swCode = `
+                const CACHE_NAME = 'sadra-v1';
+                self.addEventListener('install', event => {
+                    event.waitUntil(
+                        caches.open(CACHE_NAME).then(cache => {
+                            return cache.addAll([
+                                '/sadra/',
+                                '/sadra/sadra.html',
+                                '/sadra/icon.png'
+                            ]);
+                        })
+                    );
+                });
+                self.addEventListener('fetch', event => {
+                    event.respondWith(
+                        caches.match(event.request).then(response => {
+                            return response || fetch(event.request);
+                        })
+                    );
+                });
+                self.addEventListener('activate', event => {
+                    event.waitUntil(
+                        caches.keys().then(cacheNames => {
+                            return Promise.all(
+                                cacheNames.map(cacheName => {
+                                    if (cacheName !== CACHE_NAME) {
+                                        return caches.delete(cacheName);
+                                    }
+                                })
+                            );
+                        })
+                    );
+                });
+            `;
+            const blob = new Blob([swCode], { type: 'application/javascript' });
+            const swUrl = URL.createObjectURL(blob);
+            navigator.serviceWorker.register(swUrl)
+                .then(() => console.log('✅ Service Worker ثبت شد.'))
+                .catch(err => console.log('❌ خطا در ثبت Service Worker:', err));
+        }
+
         (async function init() {
             await loadAllData();
             loadSettings();
-            console.log('🚀 صدرا با منوی ساده و تم ایرانی-انقلابی آماده است!');
+            console.log('🚀 صدرا با قابلیت PWA (همه در یک فایل) آماده است!');
             console.log('👥 کاربران:', usersData);
             console.log('📊 نمرات:', gradesData);
             console.log('⚖️ انضباطی:', disciplineRecords);
