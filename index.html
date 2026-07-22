@@ -4,12 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>صدرا - سامانه مدیریت آموزشی</title>
-    <!-- ====== PWA ====== -->
     <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIlx1MDYzM1x1MDY0NFx1MDYyOFx1MDYyNyAtIFx1MDYzM1x1MDYyN1x1MDY0N1x1MDYyYVx1MDYyOVx1MDYyNyBcdTA2NDVcdTA2MjhcdTA2MzFcdTA2NDdcdTA2MjdcdTA2MjkiLAogICJzaG9ydF9uYW1lIjogIlx1MDYzM1x1MDY0NFx1MDYyOFx1MDYyNyIsCiAgImRlc2NyaXB0aW9uIjogIlx1MDYzM1x1MDYyN1x1MDY0N1x1MDYyYVx1MDYyOVx1MDYyNyBcdTA2NDVcdTA2MjhcdTA2MzFcdTA2NDdcdTA2MjdcdTA2MjkgXHUwNjI4XHUwNjI3XHUwNjI4XHUwNjI5XHUwNjI3IiLAogICJzdGFydF91cmwiOiAiLyIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiIzBhMGEwYSIsCiAgInRoZW1lX2NvbG9yIjogIiNjYzAwMDAiLAogICJpY29ucyI6IFsKICAgIHsKICAgICAgInNyYyI6ICJzYWRyYS5wbmciLAogICAgICAic2l6ZXMiOiAiMTkyeDE5MiIsCiAgICAgICJ0eXBlIjogImltYWdlL3BuZyIKICAgIH0sCiAgICB7CiAgICAgICJzcmMiOiAic2FkcmEucG5nIiwKICAgICAgInNpemVzIjogIjUxMng1MTIiLAogICAgICAidHlwZSI6ICJpbWFnZS9wbmciCiAgICB9CiAgXQp9" />
     <meta name="theme-color" content="#cc0000" />
     <link rel="apple-touch-icon" href="sadra.png" />
     <link rel="icon" type="image/png" href="sadra.png" />
-    <!-- ====== SCRIPTS ====== -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js">
@@ -18,7 +16,6 @@
     </script>
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" />
     <style>
-        /* ===== RESET ===== */
         * {
             margin: 0;
             padding: 0;
@@ -34,7 +31,6 @@
             padding: 20px;
             transition: background 0.3s;
         }
-        /* ===== تم‌ها ===== */
         .theme-dark {
             --primary: #8B0000;
             --secondary: #2e7d32;
@@ -255,14 +251,13 @@
             border-color: var(--gold);
             transform: scale(1.05);
         }
-        /* ===== منوی جدید (مثل minecraft.ir) ===== */
+        /* ===== منوی جدید (مثل TREKMINE) ===== */
         .navbar {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 12px;
             margin-bottom: 25px;
-            padding: 10px;
+            padding: 15px;
             background: var(--bg);
             border-radius: 20px;
             border: 1px solid var(--border);
@@ -271,24 +266,29 @@
             background: var(--card-bg);
             border: 2px solid var(--border);
             color: var(--text);
-            padding: 14px 22px;
+            padding: 16px 10px;
             border-radius: 16px;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 10px;
-            min-width: 80px;
-            justify-content: center;
+            gap: 6px;
+            text-align: center;
             font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
         }
         .nav-btn .icon {
-            font-size: 1.6rem;
+            font-size: 2rem;
+            line-height: 1;
+        }
+        .nav-btn .label {
+            font-size: 0.75rem;
+            opacity: 0.9;
         }
         .nav-btn:hover {
-            transform: translateY(-3px);
+            transform: translateY(-4px);
             border-color: var(--gold);
             box-shadow: 0 8px 25px var(--shadow);
         }
@@ -646,19 +646,111 @@
                 transform: translateX(0);
             }
         }
+        /* ===== تقویم شمسی ===== */
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin: 10px 0;
+        }
+        .calendar-grid .day {
+            background: var(--bg);
+            padding: 8px;
+            text-align: center;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            font-size: 0.85rem;
+        }
+        .calendar-grid .day-header {
+            background: var(--primary);
+            color: #fff;
+            font-weight: bold;
+            padding: 8px;
+            text-align: center;
+            border-radius: 8px;
+        }
+        .calendar-grid .day.event-day {
+            border-color: var(--gold);
+            background: var(--card-bg);
+            cursor: pointer;
+        }
+        .calendar-grid .day.event-day:hover {
+            transform: scale(1.05);
+        }
+        .event-item {
+            background: var(--bg);
+            padding: 10px 14px;
+            border-radius: 12px;
+            margin: 6px 0;
+            border-right: 3px solid var(--gold);
+        }
+        .event-item .event-title {
+            font-weight: bold;
+            color: var(--gold);
+        }
+        .event-item .event-date {
+            color: #666;
+            font-size: 0.8rem;
+        }
+        /* ===== گروه‌ها ===== */
+        .group-item {
+            background: var(--bg);
+            padding: 12px 16px;
+            border-radius: 14px;
+            margin: 8px 0;
+            border-right: 3px solid var(--secondary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .group-item .group-name {
+            font-weight: bold;
+            color: var(--gold);
+        }
+        .group-message {
+            background: var(--bg);
+            padding: 10px 14px;
+            border-radius: 12px;
+            margin: 6px 0;
+        }
+        .group-message .sender {
+            color: var(--gold);
+            font-weight: bold;
+        }
+        .group-message .time {
+            color: #666;
+            font-size: 0.8rem;
+            float: left;
+        }
+        /* ===== تکالیف گروهی ===== */
+        .task-item {
+            background: var(--bg);
+            padding: 12px 16px;
+            border-radius: 14px;
+            margin: 8px 0;
+            border-right: 3px solid var(--secondary);
+        }
+        .task-item .task-title {
+            font-weight: bold;
+            color: var(--gold);
+        }
+        .task-item .task-meta {
+            color: #666;
+            font-size: 0.8rem;
+        }
         /* ===== واکنش‌گرایی ===== */
         @media (max-width: 768px) {
             .navbar {
-                gap: 6px;
-                padding: 8px;
+                grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+                gap: 8px;
+                padding: 10px;
             }
             .nav-btn {
-                padding: 10px 14px;
-                font-size: 0.8rem;
-                min-width: 60px;
+                padding: 12px 6px;
+                font-size: 0.75rem;
             }
             .nav-btn .icon {
-                font-size: 1.2rem;
+                font-size: 1.6rem;
             }
             .header-text h1 {
                 font-size: 1.6rem;
@@ -678,16 +770,27 @@
                 left: 15px;
                 max-width: 100%;
             }
+            .calendar-grid {
+                gap: 3px;
+            }
+            .calendar-grid .day {
+                padding: 4px;
+                font-size: 0.7rem;
+            }
         }
         @media (max-width: 480px) {
+            .navbar {
+                grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+                gap: 5px;
+                padding: 8px;
+            }
             .nav-btn {
-                padding: 8px 10px;
-                font-size: 0.7rem;
-                min-width: 50px;
+                padding: 10px 4px;
+                font-size: 0.65rem;
                 border-radius: 12px;
             }
             .nav-btn .icon {
-                font-size: 1rem;
+                font-size: 1.4rem;
             }
             .header-text h1 {
                 font-size: 1.3rem;
@@ -741,53 +844,68 @@
                 <button class="logout-btn" onclick="logout()">خروج</button>
             </div>
 
-            <!-- منوی جدید (مثل minecraft.ir) -->
+            <!-- ===== منوی جدید (مثل TREKMINE) ===== -->
             <div class="navbar" id="mainNavbar">
                 <button class="nav-btn active" data-tab="home" onclick="switchTab('home')">
-                    <span class="icon">🏠</span> خانه
+                    <span class="icon">🏠</span>
+                    <span class="label">خانه</span>
                 </button>
                 <button class="nav-btn" data-tab="grades" onclick="switchTab('grades')">
-                    <span class="icon">📊</span> نمرات
+                    <span class="icon">📊</span>
+                    <span class="label">نمرات</span>
                 </button>
                 <button class="nav-btn" data-tab="reports" onclick="switchTab('reports')">
-                    <span class="icon">📋</span> کارنامه
+                    <span class="icon">📋</span>
+                    <span class="label">کارنامه</span>
                 </button>
                 <button class="nav-btn" data-tab="schedule" onclick="switchTab('schedule')">
-                    <span class="icon">🗓️</span> زمانبندی
+                    <span class="icon">🗓️</span>
+                    <span class="label">زمانبندی</span>
                 </button>
                 <button class="nav-btn" data-tab="tasks" onclick="switchTab('tasks')">
-                    <span class="icon">✅</span> تمرین
+                    <span class="icon">✅</span>
+                    <span class="label">تکالیف</span>
                 </button>
                 <button class="nav-btn" data-tab="discipline" onclick="switchTab('discipline')">
-                    <span class="icon">⚖️</span> انضباطی
+                    <span class="icon">⚖️</span>
+                    <span class="label">انضباطی</span>
                 </button>
-                <button class="nav-btn" data-tab="messages" onclick="switchTab('messages')">
-                    <span class="icon">💬</span> پیام‌ها
+                <button class="nav-btn" data-tab="groups" onclick="switchTab('groups')">
+                    <span class="icon">💬</span>
+                    <span class="label">گروه‌ها</span>
                 </button>
                 <button class="nav-btn" data-tab="survey" onclick="switchTab('survey')">
-                    <span class="icon">📊</span> نظرسنجی
-                </button>
-                <button class="nav-btn" data-tab="attendance" onclick="switchTab('attendance')">
-                    <span class="icon">📋</span> غیبت‌ها
+                    <span class="icon">📊</span>
+                    <span class="label">نظرسنجی</span>
                 </button>
                 <button class="nav-btn" data-tab="files" onclick="switchTab('files')">
-                    <span class="icon">📁</span> فایل‌ها
+                    <span class="icon">📁</span>
+                    <span class="label">فایل‌ها</span>
                 </button>
                 <button class="nav-btn" data-tab="news" onclick="switchTab('news')">
-                    <span class="icon">📰</span> اخبار
+                    <span class="icon">📰</span>
+                    <span class="label">اخبار</span>
+                </button>
+                <button class="nav-btn" data-tab="calendar" onclick="switchTab('calendar')">
+                    <span class="icon">📅</span>
+                    <span class="label">تقویم</span>
                 </button>
                 <button class="nav-btn" data-tab="profile" onclick="switchTab('profile')">
-                    <span class="icon">👤</span> پروفایل
+                    <span class="icon">👤</span>
+                    <span class="label">پروفایل</span>
                 </button>
                 <button class="nav-btn" data-tab="adminPanel" onclick="switchTab('adminPanel')">
-                    <span class="icon">🔧</span> مدیریت
+                    <span class="icon">🔧</span>
+                    <span class="label">مدیریت</span>
                 </button>
                 <button class="nav-btn" data-tab="settings" onclick="switchTab('settings')">
-                    <span class="icon">⚙️</span> تنظیمات
+                    <span class="icon">⚙️</span>
+                    <span class="label">تنظیمات</span>
                 </button>
                 <!-- دکمه تغییر تم -->
                 <button class="nav-btn theme-toggle-btn" onclick="cycleTheme()">
-                    <span class="icon">🎨</span> تغییر تم
+                    <span class="icon">🎨</span>
+                    <span class="label">تغییر تم</span>
                 </button>
             </div>
 
@@ -806,10 +924,11 @@
                     <p style="line-height:2; color:#ccc;" id="homeWelcome">سامانه مدیریت آموزشی با قابلیت‌های پیشرفته</p>
                     <ul style="list-style:none; margin-top:15px; color:#aaa;" id="homeFeatures">
                         <li style="margin:10px 0;">📊 مدیریت نمرات</li>
-                        <li style="margin:10px 0;">💬 پیام‌رسانی داخلی</li>
+                        <li style="margin:10px 0;">💬 چت گروهی</li>
                         <li style="margin:10px 0;">📋 مشاهده غیبت‌ها</li>
                         <li style="margin:10px 0;">📁 آپلود فایل</li>
                         <li style="margin:10px 0;">📰 اخبار مدرسه</li>
+                        <li style="margin:10px 0;">📅 تقویم شمسی</li>
                     </ul>
                     <div style="margin-top:20px; background:var(--bg); padding:15px; border-radius:14px; border-right:4px solid var(--gold);">
                         <span style="color:var(--gold);">★</span>
@@ -869,15 +988,18 @@
                 </div>
             </div>
 
-            <!-- تمرین -->
+            <!-- تکالیف گروهی -->
             <div id="tasks" class="tab-content">
                 <div class="card">
-                    <h3>✅ تمرین‌ها</h3>
+                    <h3>✅ تکالیف گروهی</h3>
                     <div id="taskManagement">
-                        <input type="text" id="taskTitle" placeholder="عنوان تمرین">
+                        <input type="text" id="taskTitle" placeholder="عنوان تکلیف">
+                        <textarea id="taskDescription" rows="3" placeholder="توضیح تکلیف..."></textarea>
                         <input type="date" id="taskDue">
-                        <select id="taskStudentSelect" style="display:none;"><option value="">انتخاب دانش‌آموز...</option></select>
-                        <button onclick="addTask()">➕ افزودن تمرین</button>
+                        <select id="taskGroupSelect">
+                            <option value="">انتخاب گروه...</option>
+                        </select>
+                        <button onclick="addTask()">➕ افزودن تکلیف</button>
                     </div>
                     <div class="item-list" id="taskList"></div>
                 </div>
@@ -897,18 +1019,26 @@
                 </div>
             </div>
 
-            <!-- پیام‌ها -->
-            <div id="messages" class="tab-content">
+            <!-- چت گروهی -->
+            <div id="groups" class="tab-content">
                 <div class="card">
-                    <h3>💬 پیام‌ها</h3>
-                    <div id="messageList" style="max-height:400px; overflow-y:auto; margin-bottom:15px;"></div>
-                    <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                        <select id="messageRecipient" style="flex:1; min-width:150px;">
-                            <option value="">انتخاب گیرنده...</option>
-                        </select>
-                        <input type="text" id="messageText" placeholder="متن پیام..." style="flex:2; min-width:200px;">
-                        <button onclick="sendMessage()" style="width:auto; padding:8px 24px;">ارسال</button>
+                    <h3>💬 چت گروهی</h3>
+                    <div id="groupList"></div>
+                    <div id="groupChatArea" class="hidden">
+                        <h4 id="currentGroupName"></h4>
+                        <div id="groupMessages" style="max-height:300px; overflow-y:auto; margin-bottom:15px;"></div>
+                        <div style="display:flex; gap:10px;">
+                            <input type="text" id="groupMessageText" placeholder="متن پیام..." style="flex:1;">
+                            <button onclick="sendGroupMessage()" style="width:auto; padding:8px 20px;">ارسال</button>
+                        </div>
+                        <button onclick="leaveGroup()" class="danger" style="width:auto; padding:6px 18px; margin-top:10px;">🚪 خروج از گروه</button>
                     </div>
+                    <div id="createGroupArea" class="hidden">
+                        <input type="text" id="newGroupName" placeholder="نام گروه جدید">
+                        <button onclick="createGroup()" class="success">➕ ایجاد گروه</button>
+                        <button onclick="hideCreateGroup()">لغو</button>
+                    </div>
+                    <button onclick="showCreateGroup()" class="success" style="width:auto; padding:6px 18px; margin-top:10px;">➕ ایجاد گروه جدید</button>
                 </div>
             </div>
 
@@ -929,24 +1059,6 @@
                         <button onclick="hideForm('surveyForm')">لغو</button>
                     </div>
                     <button onclick="showForm('surveyForm')" class="success" style="width:auto; padding:6px 18px;">➕ نظرسنجی جدید</button>
-                </div>
-            </div>
-
-            <!-- غیبت‌ها -->
-            <div id="attendance" class="tab-content">
-                <div class="card">
-                    <h3>📋 غیبت‌ها</h3>
-                    <div id="attendanceManagement">
-                        <select id="attendanceStudentSelect"><option value="">انتخاب دانش‌آموز...</option></select>
-                        <input type="date" id="attendanceDate">
-                        <select id="attendanceStatus">
-                            <option value="present">حاضر</option>
-                            <option value="absent">غایب</option>
-                            <option value="excused">موجه</option>
-                        </select>
-                        <button onclick="addAttendance()" class="success">ثبت غیبت</button>
-                    </div>
-                    <div class="item-list" id="attendanceList"></div>
                 </div>
             </div>
 
@@ -976,6 +1088,24 @@
                         <button onclick="hideForm('newsForm')">لغو</button>
                     </div>
                     <button onclick="showForm('newsForm')" class="success" style="width:auto; padding:6px 18px;">➕ خبر جدید</button>
+                </div>
+            </div>
+
+            <!-- تقویم شمسی -->
+            <div id="calendar" class="tab-content">
+                <div class="card">
+                    <h3>📅 تقویم شمسی</h3>
+                    <div id="calendarDisplay"></div>
+                    <div id="eventForm" class="hidden">
+                        <h4>رویداد جدید</h4>
+                        <input type="text" id="eventTitle" placeholder="عنوان رویداد">
+                        <input type="date" id="eventDate">
+                        <textarea id="eventDesc" rows="3" placeholder="توضیحات..."></textarea>
+                        <button onclick="addEvent()" class="success">ثبت رویداد</button>
+                        <button onclick="hideForm('eventForm')">لغو</button>
+                    </div>
+                    <button onclick="showForm('eventForm')" class="success" style="width:auto; padding:6px 18px;">➕ رویداد جدید</button>
+                    <div id="eventList" style="margin-top:15px;"></div>
                 </div>
             </div>
 
@@ -1088,11 +1218,12 @@
         let gradesData = [];
         let disciplineRecords = [];
         let tasksData = [];
-        let messagesData = [];
+        let groupMessagesData = [];
+        let groupsData = [];
         let surveysData = [];
-        let attendancesData = [];
         let filesData = [];
         let newsData = [];
+        let eventsData = [];
         let notifications = JSON.parse(localStorage.getItem('sadra_notifications')) || [];
         let siteSettings = JSON.parse(localStorage.getItem('sadra_settings')) || {
             theme: 'theme-dark',
@@ -1103,6 +1234,7 @@
         let chartInstance = null;
         const themeList = ['theme-dark', 'theme-red', 'theme-green', 'theme-blue', 'theme-gold'];
         let currentThemeIndex = 0;
+        let currentGroupId = null;
 
         // ===== پیام‌های سفارشی =====
         function showToast(message, type = 'info', duration = 4000) {
@@ -1165,16 +1297,18 @@
                 if (disciplines) disciplineRecords = disciplines;
                 const { data: tasks } = await supabase_js.from('tasks').select('*');
                 if (tasks) tasksData = tasks;
-                const { data: messages } = await supabase_js.from('messages').select('*');
-                if (messages) messagesData = messages;
+                const { data: groups } = await supabase_js.from('groups').select('*');
+                if (groups) groupsData = groups;
+                const { data: groupMessages } = await supabase_js.from('group_messages').select('*');
+                if (groupMessages) groupMessagesData = groupMessages;
                 const { data: surveys } = await supabase_js.from('surveys').select('*');
                 if (surveys) surveysData = surveys;
-                const { data: attendances } = await supabase_js.from('attendances').select('*');
-                if (attendances) attendancesData = attendances;
                 const { data: files } = await supabase_js.from('files').select('*');
                 if (files) filesData = files;
                 const { data: news } = await supabase_js.from('news').select('*');
                 if (news) newsData = news;
+                const { data: events } = await supabase_js.from('events').select('*');
+                if (events) eventsData = events;
             } catch (e) {
                 showToast('خطا در بارگذاری داده‌ها: ' + e.message, 'error');
             }
@@ -1259,18 +1393,20 @@
             }
 
             populateStudentSelects();
+            populateGroupSelects();
             updateHomeFeatures();
             renderUserData();
             if (userRole === 'owner' || userRole === 'manager' || userRole === 'observer' || userRole === 'deputy')
                 renderAdminPanel();
             if (userRole === 'owner' || userRole === 'observer' || userRole === 'manager' || userRole === 'deputy' || userRole ===
                 'teacher') renderDisciplineList();
-            renderMessages();
+            renderGroups();
             renderSurveys();
-            renderAttendance();
             renderFiles();
             renderNews();
+            renderCalendar();
             renderProfile();
+            renderTasks();
             showNotification();
         }
 
@@ -1296,9 +1432,7 @@
         }
 
         function populateStudentSelects() {
-            const selects = ['taskStudentSelect', 'disciplineStudentSelect', 'newGradeStudentSelect', 'reportStudentSelect',
-                'attendanceStudentSelect'
-            ];
+            const selects = ['disciplineStudentSelect', 'newGradeStudentSelect', 'reportStudentSelect'];
             selects.forEach(id => {
                 const select = document.getElementById(id);
                 if (!select) return;
@@ -1312,21 +1446,20 @@
                 });
                 if (currentVal) select.value = currentVal;
             });
+        }
 
-            const msgSelect = document.getElementById('messageRecipient');
-            if (msgSelect) {
-                const currentVal = msgSelect.value;
-                msgSelect.innerHTML = '<option value="">انتخاب گیرنده...</option>';
-                usersData.forEach(u => {
-                    if (u.id !== currentUser.id) {
-                        const option = document.createElement('option');
-                        option.value = u.id;
-                        option.textContent = u.name + ' (' + u.role + ')';
-                        msgSelect.appendChild(option);
-                    }
-                });
-                if (currentVal) msgSelect.value = currentVal;
-            }
+        function populateGroupSelects() {
+            const select = document.getElementById('taskGroupSelect');
+            if (!select) return;
+            const currentVal = select.value;
+            select.innerHTML = '<option value="">انتخاب گروه...</option>';
+            groupsData.forEach(g => {
+                const option = document.createElement('option');
+                option.value = g.id;
+                option.textContent = g.name + ' (' + getUserName(g.creator_id) + ')';
+                select.appendChild(option);
+            });
+            if (currentVal) select.value = currentVal;
         }
 
         function updateHomeFeatures() {
@@ -1334,16 +1467,16 @@
             let html = '';
             if (userRole === 'student') {
                 html =
-                    `<li style="margin:10px 0;">📊 مشاهده نمرات</li><li style="margin:10px 0;">💬 پیام‌رسانی</li><li style="margin:10px 0;">📋 مشاهده غیبت‌ها</li><li style="margin:10px 0;">📁 مشاهده فایل‌ها</li><li style="margin:10px 0;">📰 مشاهده اخبار</li>`;
+                    `<li style="margin:10px 0;">📊 مشاهده نمرات</li><li style="margin:10px 0;">💬 چت گروهی</li><li style="margin:10px 0;">📋 مشاهده غیبت‌ها</li><li style="margin:10px 0;">📁 مشاهده فایل‌ها</li><li style="margin:10px 0;">📰 مشاهده اخبار</li><li style="margin:10px 0;">📅 تقویم شمسی</li>`;
             } else if (userRole === 'teacher') {
                 html =
-                    `<li style="margin:10px 0;">📊 ثبت نمرات</li><li style="margin:10px 0;">💬 ارسال پیام</li><li style="margin:10px 0;">📋 ثبت غیبت</li><li style="margin:10px 0;">📁 آپلود فایل</li><li style="margin:10px 0;">📰 ثبت خبر</li>`;
+                    `<li style="margin:10px 0;">📊 ثبت نمرات</li><li style="margin:10px 0;">💬 مدیریت چت گروهی</li><li style="margin:10px 0;">📋 ثبت غیبت</li><li style="margin:10px 0;">📁 آپلود فایل</li><li style="margin:10px 0;">📰 ثبت خبر</li><li style="margin:10px 0;">📅 مدیریت تقویم</li>`;
             } else if (userRole === 'deputy') {
                 html =
-                    `<li style="margin:10px 0;">📊 مدیریت نمرات</li><li style="margin:10px 0;">💬 مدیریت پیام‌ها</li><li style="margin:10px 0;">📋 مدیریت غیبت</li><li style="margin:10px 0;">📁 مدیریت فایل‌ها</li><li style="margin:10px 0;">📰 مدیریت اخبار</li>`;
+                    `<li style="margin:10px 0;">📊 مدیریت نمرات</li><li style="margin:10px 0;">💬 مدیریت گروه‌ها</li><li style="margin:10px 0;">📋 مدیریت غیبت</li><li style="margin:10px 0;">📁 مدیریت فایل‌ها</li><li style="margin:10px 0;">📰 مدیریت اخبار</li><li style="margin:10px 0;">📅 مدیریت تقویم</li>`;
             } else {
                 html =
-                    `<li style="margin:10px 0;">📊 مدیریت کامل نمرات</li><li style="margin:10px 0;">💬 مدیریت پیام‌ها</li><li style="margin:10px 0;">📋 مدیریت غیبت</li><li style="margin:10px 0;">📁 مدیریت فایل‌ها</li><li style="margin:10px 0;">📰 مدیریت اخبار</li><li style="margin:10px 0;">👥 مدیریت کاربران</li>`;
+                    `<li style="margin:10px 0;">📊 مدیریت کامل نمرات</li><li style="margin:10px 0;">💬 مدیریت گروه‌ها</li><li style="margin:10px 0;">📋 مدیریت غیبت</li><li style="margin:10px 0;">📁 مدیریت فایل‌ها</li><li style="margin:10px 0;">📰 مدیریت اخبار</li><li style="margin:10px 0;">📅 مدیریت تقویم</li><li style="margin:10px 0;">👥 مدیریت کاربران</li>`;
             }
             features.innerHTML = html;
         }
@@ -1359,6 +1492,14 @@
                     btn.classList.add('active');
                 }
             });
+            // اگر تب گروه‌هاست، لیست گروه‌ها رو به‌روز کن
+            if (tabId === 'groups') {
+                renderGroups();
+            }
+            // اگر تب تقویم است، تقویم رو به‌روز کن
+            if (tabId === 'calendar') {
+                renderCalendar();
+            }
         }
 
         function showForm(formId) {
@@ -1443,7 +1584,6 @@
             }
             loadSchedule();
             renderNotes();
-            renderTasks();
         }
 
         function renderStudentGrades() {
@@ -1571,23 +1711,29 @@
             }
         }
 
-        // ===== تمرین =====
+        // ===== تکالیف گروهی =====
         async function addTask() {
-            if (!hasTaskPermission()) { showToast('شما مجوز افزودن تمرین را ندارید.', 'warning'); return; }
+            if (!hasTaskPermission()) { showToast('شما مجوز افزودن تکلیف را ندارید.', 'warning'); return; }
             const title = document.getElementById('taskTitle').value.trim();
-            const due = document.getElementById('taskDue').value || '۱۴۰۴/۰۱/۰۱';
-            let student_id = document.getElementById('taskStudentSelect').value;
-            if (!title) { showToast('عنوان تمرین را بنویس.', 'warning'); return; }
-            if (!student_id) student_id = 'all';
-            const { error } = await supabase_js.from('tasks').insert([{ title, due, done: false, student_id,
-                creator_id: currentUser.id }]);
-            if (error) { showToast('خطا در ثبت تمرین: ' + error.message, 'error'); return; }
+            const description = document.getElementById('taskDescription').value.trim();
+            const due = document.getElementById('taskDue').value || new Date().toISOString().split('T')[0];
+            const group_id = document.getElementById('taskGroupSelect').value;
+            if (!title || !group_id) { showToast('لطفاً عنوان و گروه را انتخاب کنید.', 'warning'); return; }
+            const { error } = await supabase_js.from('tasks').insert([{
+                title: title,
+                description: description,
+                due: due,
+                group_id: group_id,
+                creator_id: currentUser.id
+            }]);
+            if (error) { showToast('خطا در ثبت تکلیف: ' + error.message, 'error'); return; }
             await loadAllData();
             document.getElementById('taskTitle').value = '';
+            document.getElementById('taskDescription').value = '';
             document.getElementById('taskDue').value = '';
-            document.getElementById('taskStudentSelect').value = '';
+            document.getElementById('taskGroupSelect').value = '';
             renderTasks();
-            showToast('تمرین با موفقیت ثبت شد.', 'success');
+            showToast('تکلیف با موفقیت ثبت شد.', 'success');
         }
 
         function hasTaskPermission() {
@@ -1599,85 +1745,193 @@
 
         function renderTasks() {
             const list = document.getElementById('taskList');
-            if (tasksData.length === 0) { list.innerHTML =
-                    '<p style="color:#666; text-align:center;">هیچ تمرینی ثبت نشده است.</p>'; return; }
-            let filtered = tasksData;
-            if (userRole === 'student') filtered = tasksData.filter(t => t.student_id === currentUser.id || t
-                .student_id === 'all');
-            else if (userRole === 'teacher') filtered = tasksData.filter(t => t.creator_id === currentUser.id);
+            if (tasksData.length === 0) {
+                list.innerHTML = '<p style="color:#666; text-align:center;">هیچ تکلیفی ثبت نشده است.</p>';
+                return;
+            }
             let html = '';
+            let filtered = tasksData;
+            // فیلتر بر اساس گروه‌های کاربر
+            const userGroups = groupsData.filter(g => g.members && g.members.includes(currentUser.id));
+            const groupIds = userGroups.map(g => g.id);
+            filtered = tasksData.filter(t => groupIds.includes(t.group_id));
+            if (filtered.length === 0) {
+                list.innerHTML = '<p style="color:#666; text-align:center;">هیچ تکلیفی برای گروه‌های شما ثبت نشده است.</p>';
+                return;
+            }
             filtered.forEach(t => {
-                const target = t.student_id === 'all' ? 'همه دانش‌آموزان' : getUserName(t.student_id);
-                html +=
-                    `<div class="item-row"><div class="info"><strong>${t.title}</strong> — ${t.due || 'بدون تاریخ'}${t.student_id !== 'all' ? '<span style="color:#666; font-size:0.8rem;">برای: ' + target + '</span>' : ''}<span class="badge">${t.done ? '✅ انجام شده' : '⏳ در انتظار'}</span><span style="color:#666; font-size:0.8rem;">ثبت: ${getUserName(t.creator_id)}</span></div><div class="actions">${userRole !== 'student' && userRole !== 'observer' ? '<button onclick="toggleTask(' + t.id + ')">✔️</button>' : ''}${userRole !== 'student' && userRole !== 'observer' ? '<button onclick="deleteTask(' + t.id + ')" class="danger">🗑️</button>' : ''}</div></div>`;
+                const group = groupsData.find(g => g.id === t.group_id);
+                const groupName = group ? group.name : 'گروه نامشخص';
+                html += `<div class="task-item">
+                            <div class="task-title">${t.title}</div>
+                            <div class="task-meta">گروه: ${groupName} | مهلت: ${t.due || 'بدون تاریخ'} | ثبت: ${getUserName(t.creator_id)}</div>
+                            ${t.description ? '<div style="color:#aaa; margin-top:5px;">' + t.description + '</div>' : ''}
+                            ${userRole !== 'student' ? '<button onclick="deleteTask(' + t.id + ')" class="danger" style="width:auto; padding:4px 12px; margin-top:8px;">🗑️ حذف</button>' : ''}
+                        </div>`;
             });
             list.innerHTML = html;
-        }
-
-        async function toggleTask(id) {
-            if (userRole === 'observer') { showToast('شما به عنوان مدیر کل، مجوز تغییر وضعیت ندارید.', 'warning'); return; }
-            const task = tasksData.find(t => t.id === id);
-            if (!task) return;
-            const { error } = await supabase_js.from('tasks').update({ done: !task.done }).eq('id', id);
-            if (error) { showToast('خطا در تغییر وضعیت: ' + error.message, 'error'); return; }
-            await loadAllData();
-            renderTasks();
         }
 
         async function deleteTask(id) {
             if (userRole === 'observer') { showToast('شما به عنوان مدیر کل، مجوز حذف ندارید.', 'warning'); return; }
-            if (confirm('این تمرین حذف شود؟')) {
+            if (confirm('آیا از حذف این تکلیف اطمینان دارید؟')) {
                 const { error } = await supabase_js.from('tasks').delete().eq('id', id);
                 if (error) { showToast('خطا در حذف: ' + error.message, 'error'); return; }
                 await loadAllData();
                 renderTasks();
-                showToast('تمرین با موفقیت حذف شد.', 'success');
+                showToast('تکلیف با موفقیت حذف شد.', 'success');
             }
         }
 
-        // ===== پیام‌ها =====
-        async function sendMessage() {
-            const recipient_id = document.getElementById('messageRecipient').value;
-            const text = document.getElementById('messageText').value.trim();
-            if (!recipient_id || !text) { showToast('لطفاً گیرنده و متن پیام را وارد کنید.', 'warning'); return; }
-            const { error } = await supabase_js.from('messages').insert([{
+        // ===== چت گروهی =====
+        async function createGroup() {
+            const name = document.getElementById('newGroupName').value.trim();
+            if (!name) { showToast('لطفاً نام گروه را وارد کنید.', 'warning'); return; }
+            const { error } = await supabase_js.from('groups').insert([{
+                name: name,
+                creator_id: currentUser.id,
+                members: [currentUser.id],
+                created_at: new Date().toISOString()
+            }]);
+            if (error) { showToast('خطا در ایجاد گروه: ' + error.message, 'error'); return; }
+            await loadAllData();
+            document.getElementById('newGroupName').value = '';
+            hideCreateGroup();
+            renderGroups();
+            populateGroupSelects();
+            showToast('گروه با موفقیت ایجاد شد.', 'success');
+        }
+
+        function showCreateGroup() {
+            document.getElementById('createGroupArea').classList.remove('hidden');
+        }
+
+        function hideCreateGroup() {
+            document.getElementById('createGroupArea').classList.add('hidden');
+        }
+
+        async function joinGroup(groupId) {
+            const group = groupsData.find(g => g.id === groupId);
+            if (!group) return;
+            if (!group.members) group.members = [];
+            if (group.members.includes(currentUser.id)) {
+                showToast('شما قبلاً عضو این گروه هستید.', 'warning');
+                return;
+            }
+            group.members.push(currentUser.id);
+            const { error } = await supabase_js.from('groups').update({ members: group.members }).eq('id', groupId);
+            if (error) { showToast('خطا در پیوستن به گروه: ' + error.message, 'error'); return; }
+            await loadAllData();
+            renderGroups();
+            showToast('شما به گروه پیوستید.', 'success');
+        }
+
+        async function leaveGroup() {
+            if (!currentGroupId) return;
+            const group = groupsData.find(g => g.id === currentGroupId);
+            if (!group) return;
+            if (group.creator_id === currentUser.id) {
+                showToast('شما سازنده گروه هستید و نمی‌توانید خارج شوید.', 'warning');
+                return;
+            }
+            group.members = group.members.filter(id => id !== currentUser.id);
+            const { error } = await supabase_js.from('groups').update({ members: group.members }).eq('id', currentGroupId);
+            if (error) { showToast('خطا در خروج از گروه: ' + error.message, 'error'); return; }
+            await loadAllData();
+            currentGroupId = null;
+            document.getElementById('groupChatArea').classList.add('hidden');
+            renderGroups();
+            showToast('شما از گروه خارج شدید.', 'success');
+        }
+
+        function openGroup(groupId) {
+            currentGroupId = groupId;
+            const group = groupsData.find(g => g.id === groupId);
+            if (!group) return;
+            document.getElementById('currentGroupName').textContent = '💬 ' + group.name;
+            document.getElementById('groupChatArea').classList.remove('hidden');
+            renderGroupMessages();
+        }
+
+        async function sendGroupMessage() {
+            const text = document.getElementById('groupMessageText').value.trim();
+            if (!text || !currentGroupId) { showToast('لطفاً متن پیام را وارد کنید.', 'warning'); return; }
+            const { error } = await supabase_js.from('group_messages').insert([{
+                group_id: currentGroupId,
                 sender_id: currentUser.id,
-                recipient_id: recipient_id,
                 text: text,
                 timestamp: new Date().toISOString()
             }]);
             if (error) { showToast('خطا در ارسال پیام: ' + error.message, 'error'); return; }
+            document.getElementById('groupMessageText').value = '';
             await loadAllData();
-            document.getElementById('messageText').value = '';
-            renderMessages();
-            showToast('پیام با موفقیت ارسال شد.', 'success');
+            renderGroupMessages();
         }
 
-        function renderMessages() {
-            const list = document.getElementById('messageList');
-            let filtered = messagesData;
-            if (userRole === 'student') {
-                filtered = messagesData.filter(m => m.recipient_id === currentUser.id || m.sender_id === currentUser.id);
-            } else {
-                filtered = messagesData.filter(m => m.recipient_id === currentUser.id || m.sender_id === currentUser.id);
-            }
-            if (filtered.length === 0) {
-                list.innerHTML = '<p style="color:#666; text-align:center;">هیچ پیامی وجود ندارد.</p>';
+        function renderGroupMessages() {
+            const container = document.getElementById('groupMessages');
+            if (!currentGroupId) { container.innerHTML = ''; return; }
+            const messages = groupMessagesData.filter(m => m.group_id === currentGroupId);
+            if (messages.length === 0) {
+                container.innerHTML = '<p style="color:#666; text-align:center;">هنوز پیامی در این گروه ارسال نشده است.</p>';
                 return;
             }
             let html = '';
-            filtered.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
-            filtered.forEach(m => {
+            messages.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+            messages.forEach(m => {
                 const sender = getUserName(m.sender_id);
-                const recipient = getUserName(m.recipient_id);
                 const time = new Date(m.timestamp).toLocaleString('fa-IR');
-                html += `<div class="message-item">
-                            <div class="sender">${sender} → ${recipient}</div>
+                html += `<div class="group-message">
+                            <div class="sender">${sender}</div>
                             <div class="time">${time}</div>
                             <div style="margin-top:5px; color:#ccc;">${m.text}</div>
                         </div>`;
             });
+            container.innerHTML = html;
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function renderGroups() {
+            const list = document.getElementById('groupList');
+            if (groupsData.length === 0) {
+                list.innerHTML = '<p style="color:#666; text-align:center;">هیچ گروهی ایجاد نشده است.</p>';
+                return;
+            }
+            let html = '';
+            groupsData.forEach(g => {
+                const isMember = g.members && g.members.includes(currentUser.id);
+                const memberCount = g.members ? g.members.length : 0;
+                html += `<div class="group-item">
+                            <div>
+                                <div class="group-name">${g.name}</div>
+                                <div style="color:#666; font-size:0.8rem;">سازنده: ${getUserName(g.creator_id)} | اعضا: ${memberCount}</div>
+                            </div>
+                            <div>
+                                ${isMember ? 
+                                    '<button onclick="openGroup(' + g.id + ')" class="success" style="width:auto; padding:4px 12px;">💬 ورود</button>' :
+                                    '<button onclick="joinGroup(' + g.id + ')" class="warning" style="width:auto; padding:4px 12px;">➕ پیوستن</button>'
+                                }
+                                ${userRole !== 'student' && g.creator_id === currentUser.id ? '<button onclick="deleteGroup(' + g.id + ')" class="danger" style="width:auto; padding:4px 12px;">🗑️</button>' : ''}
+                            </div>
+                        </div>`;
+            });
             list.innerHTML = html;
+        }
+
+        async function deleteGroup(id) {
+            if (userRole === 'observer') { showToast('شما به عنوان مدیر کل، مجوز حذف ندارید.', 'warning'); return; }
+            if (confirm('آیا از حذف این گروه اطمینان دارید؟')) {
+                const { error } = await supabase_js.from('groups').delete().eq('id', id);
+                if (error) { showToast('خطا در حذف گروه: ' + error.message, 'error'); return; }
+                await loadAllData();
+                renderGroups();
+                populateGroupSelects();
+                if (currentGroupId === id) {
+                    currentGroupId = null;
+                    document.getElementById('groupChatArea').classList.add('hidden');
+                }
+                showToast('گروه با موفقیت حذف شد.', 'success');
+            }
         }
 
         // ===== نظرسنجی =====
@@ -1754,70 +2008,6 @@
                         </div>`;
             });
             list.innerHTML = html;
-        }
-
-        // ===== غیبت‌ها =====
-        async function addAttendance() {
-            if (!hasAttendancePermission()) { showToast('شما مجوز ثبت غیبت را ندارید.', 'warning'); return; }
-            const student_id = document.getElementById('attendanceStudentSelect').value;
-            const date = document.getElementById('attendanceDate').value || new Date().toISOString().split('T')[0];
-            const status = document.getElementById('attendanceStatus').value;
-            if (!student_id) { showToast('لطفاً دانش‌آموز را انتخاب کنید.', 'warning'); return; }
-            const { error } = await supabase_js.from('attendances').insert([{
-                student_id: student_id,
-                date: date,
-                status: status,
-                teacher_id: currentUser.id
-            }]);
-            if (error) { showToast('خطا در ثبت غیبت: ' + error.message, 'error'); return; }
-            await loadAllData();
-            document.getElementById('attendanceStudentSelect').value = '';
-            document.getElementById('attendanceDate').value = '';
-            renderAttendance();
-            showToast('غیبت با موفقیت ثبت شد.', 'success');
-        }
-
-        function hasAttendancePermission() {
-            if (userRole === 'owner' || userRole === 'manager') return true;
-            if (userRole === 'teacher') return true;
-            if (userRole === 'deputy') return currentUser.permissions?.manageDiscipline || false;
-            return false;
-        }
-
-        function renderAttendance() {
-            const list = document.getElementById('attendanceList');
-            let filtered = attendancesData;
-            if (userRole === 'student') {
-                filtered = attendancesData.filter(a => a.student_id == currentUser.id);
-            }
-            if (filtered.length === 0) {
-                list.innerHTML = '<p style="color:#666; text-align:center;">هیچ رکورد غیبتی ثبت نشده است.</p>';
-                return;
-            }
-            let html = '';
-            filtered.forEach(a => {
-                const name = getUserName(a.student_id);
-                const statusMap = { present: '✅ حاضر', absent: '❌ غایب', excused: '⚠️ موجه' };
-                html += `<div class="item-row">
-                            <div class="info">
-                                <strong>${name}</strong> — ${a.date} — <span class="${a.status === 'absent' ? 'badge-red' : 'badge'}">${statusMap[a.status]}</span>
-                                ${userRole !== 'student' ? '<span style="color:#666; font-size:0.8rem;">ثبت: ' + getUserName(a.teacher_id) + '</span>' : ''}
-                            </div>
-                            ${userRole !== 'student' ? '<div class="actions"><button onclick="deleteAttendance(' + a.id + ')" class="danger">🗑️</button></div>' : ''}
-                        </div>`;
-            });
-            list.innerHTML = html;
-        }
-
-        async function deleteAttendance(id) {
-            if (userRole === 'observer') { showToast('شما به عنوان مدیر کل، مجوز حذف ندارید.', 'warning'); return; }
-            if (confirm('آیا از حذف این رکورد غیبت اطمینان دارید؟')) {
-                const { error } = await supabase_js.from('attendances').delete().eq('id', id);
-                if (error) { showToast('خطا در حذف: ' + error.message, 'error'); return; }
-                await loadAllData();
-                renderAttendance();
-                showToast('رکورد غیبت با موفقیت حذف شد.', 'success');
-            }
         }
 
         // ===== فایل‌ها =====
@@ -1938,6 +2128,116 @@
             }
         }
 
+        // ===== تقویم شمسی =====
+        function renderCalendar() {
+            const container = document.getElementById('calendarDisplay');
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = now.getMonth();
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const monthNames = ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'];
+            const dayNames = ['شنبه', 'یک‌شنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنج‌شنبه', 'جمعه'];
+
+            // پیدا کردن رویدادهای این ماه
+            const monthEvents = eventsData.filter(e => {
+                const date = new Date(e.date);
+                return date.getFullYear() === year && date.getMonth() === month;
+            });
+
+            let html = `<h4 style="text-align:center; color:var(--gold);">${monthNames[month]} ${year}</h4>`;
+            html += `<div class="calendar-grid">`;
+            // روزهای هفته
+            dayNames.forEach(d => {
+                html += `<div class="day-header">${d}</div>`;
+            });
+            // روزهای خالی
+            for (let i = 0; i < firstDay; i++) {
+                html += `<div class="day"></div>`;
+            }
+            // روزهای ماه
+            for (let d = 1; d <= daysInMonth; d++) {
+                const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+                const hasEvent = monthEvents.some(e => e.date === dateStr);
+                html += `<div class="day ${hasEvent ? 'event-day' : ''}" onclick="${hasEvent ? `showEvents('${dateStr}')` : ''}">${d}</div>`;
+            }
+            html += `</div>`;
+            container.innerHTML = html;
+
+            // لیست رویدادها
+            renderEventsList();
+        }
+
+        function renderEventsList() {
+            const container = document.getElementById('eventList');
+            if (eventsData.length === 0) {
+                container.innerHTML = '<p style="color:#666;">هیچ رویدادی ثبت نشده است.</p>';
+                return;
+            }
+            let html = '<h4 style="margin-top:10px; color:var(--gold);">📋 لیست رویدادها</h4>';
+            const sorted = [...eventsData].sort((a, b) => new Date(a.date) - new Date(b.date));
+            sorted.forEach(e => {
+                const creator = getUserName(e.creator_id);
+                html += `<div class="event-item">
+                            <div class="event-title">${e.title}</div>
+                            <div class="event-date">${e.date} — ثبت: ${creator}</div>
+                            ${e.description ? '<div style="color:#aaa;">' + e.description + '</div>' : ''}
+                            ${userRole !== 'student' ? '<button onclick="deleteEvent(' + e.id + ')" class="danger" style="width:auto; padding:4px 12px; margin-top:5px;">🗑️ حذف</button>' : ''}
+                        </div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        function showEvents(dateStr) {
+            const events = eventsData.filter(e => e.date === dateStr);
+            if (events.length === 0) return;
+            let msg = '📅 رویدادهای ' + dateStr + ':\n';
+            events.forEach(e => {
+                msg += '\n• ' + e.title + (e.description ? ' (' + e.description + ')' : '');
+            });
+            showToast(msg, 'info', 6000);
+        }
+
+        async function addEvent() {
+            if (!hasEventPermission()) { showToast('شما مجوز ثبت رویداد را ندارید.', 'warning'); return; }
+            const title = document.getElementById('eventTitle').value.trim();
+            const date = document.getElementById('eventDate').value;
+            const description = document.getElementById('eventDesc').value.trim();
+            if (!title || !date) { showToast('لطفاً عنوان و تاریخ رویداد را وارد کنید.', 'warning'); return; }
+            const { error } = await supabase_js.from('events').insert([{
+                title: title,
+                date: date,
+                description: description,
+                creator_id: currentUser.id
+            }]);
+            if (error) { showToast('خطا در ثبت رویداد: ' + error.message, 'error'); return; }
+            await loadAllData();
+            document.getElementById('eventTitle').value = '';
+            document.getElementById('eventDate').value = '';
+            document.getElementById('eventDesc').value = '';
+            hideForm('eventForm');
+            renderCalendar();
+            showToast('رویداد با موفقیت ثبت شد.', 'success');
+        }
+
+        function hasEventPermission() {
+            if (userRole === 'owner' || userRole === 'manager') return true;
+            if (userRole === 'teacher') return true;
+            if (userRole === 'deputy') return currentUser.permissions?.manageStaff || false;
+            return false;
+        }
+
+        async function deleteEvent(id) {
+            if (userRole === 'observer') { showToast('شما به عنوان مدیر کل، مجوز حذف ندارید.', 'warning'); return; }
+            if (confirm('آیا از حذف این رویداد اطمینان دارید؟')) {
+                const { error } = await supabase_js.from('events').delete().eq('id', id);
+                if (error) { showToast('خطا در حذف: ' + error.message, 'error'); return; }
+                await loadAllData();
+                renderCalendar();
+                showToast('رویداد با موفقیت حذف شد.', 'success');
+            }
+        }
+
         // ===== پروفایل =====
         function renderProfile() {
             const info = document.getElementById('profileInfo');
@@ -1982,7 +2282,6 @@
             if (!student) { showToast('دانش‌آموز یافت نشد.', 'error'); return; }
             const studentGrades = gradesData.filter(g => g.student_id == studentId);
             const studentDisciplines = disciplineRecords.filter(d => d.student_id == studentId);
-            const studentAttendances = attendancesData.filter(a => a.student_id == studentId);
 
             let html = '<div id="reportContent" style="direction:rtl;">';
             html += '<h2 style="color:var(--gold, #d4a017); text-align:center;">★ کارنامه تحصیلی ★</h2>';
@@ -2020,26 +2319,6 @@
                 html += '</tbody></table>';
             } else {
                 html += '<p style="color:#666; margin-top:10px;">هیچ رکورد انضباطی ثبت نشده است.</p>';
-            }
-
-            if (studentAttendances.length > 0) {
-                const total = studentAttendances.length;
-                const absent = studentAttendances.filter(a => a.status === 'absent').length;
-                const present = studentAttendances.filter(a => a.status === 'present').length;
-                const excused = studentAttendances.filter(a => a.status === 'excused').length;
-                html += '<h4 style="color:var(--secondary, #2a6b3c); margin-top:20px;">📋 حضور و غیاب</h4>';
-                html += '<table style="width:100%; margin:10px 0;"><thead><tr><th>وضعیت</th><th>تعداد</th></tr></thead><tbody>';
-                html += '<tr><td>✅ حاضر</td><td>' + present + '</td></tr>';
-                html += '<tr><td>❌ غایب</td><td>' + absent + '</td></tr>';
-                html += '<tr><td>⚠️ موجه</td><td>' + excused + '</td></tr>';
-                html += '</tbody></table>';
-                html += '<div style="text-align:center; background:var(--bg, #0a0a0a); padding:10px; border-radius:10px; margin:10px 0;">';
-                const attendanceRate = total > 0 ? ((present + excused) / total * 100).toFixed(1) : 0;
-                html += 'نرخ حضور: <strong style="color:var(--gold, #d4a017);">' + attendanceRate + '%</strong> (از ' +
-                    total + ' روز)';
-                html += '</div>';
-            } else {
-                html += '<p style="color:#666; margin-top:10px;">هیچ رکورد حضور و غیاب ثبت نشده است.</p>';
             }
 
             html += '<hr style="border-color:#333; margin:15px 0;">';
@@ -2488,16 +2767,16 @@
         (async function init() {
             await loadAllData();
             loadSettings();
-            console.log('🚀 صدرا با همه‌ی قابلیت‌های حرفه‌ای آماده است!');
+            console.log('🚀 صدرا با منوی TREKMINE، چت گروهی، تکالیف گروهی، اعلان‌ها و تقویم شمسی آماده است!');
             console.log('👥 کاربران:', usersData);
             console.log('📊 نمرات:', gradesData);
             console.log('⚖️ انضباطی:', disciplineRecords);
-            console.log('✅ تمرین‌ها:', tasksData);
-            console.log('💬 پیام‌ها:', messagesData);
+            console.log('📝 تکالیف:', tasksData);
+            console.log('💬 گروه‌ها:', groupsData);
             console.log('📊 نظرسنجی‌ها:', surveysData);
-            console.log('📋 غیبت‌ها:', attendancesData);
             console.log('📁 فایل‌ها:', filesData);
             console.log('📰 اخبار:', newsData);
+            console.log('📅 رویدادها:', eventsData);
         })();
     </script>
 </body>
