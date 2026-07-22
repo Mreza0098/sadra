@@ -16,7 +16,6 @@
     </script>
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" />
     <style>
-        /* ========== RESET & BASE ========== */
         * {
             margin: 0;
             padding: 0;
@@ -113,7 +112,6 @@
         .text-light {
             color: var(--text-light);
         }
-        /* ========== WELCOME PAGE ========== */
         #welcomePage {
             display: flex;
             flex-direction: column;
@@ -150,7 +148,6 @@
             transform: scale(1.05);
             filter: brightness(1.2);
         }
-        /* ========== LOGIN ========== */
         #loginPage {
             display: none;
             padding: 40px 20px;
@@ -248,7 +245,6 @@
             margin-top: 10px;
             font-size: 0.9rem;
         }
-        /* ========== HEADER ========== */
         .header {
             display: flex;
             align-items: center;
@@ -313,14 +309,12 @@
             border-color: var(--gold);
             transform: scale(1.05);
         }
-        /* ========== MAIN LAYOUT (منوی عمودی راست) ========== */
         .main-layout {
             display: flex;
             gap: 20px;
             flex: 1;
             min-height: 70vh;
         }
-        /* ===== منوی عمودی راست ===== */
         .vertical-menu {
             width: 220px;
             min-width: 200px;
@@ -335,7 +329,6 @@
             position: sticky;
             top: 20px;
             order: 2;
-            /* منو در راست */
         }
         .vertical-menu .menu-btn {
             background: transparent;
@@ -389,13 +382,11 @@
             border-top: 1px solid var(--border);
             margin: 8px 0;
         }
-        /* ===== محتوای اصلی ===== */
         .content-area {
             flex: 1;
             min-width: 0;
             order: 1;
         }
-        /* ========== TAB CONTENT ========== */
         .tab-content {
             display: none;
             animation: fadeIn 0.4s ease;
@@ -413,7 +404,6 @@
                 transform: translateY(0);
             }
         }
-        /* ========== CARDS (مدرن و پرجزئیات) ========== */
         .card {
             background: var(--card-bg);
             padding: 28px;
@@ -446,7 +436,6 @@
             margin-bottom: 15px;
             line-height: 1.8;
         }
-        /* ========== FORM ELEMENTS ========== */
         input,
         textarea,
         button,
@@ -525,7 +514,6 @@
             width: auto;
             padding: 10px 24px;
         }
-        /* ========== ITEM LISTS ========== */
         .item-list {
             margin-top: 18px;
             border-top: 1px solid var(--border);
@@ -577,7 +565,6 @@
         .item-row .actions button:hover {
             background: var(--primary);
         }
-        /* ========== BADGES ========== */
         .badge {
             background: var(--gold);
             color: #000;
@@ -603,7 +590,6 @@
             font-weight: bold;
             display: inline-block;
         }
-        /* ========== STATS BOX ========== */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -627,7 +613,6 @@
             font-size: 0.85rem;
             margin-top: 4px;
         }
-        /* ========== TOAST ========== */
         .toast-container {
             position: fixed;
             bottom: 30px;
@@ -690,7 +675,6 @@
                 transform: translateX(0);
             }
         }
-        /* ========== CALENDAR ========== */
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
@@ -750,7 +734,6 @@
             color: var(--text-light);
             font-size: 0.85rem;
         }
-        /* ========== CHAT / GROUPS ========== */
         .group-item {
             background: var(--bg);
             padding: 14px 20px;
@@ -800,7 +783,6 @@
             color: var(--text-light);
             font-size: 0.85rem;
         }
-        /* ========== PERSONALIZATION ========== */
         .personalization-group {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -809,7 +791,6 @@
         .personalization-group .full-width {
             grid-column: 1 / -1;
         }
-        /* ========== NOTIFICATION BANNER ========== */
         .notification-banner {
             background: var(--primary);
             color: #fff;
@@ -828,7 +809,6 @@
         .settings-group .full-width {
             grid-column: 1 / -1;
         }
-        /* ========== PERMISSIONS ========== */
         .permission-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -848,7 +828,6 @@
             margin: 0;
             accent-color: var(--primary);
         }
-        /* ========== FILE UPLOAD ========== */
         .file-upload-area {
             border: 3px dashed var(--border);
             padding: 30px;
@@ -862,7 +841,6 @@
             border-color: var(--gold);
             background: var(--bg);
         }
-        /* ========== SURVEY ========== */
         .survey-option {
             display: flex;
             align-items: center;
@@ -872,7 +850,6 @@
         .survey-option input[type="radio"] {
             width: auto;
         }
-        /* ========== NEWS ========== */
         .news-item {
             border-bottom: 1px solid var(--border);
             padding: 18px 0;
@@ -891,7 +868,6 @@
             color: var(--text-light);
             line-height: 2;
         }
-        /* ========== FOOTER ========== */
         .footer {
             text-align: center;
             margin-top: 30px;
@@ -903,7 +879,6 @@
         .footer strong {
             color: var(--gold);
         }
-        /* ========== RESPONSIVE ========== */
         @media (max-width: 1024px) {
             .vertical-menu {
                 width: 180px;
@@ -998,7 +973,6 @@
 <body>
     <div class="app theme-dark" id="appContainer">
 
-        <!-- ===== WELCOME PAGE ===== -->
         <div id="welcomePage">
             <h1>★ صدرا ★</h1>
             <p style="font-size:1.8rem; color:var(--gold);">سامانه مدیریت آموزشی</p>
@@ -1006,7 +980,6 @@
             <button onclick="showLogin()">🚀 ورود به سامانه</button>
         </div>
 
-        <!-- ===== LOGIN PAGE ===== -->
         <div id="loginPage">
             <div class="login-box">
                 <h2>★ صدرا ★</h2>
@@ -1030,10 +1003,7 @@
             </div>
         </div>
 
-        <!-- ===== APP PAGE ===== -->
         <div id="appPage">
-
-            <!-- HEADER -->
             <div class="header">
                 <div class="logo" id="logoContainer">
                     <img src="sadra.png" alt="لوگو" id="logoImage" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\'logo-placeholder\'>★</span>';" />
@@ -1045,108 +1015,73 @@
                 <button class="logout-btn" onclick="logout()">خروج</button>
             </div>
 
-            <!-- MAIN LAYOUT -->
             <div class="main-layout">
-
-                <!-- ===== VERTICAL MENU (راست) ===== -->
                 <div class="vertical-menu" id="mainMenu">
                     <button class="menu-btn active" data-tab="home" onclick="switchTab('home')">
-                        <span class="icon">🏠</span>
-                        <span class="label">خانه</span>
+                        <span class="icon">🏠</span> <span class="label">خانه</span>
                     </button>
                     <button class="menu-btn" data-tab="grades" onclick="switchTab('grades')">
-                        <span class="icon">📊</span>
-                        <span class="label">نمرات</span>
+                        <span class="icon">📊</span> <span class="label">نمرات</span>
                     </button>
                     <button class="menu-btn" data-tab="reports" onclick="switchTab('reports')">
-                        <span class="icon">📋</span>
-                        <span class="label">کارنامه</span>
+                        <span class="icon">📋</span> <span class="label">کارنامه</span>
                     </button>
                     <button class="menu-btn" data-tab="schedule" onclick="switchTab('schedule')">
-                        <span class="icon">🗓️</span>
-                        <span class="label">زمانبندی</span>
+                        <span class="icon">🗓️</span> <span class="label">زمانبندی</span>
                     </button>
                     <button class="menu-btn" data-tab="tasks" onclick="switchTab('tasks')">
-                        <span class="icon">📝</span>
-                        <span class="label">تکالیف</span>
+                        <span class="icon">📝</span> <span class="label">تکالیف</span>
                     </button>
                     <button class="menu-btn" data-tab="discipline" onclick="switchTab('discipline')">
-                        <span class="icon">⚖️</span>
-                        <span class="label">انضباطی</span>
+                        <span class="icon">⚖️</span> <span class="label">انضباطی</span>
                     </button>
                     <button class="menu-btn" data-tab="groups" onclick="switchTab('groups')">
-                        <span class="icon">💬</span>
-                        <span class="label">گروه‌ها</span>
+                        <span class="icon">💬</span> <span class="label">گروه‌ها</span>
                     </button>
                     <button class="menu-btn" data-tab="survey" onclick="switchTab('survey')">
-                        <span class="icon">📊</span>
-                        <span class="label">نظرسنجی</span>
+                        <span class="icon">📊</span> <span class="label">نظرسنجی</span>
                     </button>
                     <button class="menu-btn" data-tab="files" onclick="switchTab('files')">
-                        <span class="icon">📁</span>
-                        <span class="label">فایل‌ها</span>
+                        <span class="icon">📁</span> <span class="label">فایل‌ها</span>
                     </button>
                     <button class="menu-btn" data-tab="news" onclick="switchTab('news')">
-                        <span class="icon">📰</span>
-                        <span class="label">اخبار</span>
+                        <span class="icon">📰</span> <span class="label">اخبار</span>
                     </button>
                     <button class="menu-btn" data-tab="calendar" onclick="switchTab('calendar')">
-                        <span class="icon">📅</span>
-                        <span class="label">تقویم</span>
+                        <span class="icon">📅</span> <span class="label">تقویم</span>
                     </button>
                     <button class="menu-btn" data-tab="profile" onclick="switchTab('profile')">
-                        <span class="icon">👤</span>
-                        <span class="label">پروفایل</span>
+                        <span class="icon">👤</span> <span class="label">پروفایل</span>
                     </button>
                     <button class="menu-btn" data-tab="personalization" onclick="switchTab('personalization')">
-                        <span class="icon">🎨</span>
-                        <span class="label">شخصی‌سازی</span>
+                        <span class="icon">🎨</span> <span class="label">شخصی‌سازی</span>
                     </button>
                     <button class="menu-btn" data-tab="adminPanel" onclick="switchTab('adminPanel')">
-                        <span class="icon">🔧</span>
-                        <span class="label">مدیریت</span>
+                        <span class="icon">🔧</span> <span class="label">مدیریت</span>
                     </button>
                     <button class="menu-btn" data-tab="settings" onclick="switchTab('settings')">
-                        <span class="icon">⚙️</span>
-                        <span class="label">تنظیمات</span>
+                        <span class="icon">⚙️</span> <span class="label">تنظیمات</span>
                     </button>
                     <hr class="menu-divider" />
                     <button class="menu-btn theme-toggle-btn" onclick="cycleTheme()">
-                        <span class="icon">🎨</span>
-                        <span class="label">تغییر تم</span>
+                        <span class="icon">🎨</span> <span class="label">تغییر تم</span>
                     </button>
                 </div>
-
-                <!-- ===== CONTENT AREA ===== -->
-                <div class="content-area">
-
+                                <div class="content-area">
                     <div id="notificationBanner" class="notification-banner">
                         <strong>📢 اعلان</strong>
                         <p id="notificationText"></p>
                     </div>
 
-                    <!-- ===== HOME ===== -->
                     <div id="home" class="tab-content active">
                         <div class="card">
                             <h3>🚀 به صدرا خوش آمدی</h3>
                             <p class="subtitle" id="homeWelcome">سامانه مدیریت آموزشی با قابلیت‌های پیشرفته</p>
                             <div class="stats-grid">
-                                <div class="stat-box">
-                                    <div class="number" id="statStudents">0</div>
-                                    <div class="label">دانش‌آموزان</div>
-                                </div>
-                                <div class="stat-box">
-                                    <div class="number" id="statTeachers">0</div>
-                                    <div class="label">معلمان</div>
-                                </div>
-                                <div class="stat-box">
-                                    <div class="number" id="statGrades">0</div>
-                                    <div class="label">نمرات ثبت شده</div>
-                                </div>
-                                <div class="stat-box">
-                                    <div class="number" id="statGroups">0</div>
-                                    <div class="label">گروه‌های فعال</div>
-                                </div>
+                                <div class="stat-box"><div class="number" id="statStudents">0</div><div class="label">دانش‌آموزان</div></div>
+                                <div class="stat-box"><div class="number" id="statTeachers">0</div><div class="label">معلمان</div></div>
+                                <div class="stat-box"><div class="number" id="statGrades">0</div><div class="label">نمرات ثبت شده</div></div>
+                                <div class="stat-box"><div class="number" id="statGroups">0</div><div class="label">گروه‌های فعال</div></div>
                             </div>
                             <ul style="list-style:none; margin-top:15px; color:var(--text-light);" id="homeFeatures">
                                 <li style="margin:12px 0;">📊 مدیریت نمرات</li>
@@ -1163,7 +1098,6 @@
                         </div>
                     </div>
 
-                    <!-- ===== GRADES ===== -->
                     <div id="grades" class="tab-content">
                         <div class="card">
                             <h3>📊 نمرات</h3>
@@ -1173,7 +1107,6 @@
                         </div>
                     </div>
 
-                    <!-- ===== REPORTS ===== -->
                     <div id="reports" class="tab-content">
                         <div class="card">
                             <h3>📋 کارنامه و گزارشات</h3>
@@ -1194,7 +1127,6 @@
                         </div>
                     </div>
 
-                    <!-- ===== SCHEDULE ===== -->
                     <div id="schedule" class="tab-content">
                         <div class="card">
                             <h3>🗓️ زمانبندی هفتگی</h3>
@@ -1216,7 +1148,6 @@
                         </div>
                     </div>
 
-                    <!-- ===== TASKS ===== -->
                     <div id="tasks" class="tab-content">
                         <div class="card">
                             <h3>📝 تکالیف گروهی</h3>
@@ -1225,16 +1156,13 @@
                                 <input type="text" id="taskTitle" placeholder="عنوان تکلیف">
                                 <textarea id="taskDescription" rows="3" placeholder="توضیح تکلیف..."></textarea>
                                 <input type="date" id="taskDue">
-                                <select id="taskGroupSelect">
-                                    <option value="">انتخاب گروه...</option>
-                                </select>
+                                <select id="taskGroupSelect"><option value="">انتخاب گروه...</option></select>
                                 <button onclick="addTask()">➕ افزودن تکلیف</button>
                             </div>
                             <div class="item-list" id="taskList"></div>
                         </div>
                     </div>
 
-                    <!-- ===== DISCIPLINE ===== -->
                     <div id="discipline" class="tab-content">
                         <div class="card">
                             <h3>⚖️ ثبت منفی انضباطی</h3>
@@ -1249,7 +1177,6 @@
                         </div>
                     </div>
 
-                    <!-- ===== GROUPS ===== -->
                     <div id="groups" class="tab-content">
                         <div class="card">
                             <h3>💬 چت گروهی</h3>
@@ -1273,7 +1200,6 @@
                         </div>
                     </div>
 
-                    <!-- ===== SURVEY ===== -->
                     <div id="survey" class="tab-content">
                         <div class="card">
                             <h3>📊 نظرسنجی ناشناس</h3>
@@ -1294,7 +1220,6 @@
                         </div>
                     </div>
 
-                    <!-- ===== FILES ===== -->
                     <div id="files" class="tab-content">
                         <div class="card">
                             <h3>📁 فایل‌ها</h3>
@@ -1308,7 +1233,6 @@
                         </div>
                     </div>
 
-                    <!-- ===== NEWS ===== -->
                     <div id="news" class="tab-content">
                         <div class="card">
                             <h3>📰 اخبار مدرسه</h3>
@@ -1325,7 +1249,6 @@
                         </div>
                     </div>
 
-                    <!-- ===== CALENDAR ===== -->
                     <div id="calendar" class="tab-content">
                         <div class="card">
                             <h3>📅 تقویم شمسی</h3>
@@ -1344,7 +1267,6 @@
                         </div>
                     </div>
 
-                    <!-- ===== PROFILE ===== -->
                     <div id="profile" class="tab-content">
                         <div class="card">
                             <h3>👤 پروفایل کاربری</h3>
@@ -1356,54 +1278,20 @@
                         </div>
                     </div>
 
-                    <!-- ===== PERSONALIZATION ===== -->
                     <div id="personalization" class="tab-content">
                         <div class="card">
                             <h3>🎨 شخصی‌سازی</h3>
                             <p class="subtitle">تنظیمات ظاهری و سلیقه‌ای</p>
                             <div class="personalization-group">
-                                <div class="full-width">
-                                    <label>زبان</label>
-                                    <select id="userLang" onchange="savePersonalization()">
-                                        <option value="fa">فارسی</option>
-                                        <option value="en">English</option>
-                                        <option value="ar">العربية</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label>چینش منو</label>
-                                    <select id="userLayout" onchange="savePersonalization()">
-                                        <option value="grid">شبکه‌ای (پیش‌فرض)</option>
-                                        <option value="list">لیستی</option>
-                                        <option value="compact">فشرده</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label>اندازه فونت</label>
-                                    <select id="userFontSize" onchange="savePersonalization()">
-                                        <option value="small">کوچک</option>
-                                        <option value="medium">متوسط</option>
-                                        <option value="large">بزرگ</option>
-                                    </select>
-                                </div>
-                                <div class="full-width">
-                                    <label>تم شخصی</label>
-                                    <select id="userTheme" onchange="applyUserTheme(this.value)">
-                                        <option value="theme-dark">تیره (پیش‌فرض)</option>
-                                        <option value="theme-red">قرمز</option>
-                                        <option value="theme-green">سبز</option>
-                                        <option value="theme-blue">آبی</option>
-                                        <option value="theme-gold">طلایی</option>
-                                    </select>
-                                </div>
-                                <div class="full-width">
-                                    <button onclick="resetPersonalization()" class="danger" style="width:auto; padding:8px 24px;">↺ بازنشانی به پیش‌فرض</button>
-                                </div>
+                                <div class="full-width"><label>زبان</label><select id="userLang" onchange="savePersonalization()"><option value="fa">فارسی</option><option value="en">English</option><option value="ar">العربية</option></select></div>
+                                <div><label>چینش منو</label><select id="userLayout" onchange="savePersonalization()"><option value="grid">شبکه‌ای</option><option value="list">لیستی</option><option value="compact">فشرده</option></select></div>
+                                <div><label>اندازه فونت</label><select id="userFontSize" onchange="savePersonalization()"><option value="small">کوچک</option><option value="medium">متوسط</option><option value="large">بزرگ</option></select></div>
+                                <div class="full-width"><label>تم شخصی</label><select id="userTheme" onchange="applyUserTheme(this.value)"><option value="theme-dark">تیره</option><option value="theme-red">قرمز</option><option value="theme-green">سبز</option><option value="theme-blue">آبی</option><option value="theme-gold">طلایی</option></select></div>
+                                <div class="full-width"><button onclick="resetPersonalization()" class="danger" style="width:auto; padding:8px 24px;">↺ بازنشانی به پیش‌فرض</button></div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- ===== ADMIN PANEL ===== -->
                     <div id="adminPanel" class="tab-content">
                         <div class="card">
                             <h3>🔧 پنل مدیریت</h3>
@@ -1434,7 +1322,7 @@
                                         <option value="manager">مدیر</option>
                                         <option value="deputy">معاون</option>
                                         <option value="teacher">معلم</option>
-                                        <option value="observer">مدیر کل (مشاهده‌گر)</option>
+                                        <option value="observer">مدیر کل</option>
                                     </select>
                                     <div id="teacherLessonSection" class="hidden"><h5>درس‌های این معلم</h5><div id="teacherLessonCheckboxes"></div></div>
                                     <button onclick="addStaff()" class="success">ذخیره</button>
@@ -1467,7 +1355,6 @@
                         </div>
                     </div>
 
-                    <!-- ===== SETTINGS ===== -->
                     <div id="settings" class="tab-content">
                         <div class="card">
                             <h3>⚙️ تنظیمات سایت</h3>
@@ -1475,33 +1362,26 @@
                             <div class="settings-group">
                                 <div class="full-width"><label>شعار سایت</label><input type="text" id="settingSlogan" placeholder="شعار سایت را وارد کنید"></div>
                                 <div class="full-width"><label>عنوان سایت</label><input type="text" id="settingTitle" placeholder="عنوان سایت را وارد کنید"></div>
-                                <div class="full-width">
-                                    <label>آپلود لوگو (Favicon & PWA)</label>
-                                    <input type="file" id="settingLogo" accept="image/*" onchange="uploadLogo(this)">
-                                    <p style="color:var(--text-light); font-size:0.85rem;">عکس با نام `sadra.png` در پوشه‌ی اصلی ذخیره خواهد شد.</p>
-                                </div>
+                                <div class="full-width"><label>آپلود لوگو</label><input type="file" id="settingLogo" accept="image/*" onchange="uploadLogo(this)"><p style="color:var(--text-light); font-size:0.85rem;">عکس با نام sadra.png</p></div>
                                 <div class="full-width"><button onclick="saveSettings()" class="success">💾 ذخیره تنظیمات</button></div>
                             </div>
                         </div>
                     </div>
 
-                </div> <!-- end content-area -->
-            </div> <!-- end main-layout -->
+                </div>
+            </div>
 
             <div class="footer"><strong>★</strong> صدرا · سامانه مدیریت آموزشی <strong>★</strong></div>
-        </div> <!-- end appPage -->
-    </div> <!-- end appContainer -->
+        </div>
+    </div>
 
     <div class="toast-container" id="toastContainer"></div>
 
     <script>
-        // ===== SUPABASE =====
         const SUPABASE_URL = 'https://cyyfagessadtzzqcgero.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN5eWZhZ2Vzc2FkdHp6cWNnZXJvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ0MzY4NTYsImV4cCI6MjEwMDAxMjg1Nn0.ryER3Az8letoQDAoJhqAoYylRjgXrIBX0tKFMCLFLJ8';
         const supabase_js = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-        // ===== VARIABLES =====
-        let currentUser = null;
+                let currentUser = null;
         let userRole = null;
         let usersData = [];
         let gradesData = [];
@@ -1531,32 +1411,22 @@
         let currentThemeIndex = 0;
         let currentGroupId = null;
 
-        // ===== TOAST =====
         function showToast(message, type = 'info', duration = 4000) {
             const container = document.getElementById('toastContainer');
             const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
+            toast.className = 'toast ' + type;
             const titles = { info: '📢 اطلاع', success: '✅ موفق', error: '❌ خطا', warning: '⚠️ هشدار' };
-            toast.innerHTML = `
-                        <div class="toast-title">${titles[type] || 'اطلاع'}</div>
-                        <button class="toast-close" onclick="this.parentElement.remove()">✕</button>
-                        <div>${message}</div>
-                    `;
+            toast.innerHTML = '<div class="toast-title">' + (titles[type] || 'اطلاع') + '</div><button class="toast-close" onclick="this.parentElement.remove()">✕</button><div>' + message + '</div>';
             container.appendChild(toast);
-            let timer = setTimeout(() => {
-                toast.style.opacity = '0';
-                setTimeout(() => toast.remove(), 300);
-            }, duration);
+            let timer = setTimeout(() => { toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300); }, duration);
             toast.addEventListener('mouseenter', () => { clearTimeout(timer); });
             toast.addEventListener('mouseleave', () => {
-                timer = setTimeout(() => {
-                    toast.style.opacity = '0';
-                    setTimeout(() => toast.remove(), 300);
-                }, duration);
+                timer = setTimeout(() => { toast.style.opacity = '0';
+                    setTimeout(() => toast.remove(), 300); }, duration);
             });
         }
 
-        // ===== THEME =====
         function applyTheme(theme) {
             document.getElementById('appContainer').className = 'app ' + theme;
             siteSettings.theme = theme;
@@ -1577,7 +1447,6 @@
             applyTheme(theme);
         }
 
-        // ===== PERSONALIZATION =====
         function savePersonalization() {
             userPreferences.lang = document.getElementById('userLang').value;
             userPreferences.layout = document.getElementById('userLayout').value;
@@ -1630,7 +1499,6 @@
             applyUserPreferences();
         }
 
-        // ===== LOAD DATA =====
         async function loadAllData() {
             try {
                 const { data: users } = await supabase_js.from('users').select('*');
@@ -1666,7 +1534,6 @@
             document.getElementById('statGroups').textContent = groupsData.length;
         }
 
-        // ===== WELCOME & LOGIN =====
         function showLogin() {
             document.getElementById('welcomePage').style.display = 'none';
             document.getElementById('loginPage').style.display = 'block';
@@ -1730,7 +1597,6 @@
                 document.getElementById('logoImage').src = siteSettings.logo;
                 document.getElementById('logoImage').style.display = 'block';
             }
-
             let displayName = '';
             if (userRole === 'student') displayName = 'خوش آمدی، ' + currentUser.name;
             else if (userRole === 'owner') displayName = 'مدیر اصلی - خوش آمدید';
@@ -1739,9 +1605,7 @@
             else if (userRole === 'teacher') displayName = 'معلم - ' + currentUser.name;
             else if (userRole === 'observer') displayName = 'مدیر کل - ' + currentUser.name;
             document.getElementById('userDisplayName').textContent = displayName;
-
             const isObserver = (userRole === 'observer');
-
             document.querySelectorAll('#btnAddStudent, #btnAddStaff, #btnAddGrade, #btnPermissions').forEach(btn => {
                 btn.style.display = isObserver ? 'none' : 'inline-flex';
             });
@@ -1749,7 +1613,6 @@
                 document.querySelectorAll('#addStudentSection, #addStaffSection, #addGradeSection, #managePermissionsSection')
                     .forEach(el => el.classList.add('hidden'));
             }
-
             populateStudentSelects();
             populateGroupSelects();
             updateHomeFeatures();
@@ -1784,7 +1647,6 @@
             showToast('خارج شدید', 'info');
         }
 
-        // ===== HELPERS =====
         function getUserName(id) {
             if (id === 'owner') return 'مدیر اصلی';
             const user = usersData.find(u => u.id == id);
@@ -1827,16 +1689,16 @@
             let html = '';
             if (userRole === 'student') {
                 html =
-                    `<li style="margin:12px 0;">📊 مشاهده نمرات</li><li style="margin:12px 0;">💬 چت گروهی</li><li style="margin:12px 0;">📋 مشاهده غیبت‌ها</li><li style="margin:12px 0;">📁 مشاهده فایل‌ها</li><li style="margin:12px 0;">📰 مشاهده اخبار</li><li style="margin:12px 0;">📅 تقویم شمسی</li>`;
+                    '<li style="margin:12px 0;">📊 مشاهده نمرات</li><li style="margin:12px 0;">💬 چت گروهی</li><li style="margin:12px 0;">📋 مشاهده غیبت‌ها</li><li style="margin:12px 0;">📁 مشاهده فایل‌ها</li><li style="margin:12px 0;">📰 مشاهده اخبار</li><li style="margin:12px 0;">📅 تقویم شمسی</li>';
             } else if (userRole === 'teacher') {
                 html =
-                    `<li style="margin:12px 0;">📊 ثبت نمرات</li><li style="margin:12px 0;">💬 مدیریت چت گروهی</li><li style="margin:12px 0;">📋 ثبت غیبت</li><li style="margin:12px 0;">📁 آپلود فایل</li><li style="margin:12px 0;">📰 ثبت خبر</li><li style="margin:12px 0;">📅 مدیریت تقویم</li>`;
+                    '<li style="margin:12px 0;">📊 ثبت نمرات</li><li style="margin:12px 0;">💬 مدیریت چت گروهی</li><li style="margin:12px 0;">📋 ثبت غیبت</li><li style="margin:12px 0;">📁 آپلود فایل</li><li style="margin:12px 0;">📰 ثبت خبر</li><li style="margin:12px 0;">📅 مدیریت تقویم</li>';
             } else if (userRole === 'deputy') {
                 html =
-                    `<li style="margin:12px 0;">📊 مدیریت نمرات</li><li style="margin:12px 0;">💬 مدیریت گروه‌ها</li><li style="margin:12px 0;">📋 مدیریت غیبت</li><li style="margin:12px 0;">📁 مدیریت فایل‌ها</li><li style="margin:12px 0;">📰 مدیریت اخبار</li><li style="margin:12px 0;">📅 مدیریت تقویم</li>`;
+                    '<li style="margin:12px 0;">📊 مدیریت نمرات</li><li style="margin:12px 0;">💬 مدیریت گروه‌ها</li><li style="margin:12px 0;">📋 مدیریت غیبت</li><li style="margin:12px 0;">📁 مدیریت فایل‌ها</li><li style="margin:12px 0;">📰 مدیریت اخبار</li><li style="margin:12px 0;">📅 مدیریت تقویم</li>';
             } else {
                 html =
-                    `<li style="margin:12px 0;">📊 مدیریت کامل نمرات</li><li style="margin:12px 0;">💬 مدیریت گروه‌ها</li><li style="margin:12px 0;">📋 مدیریت غیبت</li><li style="margin:12px 0;">📁 مدیریت فایل‌ها</li><li style="margin:12px 0;">📰 مدیریت اخبار</li><li style="margin:12px 0;">📅 مدیریت تقویم</li><li style="margin:12px 0;">👥 مدیریت کاربران</li>`;
+                    '<li style="margin:12px 0;">📊 مدیریت کامل نمرات</li><li style="margin:12px 0;">💬 مدیریت گروه‌ها</li><li style="margin:12px 0;">📋 مدیریت غیبت</li><li style="margin:12px 0;">📁 مدیریت فایل‌ها</li><li style="margin:12px 0;">📰 مدیریت اخبار</li><li style="margin:12px 0;">📅 مدیریت تقویم</li><li style="margin:12px 0;">👥 مدیریت کاربران</li>';
             }
             features.innerHTML = html;
         }
@@ -1845,12 +1707,9 @@
             document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
             const target = document.getElementById(tabId);
             if (target) target.classList.add('active');
-
             document.querySelectorAll('.menu-btn[data-tab]').forEach(btn => {
                 btn.classList.remove('active');
-                if (btn.dataset.tab === tabId) {
-                    btn.classList.add('active');
-                }
+                if (btn.dataset.tab === tabId) { btn.classList.add('active'); }
             });
             if (tabId === 'groups') renderGroups();
             if (tabId === 'calendar') renderCalendar();
@@ -1895,14 +1754,13 @@
                 let html = '';
                 lessons.forEach(lesson => {
                     html +=
-                        `<div class="permission-item"><input type="checkbox" value="${lesson}" id="lesson_${lesson}"><label for="lesson_${lesson}">${lesson}</label></div>`;
+                        '<div class="permission-item"><input type="checkbox" value="' + lesson + '" id="lesson_' +
+                        lesson + '"><label for="lesson_' + lesson + '">' + lesson + '</label></div>';
                 });
                 container.innerHTML = html;
             } else section.classList.add('hidden');
         }
-
-        // ===== GRADES =====
-        function renderUserData() {
+                function renderUserData() {
             if (!currentUser) return;
             if (userRole === 'student') {
                 renderStudentGrades();
@@ -1924,12 +1782,14 @@
                     filteredGrades.forEach(g => {
                         sum += g.score;
                         const name = getUserName(g.student_id);
-                        html +=
-                            `<div class="item-row"><div class="info"><div class="title">${name}</div><div class="meta">${g.lesson} — <span style="color:var(--gold);">${g.score}</span> (${g.date || 'بدون تاریخ'})</div></div></div>`;
+                        html += '<div class="item-row"><div class="info"><div class="title">' + name +
+                            '</div><div class="meta">' + g.lesson + ' — <span style="color:var(--gold);">' + g
+                            .score + '</span> (' + (g.date || 'بدون تاریخ') + ')</div></div></div>';
                     });
                     list.innerHTML = html;
-                    document.getElementById('avgBox').innerHTML =
-                        `معدل کل: <strong style="color:var(--gold);">${(sum / filteredGrades.length).toFixed(2)}</strong> (از ${filteredGrades.length} نمره)`;
+                    document.getElementById('avgBox').innerHTML = 'معدل کل: <strong style="color:var(--gold);">' + (
+                        sum / filteredGrades.length).toFixed(2) + '</strong> (از ' + filteredGrades.length +
+                        ' نمره)';
                 }
             }
             loadSchedule();
@@ -1947,16 +1807,16 @@
                     sum = 0;
                 userGrades.forEach(g => {
                     sum += g.score;
-                    html +=
-                        `<div class="item-row"><div class="info"><div class="title">${g.lesson}</div><div class="meta"><span style="color:var(--gold);">${g.score}</span> (${g.date || 'بدون تاریخ'})</div></div></div>`;
+                    html += '<div class="item-row"><div class="info"><div class="title">' + g.lesson +
+                        '</div><div class="meta"><span style="color:var(--gold);">' + g.score + '</span> (' + (
+                            g.date || 'بدون تاریخ') + ')</div></div></div>';
                 });
                 list.innerHTML = html;
-                document.getElementById('avgBox').innerHTML =
-                    `معدل کل: <strong style="color:var(--gold);">${(sum / userGrades.length).toFixed(2)}</strong> (از ${userGrades.length} نمره)`;
+                document.getElementById('avgBox').innerHTML = 'معدل کل: <strong style="color:var(--gold);">' + (
+                    sum / userGrades.length).toFixed(2) + '</strong> (از ' + userGrades.length + ' نمره)';
             }
         }
 
-        // ===== DISCIPLINE =====
         async function addDiscipline() {
             if (!hasDisciplinePermission()) { showToast('شما مجوز ثبت منفی انضباطی را ندارید.', 'warning'); return; }
             const student_id = document.getElementById('disciplineStudentSelect').value;
@@ -1994,13 +1854,17 @@
             else if (userRole === 'teacher') filtered = disciplineRecords.filter(d => d.teacher_id === currentUser.id);
             filtered.forEach(d => {
                 const name = getUserName(d.student_id);
-                html +=
-                    `<div class="item-row"><div class="info"><div class="title">${name}</div><div class="meta"><span class="badge-red">-${d.value}</span> ${d.reason ? '— ' + d.reason : ''} (${d.date})${userRole !== 'student' ? ' — ثبت: ' + getUserName(d.teacher_id) : ''}</div></div>${userRole !== 'student' && userRole !== 'observer' ? '<div class="actions"><button onclick="deleteDiscipline(' + d.id + ')" class="danger">🗑️</button></div>' : ''}</div>`;
+                html += '<div class="item-row"><div class="info"><div class="title">' + name +
+                    '</div><div class="meta"><span class="badge-red">-' + d.value + '</span> ' + (d.reason ?
+                        '— ' + d.reason : '') + ' (' + d.date + ')' + (userRole !== 'student' ?
+                        ' — ثبت: ' + getUserName(d.teacher_id) : '') +
+                    '</div></div>' + (userRole !== 'student' && userRole !== 'observer' ?
+                        '<div class="actions"><button onclick="deleteDiscipline(' + d.id +
+                        ')" class="danger">🗑️</button></div>' : '') + '</div>';
             });
             list.innerHTML = html;
         }
 
-        // ===== TASKS =====
         async function addTask() {
             if (!hasTaskPermission()) { showToast('شما مجوز افزودن تکلیف را ندارید.', 'warning'); return; }
             const title = document.getElementById('taskTitle').value.trim();
@@ -2049,17 +1913,18 @@
             filtered.forEach(t => {
                 const group = groupsData.find(g => g.id === t.group_id);
                 const groupName = group ? group.name : 'گروه نامشخص';
-                html += `<div class="task-item">
-                            <div class="task-title">${t.title}</div>
-                            <div class="task-meta">گروه: ${groupName} | مهلت: ${t.due || 'بدون تاریخ'} | ثبت: ${getUserName(t.creator_id)}</div>
-                            ${t.description ? '<div style="color:var(--text-light); margin-top:5px;">' + t.description + '</div>' : ''}
-                            ${userRole !== 'student' ? '<button onclick="deleteTask(' + t.id + ')" class="danger" style="width:auto; padding:4px 12px; margin-top:8px;">🗑️ حذف</button>' : ''}
-                        </div>`;
+                html += '<div class="task-item"><div class="task-title">' + t.title +
+                    '</div><div class="task-meta">گروه: ' + groupName + ' | مهلت: ' + (t.due || 'بدون تاریخ') +
+                    ' | ثبت: ' + getUserName(t.creator_id) + '</div>' + (t.description ?
+                        '<div style="color:var(--text-light); margin-top:5px;">' + t.description + '</div>' :
+                        '') + (userRole !== 'student' ?
+                        '<button onclick="deleteTask(' + t.id +
+                        ')" class="danger" style="width:auto; padding:4px 12px; margin-top:8px;">🗑️ حذف</button>'
+                        : '') + '</div>';
             });
             list.innerHTML = html;
         }
 
-        // ===== GROUPS =====
         async function createGroup() {
             const name = document.getElementById('newGroupName').value.trim();
             if (!name) { showToast('لطفاً نام گروه را وارد کنید.', 'warning'); return; }
@@ -2153,11 +2018,9 @@
             messages.forEach(m => {
                 const sender = getUserName(m.sender_id);
                 const time = new Date(m.timestamp).toLocaleString('fa-IR');
-                html += `<div class="group-message">
-                            <div class="sender">${sender}</div>
-                            <div class="time">${time}</div>
-                            <div style="margin-top:5px; color:var(--text-light);">${m.text}</div>
-                        </div>`;
+                html += '<div class="group-message"><div class="sender">' + sender +
+                    '</div><div class="time">' + time + '</div><div style="margin-top:5px; color:var(--text-light);">' +
+                    m.text + '</div></div>';
             });
             container.innerHTML = html;
             container.scrollTop = container.scrollHeight;
@@ -2173,24 +2036,22 @@
             groupsData.forEach(g => {
                 const isMember = g.members && g.members.includes(currentUser.id);
                 const memberCount = g.members ? g.members.length : 0;
-                html += `<div class="group-item">
-                            <div>
-                                <div class="group-name">${g.name}</div>
-                                <div style="color:var(--text-light); font-size:0.85rem;">سازنده: ${getUserName(g.creator_id)} | اعضا: ${memberCount}</div>
-                            </div>
-                            <div>
-                                ${isMember ? 
-                                    '<button onclick="openGroup(' + g.id + ')" class="success" style="width:auto; padding:6px 16px;">💬 ورود</button>' :
-                                    '<button onclick="joinGroup(' + g.id + ')" class="warning" style="width:auto; padding:6px 16px;">➕ پیوستن</button>'
-                                }
-                                ${userRole !== 'student' && g.creator_id === currentUser.id ? '<button onclick="deleteGroup(' + g.id + ')" class="danger" style="width:auto; padding:6px 16px;">🗑️</button>' : ''}
-                            </div>
-                        </div>`;
+                html += '<div class="group-item"><div><div class="group-name">' + g.name +
+                    '</div><div style="color:var(--text-light); font-size:0.85rem;">سازنده: ' + getUserName(g
+                        .creator_id) + ' | اعضا: ' + memberCount +
+                    '</div></div><div>' + (isMember ?
+                        '<button onclick="openGroup(' + g.id +
+                        ')" class="success" style="width:auto; padding:6px 16px;">💬 ورود</button>' :
+                        '<button onclick="joinGroup(' + g.id +
+                        ')" class="warning" style="width:auto; padding:6px 16px;">➕ پیوستن</button>') +
+                    (userRole !== 'student' && g.creator_id === currentUser.id ?
+                        '<button onclick="deleteGroup(' + g.id +
+                        ')" class="danger" style="width:auto; padding:6px 16px;">🗑️</button>' : '') +
+                    '</div></div>';
             });
             list.innerHTML = html;
         }
 
-        // ===== SURVEY =====
         function addSurveyOption() {
             const container = document.getElementById('surveyOptions');
             const input = document.createElement('input');
@@ -2243,27 +2104,21 @@
             let html = '';
             surveysData.forEach(s => {
                 const totalVotes = s.votes.reduce((a, b) => a + b, 0);
-                html += `<div class="card" style="border-right-color:var(--secondary);">
-                            <h4>${s.question}</h4>
-                            <div style="margin:10px 0;">`;
+                html += '<div class="card" style="border-right-color:var(--secondary);"><h4>' + s.question +
+                    '</h4><div style="margin:10px 0;">';
                 s.options.forEach((opt, idx) => {
                     const percentage = totalVotes > 0 ? Math.round((s.votes[idx] / totalVotes) * 100) : 0;
-                    html += `
-                                <div class="survey-option">
-                                    <input type="radio" name="survey_${s.id}" value="${idx}" onchange="voteSurvey(${s.id}, ${idx})">
-                                    <label>${opt}</label>
-                                    <span style="color:var(--text-light); margin-right:10px;">${s.votes[idx] || 0} رای (${percentage}%)</span>
-                                </div>
-                            `;
+                    html += '<div class="survey-option"><input type="radio" name="survey_' + s.id +
+                        '" value="' + idx + '" onchange="voteSurvey(' + s.id + ', ' + idx +
+                        ')"><label>' + opt + '</label><span style="color:var(--text-light); margin-right:10px;">' +
+                        (s.votes[idx] || 0) + ' رای (' + percentage + '%)</span></div>';
                 });
-                html += `</div>
-                            <div style="color:var(--text-light); font-size:0.85rem;">تعداد کل رای‌ها: ${totalVotes}</div>
-                        </div>`;
+                html += '</div><div style="color:var(--text-light); font-size:0.85rem;">تعداد کل رای‌ها: ' +
+                    totalVotes + '</div></div>';
             });
             list.innerHTML = html;
         }
 
-        // ===== FILES =====
         async function uploadFile(input) {
             const file = input.files[0];
             if (!file) return;
@@ -2296,21 +2151,18 @@
             filesData.forEach(f => {
                 const uploader = getUserName(f.uploader_id);
                 const size = (f.size / 1024).toFixed(1) + ' KB';
-                html += `<div class="item-row">
-                            <div class="info">
-                                <div class="title">${f.name}</div>
-                                <div class="meta">${size} — ${f.type} — ${uploader} — ${new Date(f.timestamp).toLocaleDateString('fa-IR')}</div>
-                            </div>
-                            <div class="actions">
-                                <a href="${f.content}" download="${f.name}" class="nav-btn" style="padding:6px 14px; background:var(--primary); text-decoration:none; color:white; border-radius:12px; display:inline-block;">📥 دانلود</a>
-                                ${userRole !== 'student' ? '<button onclick="deleteFile(' + f.id + ')" class="danger">🗑️</button>' : ''}
-                            </div>
-                        </div>`;
+                html += '<div class="item-row"><div class="info"><div class="title">' + f.name +
+                    '</div><div class="meta">' + size + ' — ' + f.type + ' — ' + uploader + ' — ' +
+                    new Date(f.timestamp).toLocaleDateString('fa-IR') +
+                    '</div></div><div class="actions"><a href="' + f.content + '" download="' + f.name +
+                    '" class="nav-btn" style="padding:6px 14px; background:var(--primary); text-decoration:none; color:white; border-radius:12px; display:inline-block;">📥 دانلود</a>' +
+                    (userRole !== 'student' ?
+                        '<button onclick="deleteFile(' + f.id + ')" class="danger">🗑️</button>' : '') +
+                    '</div></div>';
             });
             list.innerHTML = html;
         }
 
-        // ===== NEWS =====
         async function addNews() {
             if (!hasNewsPermission()) { showToast('شما مجوز ثبت خبر را ندارید.', 'warning'); return; }
             const title = document.getElementById('newsTitle').value.trim();
@@ -2349,17 +2201,16 @@
             sorted.forEach(n => {
                 const creator = getUserName(n.creator_id);
                 const date = new Date(n.timestamp).toLocaleDateString('fa-IR');
-                html += `<div class="news-item">
-                            <div class="title">${n.title}</div>
-                            <div class="date">${date} — ثبت: ${creator}</div>
-                            <div class="content">${n.content}</div>
-                            ${userRole !== 'student' ? '<button onclick="deleteNews(' + n.id + ')" class="danger" style="width:auto; padding:4px 12px; margin-top:10px;">🗑️ حذف</button>' : ''}
-                        </div>`;
+                html += '<div class="news-item"><div class="title">' + n.title + '</div><div class="date">' +
+                    date + ' — ثبت: ' + creator + '</div><div class="content">' + n.content +
+                    '</div>' + (userRole !== 'student' ?
+                        '<button onclick="deleteNews(' + n.id +
+                        ')" class="danger" style="width:auto; padding:4px 12px; margin-top:10px;">🗑️ حذف</button>'
+                        : '') + '</div>';
             });
             list.innerHTML = html;
         }
 
-        // ===== CALENDAR =====
         function renderCalendar() {
             const container = document.getElementById('calendarDisplay');
             const now = new Date();
@@ -2370,18 +2221,19 @@
             const firstDay = new Date(year, month, 1).getDay();
             const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-            let html = `<h4 style="text-align:center; color:var(--gold); font-size:1.4rem;">${monthNames[month]} ${year}</h4>`;
-            html += `<div class="calendar-grid">`;
-            dayNames.forEach(d => { html += `<div class="day-header">${d}</div>`; });
-            for (let i = 0; i < firstDay; i++) { html += `<div class="day empty"></div>`; }
+            let html = '<h4 style="text-align:center; color:var(--gold); font-size:1.4rem;">' + monthNames[month] + ' ' +
+                year + '</h4>';
+            html += '<div class="calendar-grid">';
+            dayNames.forEach(d => { html += '<div class="day-header">' + d + '</div>'; });
+            for (let i = 0; i < firstDay; i++) { html += '<div class="day empty"></div>'; }
             for (let d = 1; d <= daysInMonth; d++) {
-                const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+                const dateStr = year + '-' + String(month + 1).padStart(2, '0') + '-' + String(d).padStart(2, '0');
                 const hasEvent = eventsData.some(e => e.date === dateStr);
                 const isToday = d === now.getDate() && month === now.getMonth();
-                html +=
-                    `<div class="day ${hasEvent ? 'event-day' : ''} ${isToday ? 'today' : ''}" onclick="${hasEvent ? `showEvents('${dateStr}')` : ''}">${d}</div>`;
+                html += '<div class="day ' + (hasEvent ? 'event-day' : '') + (isToday ? ' today' : '') + '" onclick="' +
+                    (hasEvent ? "showEvents('" + dateStr + "')" : '') + '">' + d + '</div>';
             }
-            html += `</div>`;
+            html += '</div>';
             container.innerHTML = html;
             renderEventsList();
         }
@@ -2396,12 +2248,13 @@
             const sorted = [...eventsData].sort((a, b) => new Date(a.date) - new Date(b.date));
             sorted.forEach(e => {
                 const creator = getUserName(e.creator_id);
-                html += `<div class="event-item">
-                            <div class="event-title">${e.title}</div>
-                            <div class="event-date">${e.date} — ثبت: ${creator}</div>
-                            ${e.description ? '<div style="color:var(--text-light);">' + e.description + '</div>' : ''}
-                            ${userRole !== 'student' ? '<button onclick="deleteEvent(' + e.id + ')" class="danger" style="width:auto; padding:4px 12px; margin-top:5px;">🗑️ حذف</button>' : ''}
-                        </div>`;
+                html += '<div class="event-item"><div class="event-title">' + e.title +
+                    '</div><div class="event-date">' + e.date + ' — ثبت: ' + creator + '</div>' + (e
+                        .description ? '<div style="color:var(--text-light);">' + e.description + '</div>' :
+                        '') + (userRole !== 'student' ?
+                        '<button onclick="deleteEvent(' + e.id +
+                        ')" class="danger" style="width:auto; padding:4px 12px; margin-top:5px;">🗑️ حذف</button>'
+                        : '') + '</div>';
             });
             container.innerHTML = html;
         }
@@ -2414,22 +2267,17 @@
             showToast(msg, 'info', 6000);
         }
 
-        // ===== PROFILE =====
         function renderProfile() {
             const info = document.getElementById('profileInfo');
             if (!currentUser) return;
             const user = usersData.find(u => u.id == currentUser.id);
             if (!user) { info.innerHTML = '<p style="color:var(--text-light);">اطلاعات پروفایل یافت نشد.</p>'; return; }
             const isVerified = user.verified || false;
-            info.innerHTML = `
-                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
-                            <div><strong>نام:</strong> ${user.name}</div>
-                            <div><strong>نقش:</strong> ${user.role}</div>
-                            <div><strong>کد ملی:</strong> ${user.id}</div>
-                            <div><strong>موبایل:</strong> ${user.mobile}</div>
-                            <div><strong>وضعیت تایید:</strong> ${isVerified ? '✅ تایید شده' : '⏳ در انتظار تایید'}</div>
-                        </div>
-                    `;
+            info.innerHTML = '<div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;"><div><strong>نام:</strong> ' +
+                user.name + '</div><div><strong>نقش:</strong> ' + user.role +
+                '</div><div><strong>کد ملی:</strong> ' + user.id + '</div><div><strong>موبایل:</strong> ' + user.mobile +
+                '</div><div><strong>وضعیت تایید:</strong> ' + (isVerified ? '✅ تایید شده' : '⏳ در انتظار تایید') +
+                '</div></div>';
             const verifySection = document.getElementById('profileVerification');
             if (userRole === 'owner' || userRole === 'manager') {
                 verifySection.classList.remove('hidden');
@@ -2438,7 +2286,6 @@
             }
         }
 
-        // ===== REPORTS =====
         function generateReport() {
             const studentId = document.getElementById('reportStudentSelect').value;
             if (!studentId) { showToast('لطفاً یک دانش‌آموز را انتخاب کنید.', 'warning'); return; }
@@ -2539,10 +2386,8 @@
             showToast('دانلود PDF شروع شد.', 'success');
         }
 
-        // ===== ADMIN PANEL =====
         function renderAdminPanel() {
             if (!hasAdminAccess()) return;
-            // Grades
             const gradeList = document.getElementById('adminGradeList');
             if (gradesData.length === 0) {
                 gradeList.innerHTML = '<p style="color:var(--text-light);">هیچ نمره‌ای ثبت نشده است.</p>';
@@ -2550,13 +2395,16 @@
                 let html = '<h4>📋 لیست نمرات</h4>';
                 gradesData.forEach(g => {
                     const name = getUserName(g.student_id);
-                    html +=
-                        `<div class="item-row"><div class="info"><div class="title">${name}</div><div class="meta">${g.lesson} — <span style="color:var(--gold);">${g.score}</span> (${g.date || 'بدون تاریخ'})</div></div>${userRole !== 'observer' ? '<div class="actions"><button onclick="deleteGrade(' + g.id + ')" class="danger">🗑️</button></div>' : ''}</div>`;
+                    html += '<div class="item-row"><div class="info"><div class="title">' + name +
+                        '</div><div class="meta">' + g.lesson + ' — <span style="color:var(--gold);">' + g
+                        .score + '</span> (' + (g.date || 'بدون تاریخ') +
+                        ')</div></div>' + (userRole !== 'observer' ?
+                            '<div class="actions"><button onclick="deleteGrade(' + g.id +
+                            ')" class="danger">🗑️</button></div>' : '') + '</div>';
                 });
                 gradeList.innerHTML = html;
             }
 
-            // Users
             const userList = document.getElementById('adminUserList');
             const students = usersData.filter(u => u.role === 'student');
             if (students.length === 0) {
@@ -2564,13 +2412,15 @@
             } else {
                 let html = '<h4>📋 لیست دانش‌آموزان</h4>';
                 students.forEach(u => {
-                    html +=
-                        `<div class="item-row"><div class="info"><div class="title">${u.name}</div><div class="meta">کد: ${u.id} — موبایل: ${u.mobile}</div></div>${userRole !== 'observer' ? '<div class="actions"><button onclick="deleteStudent(' + u.id + ')" class="danger">🗑️</button></div>' : ''}</div>`;
+                    html += '<div class="item-row"><div class="info"><div class="title">' + u.name +
+                        '</div><div class="meta">کد: ' + u.id + ' — موبایل: ' + u.mobile +
+                        '</div></div>' + (userRole !== 'observer' ?
+                            '<div class="actions"><button onclick="deleteStudent(' + u.id +
+                            ')" class="danger">🗑️</button></div>' : '') + '</div>';
                 });
                 userList.innerHTML = html;
             }
 
-            // Staff
             const staffList = document.getElementById('adminStaffList');
             const staff = usersData.filter(u => u.role !== 'student');
             if (staff.length === 0) {
@@ -2585,7 +2435,8 @@
                     if (s.role === 'deputy') {
                         const perms = s.permissions || {};
                         const activePerms = Object.keys(perms).filter(k => perms[k]);
-                        extraInfo = ' — دسترسی‌ها: ' + (activePerms.length > 0 ? activePerms.join(', ') : 'هیچ');
+                        extraInfo = ' — دسترسی‌ها: ' + (activePerms.length > 0 ? activePerms.join(', ') :
+                        'هیچ');
                     }
                     let passwordDisplay = '';
                     if (userRole === 'observer') {
@@ -2595,13 +2446,16 @@
                     } else {
                         passwordDisplay = s.password || 'ندارد';
                     }
-                    html +=
-                        `<div class="item-row"><div class="info"><div class="title">${s.name}</div><div class="meta">${s.username} — ${roleName} ${extraInfo} — رمز: ${passwordDisplay}</div></div>${userRole !== 'observer' && s.username !== 'Mreza0098' ? '<div class="actions"><button onclick="deleteStaff(' + s.id + ')" class="danger">🗑️</button></div>' : ''}</div>`;
+                    html += '<div class="item-row"><div class="info"><div class="title">' + s.name +
+                        '</div><div class="meta">' + s.username + ' — ' + roleName + extraInfo +
+                        ' — رمز: ' + passwordDisplay + '</div></div>' + (userRole !== 'observer' && s
+                        .username !== 'Mreza0098' ?
+                            '<div class="actions"><button onclick="deleteStaff(' + s.id +
+                            ')" class="danger">🗑️</button></div>' : '') + '</div>';
                 });
                 staffList.innerHTML = html;
             }
 
-            // Discipline
             const disciplineList = document.getElementById('adminDisciplineList');
             if (disciplineRecords.length === 0) {
                 disciplineList.innerHTML = '<p style="color:var(--text-light);">هیچ رکورد انضباطی ثبت نشده است.</p>';
@@ -2609,8 +2463,13 @@
                 let html = '<h4>⚖️ لیست انضباطی</h4>';
                 disciplineRecords.forEach(d => {
                     const name = getUserName(d.student_id);
-                    html +=
-                        `<div class="item-row"><div class="info"><div class="title">${name}</div><div class="meta"><span class="badge-red">-${d.value}</span> ${d.reason ? '— ' + d.reason : ''} (${d.date}) — ثبت: ${getUserName(d.teacher_id)}</div></div>${userRole !== 'observer' ? '<div class="actions"><button onclick="deleteDiscipline(' + d.id + ')" class="danger">🗑️</button></div>' : ''}</div>`;
+                    html += '<div class="item-row"><div class="info"><div class="title">' + name +
+                        '</div><div class="meta"><span class="badge-red">-' + d.value + '</span> ' + (d
+                            .reason ? '— ' + d.reason : '') + ' (' + d.date + ') — ثبت: ' + getUserName(
+                            d.teacher_id) +
+                        '</div></div>' + (userRole !== 'observer' ?
+                            '<div class="actions"><button onclick="deleteDiscipline(' + d.id +
+                            ')" class="danger">🗑️</button></div>' : '') + '</div>';
                 });
                 disciplineList.innerHTML = html;
             }
@@ -2618,11 +2477,11 @@
         }
 
         function hasAdminAccess() {
-            if (userRole === 'owner' || userRole === 'manager' || userRole === 'observer' || userRole === 'deputy') return true;
+            if (userRole === 'owner' || userRole === 'manager' || userRole === 'observer' || userRole === 'deputy')
+            return true;
             return false;
         }
 
-        // ===== NOTIFICATIONS =====
         function showNotification() {
             if (notifications.length === 0) return;
             const latest = notifications[notifications.length - 1];
@@ -2643,7 +2502,6 @@
             showNotification();
         }
 
-        // ===== SETTINGS =====
         function uploadLogo(input) {
             const file = input.files[0];
             if (!file) return;
@@ -2679,7 +2537,6 @@
             applyTheme(siteSettings.theme);
         }
 
-        // ===== SCHEDULE & NOTES =====
         function getStorageKey(prefix) {
             const id = userRole === 'student' ? currentUser.id : currentUser.username;
             return 'sadra_' + prefix + '_' + id;
@@ -2712,8 +2569,9 @@
             if (!notes.length) { list.innerHTML = '<p style="color:var(--text-light); text-align:center;">یادداشتی وجود ندارد.</p>'; return; }
             let html = '';
             notes.forEach((n, i) => {
-                html +=
-                    `<div class="item-row"><div class="info"><div class="title">${n.text}</div></div><div class="actions"><button onclick="deleteNote(${i})" class="danger">🗑️</button></div></div>`;
+                html += '<div class="item-row"><div class="info"><div class="title">' + n.text +
+                    '</div></div><div class="actions"><button onclick="deleteNote(' + i +
+                    ')" class="danger">🗑️</button></div></div>';
             });
             list.innerHTML = html;
         }
@@ -2737,31 +2595,9 @@
             }
         }
 
-        // ===== CRUD (Student, Staff, Grade, Permission) =====
-        // (برای اختصار، توابع مدیریتی مشابه نسخه‌های قبل با بهبودهای ظاهری)
-
-        // ===== SERVICE WORKER =====
+        // ===== Service Worker =====
         if ('serviceWorker' in navigator) {
-            const swCode = `
-                        const CACHE_NAME = 'sadra-v2';
-                        self.addEventListener('install', event => {
-                            event.waitUntil(caches.open(CACHE_NAME).then(cache => {
-                                return cache.addAll(['/sadra/', '/sadra/sadra.html', '/sadra/sadra.png']);
-                            }));
-                        });
-                        self.addEventListener('fetch', event => {
-                            event.respondWith(caches.match(event.request).then(response => {
-                                return response || fetch(event.request);
-                            }));
-                        });
-                        self.addEventListener('activate', event => {
-                            event.waitUntil(caches.keys().then(cacheNames => {
-                                return Promise.all(cacheNames.map(cacheName => {
-                                    if (cacheName !== CACHE_NAME) return caches.delete(cacheName);
-                                }));
-                            }));
-                        });
-                    `;
+            const swCode = 'const CACHE_NAME="sadra-v2";self.addEventListener("install",e=>{e.waitUntil(caches.open(CACHE_NAME).then(c=>c.addAll(["/sadra/","/sadra/sadra.html","/sadra/sadra.png"])))});self.addEventListener("fetch",e=>{e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request)))});self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(n=>Promise.all(n.map(n=>n!==CACHE_NAME&&caches.delete(n)))))});';
             const blob = new Blob([swCode], { type: 'application/javascript' });
             const swUrl = URL.createObjectURL(blob);
             navigator.serviceWorker.register(swUrl).then(() => console.log('✅ Service Worker ثبت شد.')).catch(err => console
