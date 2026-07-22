@@ -39,6 +39,7 @@
             --card-bg: #161616;
             --border: #2a2a2a;
             --text: #eee;
+            --text-light: #aaa;
             --shadow: rgba(139, 0, 0, 0.3);
         }
         .theme-red {
@@ -49,6 +50,7 @@
             --card-bg: #2a2a2a;
             --border: #444;
             --text: #eee;
+            --text-light: #bbb;
             --shadow: rgba(198, 40, 40, 0.3);
         }
         .theme-green {
@@ -59,6 +61,7 @@
             --card-bg: #162016;
             --border: #2a3a2a;
             --text: #eee;
+            --text-light: #bbb;
             --shadow: rgba(27, 94, 32, 0.3);
         }
         .theme-blue {
@@ -69,6 +72,7 @@
             --card-bg: #16162a;
             --border: #2a2a4a;
             --text: #eee;
+            --text-light: #bbb;
             --shadow: rgba(13, 71, 161, 0.3);
         }
         .theme-gold {
@@ -79,6 +83,7 @@
             --card-bg: #2a2a16;
             --border: #4a4a2a;
             --text: #eee;
+            --text-light: #ccc;
             --shadow: rgba(184, 134, 11, 0.3);
         }
         .app {
@@ -91,9 +96,40 @@
             box-shadow: 0 0 60px var(--shadow);
             transition: all 0.4s ease;
         }
-        /* ===== ورود ===== */
-        #loginPage {
+        .text-light {
+            color: var(--text-light);
+        }
+        #welcomePage {
             display: block;
+            text-align: center;
+            padding: 60px 20px;
+        }
+        #welcomePage h1 {
+            font-size: 3rem;
+            color: var(--gold);
+            text-shadow: 0 0 40px var(--shadow);
+        }
+        #welcomePage p {
+            color: var(--text-light);
+            font-size: 1.2rem;
+            margin: 20px 0;
+        }
+        #welcomePage button {
+            padding: 16px 40px;
+            font-size: 1.2rem;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        #welcomePage button:hover {
+            transform: scale(1.05);
+            filter: brightness(1.2);
+        }
+        #loginPage {
+            display: none;
         }
         #appPage {
             display: none;
@@ -116,7 +152,7 @@
         }
         .login-box .sub {
             text-align: center;
-            color: #aaa;
+            color: var(--text-light);
             margin-bottom: 25px;
             font-size: 0.95rem;
         }
@@ -133,7 +169,7 @@
             border-radius: 15px;
             text-align: center;
             cursor: pointer;
-            color: #aaa;
+            color: var(--text-light);
             transition: 0.3s;
             font-weight: bold;
         }
@@ -186,7 +222,6 @@
             margin-top: 10px;
             font-size: 0.9rem;
         }
-        /* ===== هدر ===== */
         .header {
             display: flex;
             align-items: center;
@@ -230,7 +265,7 @@
             color: var(--gold);
         }
         .header-text p {
-            color: #aaa;
+            color: var(--text-light);
             font-size: 0.95rem;
             border-right: 4px solid var(--secondary);
             padding-right: 12px;
@@ -251,11 +286,10 @@
             border-color: var(--gold);
             transform: scale(1.05);
         }
-        /* ===== منوی جدید (مثل TREKMINE) ===== */
         .navbar {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            gap: 12px;
+            grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+            gap: 10px;
             margin-bottom: 25px;
             padding: 15px;
             background: var(--bg);
@@ -266,25 +300,25 @@
             background: var(--card-bg);
             border: 2px solid var(--border);
             color: var(--text);
-            padding: 16px 10px;
+            padding: 14px 8px;
             border-radius: 16px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 6px;
+            gap: 4px;
             text-align: center;
             font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
         }
         .nav-btn .icon {
-            font-size: 2rem;
+            font-size: 1.8rem;
             line-height: 1;
         }
         .nav-btn .label {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             opacity: 0.9;
         }
         .nav-btn:hover {
@@ -307,7 +341,6 @@
             background: var(--gold);
             filter: brightness(1.2);
         }
-        /* ===== تب‌ها ===== */
         .tab-content {
             display: none;
             animation: fadeIn 0.5s ease;
@@ -325,7 +358,6 @@
                 transform: translateY(0);
             }
         }
-        /* ===== کارت‌ها ===== */
         .card {
             background: var(--card-bg);
             padding: 22px;
@@ -530,60 +562,6 @@
         .settings-group .full-width {
             grid-column: 1 / -1;
         }
-        .message-item {
-            border-bottom: 1px solid var(--border);
-            padding: 12px 0;
-        }
-        .message-item .sender {
-            color: var(--gold);
-            font-weight: bold;
-        }
-        .message-item .time {
-            color: #666;
-            font-size: 0.8rem;
-            float: left;
-        }
-        .survey-option {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin: 8px 0;
-        }
-        .survey-option input[type="radio"] {
-            width: auto;
-        }
-        .file-upload-area {
-            border: 3px dashed var(--border);
-            padding: 25px;
-            text-align: center;
-            border-radius: 16px;
-            margin: 12px 0;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .file-upload-area:hover {
-            border-color: var(--gold);
-            background: var(--bg);
-        }
-        .news-item {
-            border-bottom: 1px solid var(--border);
-            padding: 18px 0;
-        }
-        .news-item .title {
-            color: var(--gold);
-            font-size: 1.2rem;
-            font-weight: bold;
-        }
-        .news-item .date {
-            color: #666;
-            font-size: 0.8rem;
-        }
-        .news-item .content {
-            margin-top: 10px;
-            color: #ccc;
-            line-height: 1.8;
-        }
-        /* ===== پیام‌های سفارشی ===== */
         .toast-container {
             position: fixed;
             bottom: 30px;
@@ -646,7 +624,6 @@
                 transform: translateX(0);
             }
         }
-        /* ===== تقویم شمسی ===== */
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
@@ -660,6 +637,7 @@
             border-radius: 8px;
             border: 1px solid var(--border);
             font-size: 0.85rem;
+            color: var(--text);
         }
         .calendar-grid .day-header {
             background: var(--primary);
@@ -677,22 +655,31 @@
         .calendar-grid .day.event-day:hover {
             transform: scale(1.05);
         }
+        .calendar-grid .day.empty {
+            background: transparent;
+            border: none;
+        }
+        .calendar-grid .day.today {
+            background: var(--gold);
+            color: #000;
+            font-weight: bold;
+        }
         .event-item {
             background: var(--bg);
             padding: 10px 14px;
             border-radius: 12px;
             margin: 6px 0;
             border-right: 3px solid var(--gold);
+            color: var(--text);
         }
         .event-item .event-title {
             font-weight: bold;
             color: var(--gold);
         }
         .event-item .event-date {
-            color: #666;
+            color: var(--text-light);
             font-size: 0.8rem;
         }
-        /* ===== گروه‌ها ===== */
         .group-item {
             background: var(--bg);
             padding: 12px 16px;
@@ -702,6 +689,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            color: var(--text);
         }
         .group-item .group-name {
             font-weight: bold;
@@ -712,50 +700,59 @@
             padding: 10px 14px;
             border-radius: 12px;
             margin: 6px 0;
+            color: var(--text);
         }
         .group-message .sender {
             color: var(--gold);
             font-weight: bold;
         }
         .group-message .time {
-            color: #666;
+            color: var(--text-light);
             font-size: 0.8rem;
             float: left;
         }
-        /* ===== تکالیف گروهی ===== */
         .task-item {
             background: var(--bg);
             padding: 12px 16px;
             border-radius: 14px;
             margin: 8px 0;
             border-right: 3px solid var(--secondary);
+            color: var(--text);
         }
         .task-item .task-title {
             font-weight: bold;
             color: var(--gold);
         }
         .task-item .task-meta {
-            color: #666;
+            color: var(--text-light);
             font-size: 0.8rem;
         }
-        /* ===== واکنش‌گرایی ===== */
+        .personalization-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+        .personalization-group .full-width {
+            grid-column: 1 / -1;
+        }
         @media (max-width: 768px) {
             .navbar {
-                grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-                gap: 8px;
+                grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+                gap: 6px;
                 padding: 10px;
             }
             .nav-btn {
-                padding: 12px 6px;
-                font-size: 0.75rem;
+                padding: 10px 4px;
+                font-size: 0.7rem;
             }
             .nav-btn .icon {
-                font-size: 1.6rem;
+                font-size: 1.4rem;
             }
             .header-text h1 {
                 font-size: 1.6rem;
             }
-            .settings-group {
+            .settings-group,
+            .personalization-group {
                 grid-template-columns: 1fr;
             }
             .app {
@@ -780,17 +777,17 @@
         }
         @media (max-width: 480px) {
             .navbar {
-                grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
-                gap: 5px;
-                padding: 8px;
+                grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+                gap: 4px;
+                padding: 6px;
             }
             .nav-btn {
-                padding: 10px 4px;
-                font-size: 0.65rem;
-                border-radius: 12px;
+                padding: 8px 2px;
+                font-size: 0.6rem;
+                border-radius: 10px;
             }
             .nav-btn .icon {
-                font-size: 1.4rem;
+                font-size: 1.2rem;
             }
             .header-text h1 {
                 font-size: 1.3rem;
@@ -805,7 +802,13 @@
 <body>
     <div class="app theme-dark" id="appContainer">
 
-        <!-- ===== صفحه ورود ===== -->
+        <div id="welcomePage">
+            <h1>★ صدرا ★</h1>
+            <p style="font-size:1.5rem; color:var(--gold);">سامانه مدیریت آموزشی</p>
+            <p style="max-width:500px; margin:20px auto; line-height:1.8;">به سامانه جامع مدیریت آموزشی مدرسه خوش آمدید.<br>برای ادامه، وارد شوید.</p>
+            <button onclick="showLogin()">🚀 ورود به سامانه</button>
+        </div>
+
         <div id="loginPage">
             <div class="login-box">
                 <h2>★ صدرا ★</h2>
@@ -829,10 +832,7 @@
             </div>
         </div>
 
-        <!-- ===== صفحه اصلی ===== -->
         <div id="appPage">
-
-            <!-- هدر -->
             <div class="header">
                 <div class="logo" id="logoContainer">
                     <img src="sadra.png" alt="لوگو" id="logoImage" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\'logo-placeholder\'>★</span>';" />
@@ -843,9 +843,7 @@
                 </div>
                 <button class="logout-btn" onclick="logout()">خروج</button>
             </div>
-
-            <!-- ===== منوی جدید (مثل TREKMINE) ===== -->
-            <div class="navbar" id="mainNavbar">
+                        <div class="navbar" id="mainNavbar">
                 <button class="nav-btn active" data-tab="home" onclick="switchTab('home')">
                     <span class="icon">🏠</span>
                     <span class="label">خانه</span>
@@ -863,7 +861,7 @@
                     <span class="label">زمانبندی</span>
                 </button>
                 <button class="nav-btn" data-tab="tasks" onclick="switchTab('tasks')">
-                    <span class="icon">✅</span>
+                    <span class="icon">📝</span>
                     <span class="label">تکالیف</span>
                 </button>
                 <button class="nav-btn" data-tab="discipline" onclick="switchTab('discipline')">
@@ -894,6 +892,10 @@
                     <span class="icon">👤</span>
                     <span class="label">پروفایل</span>
                 </button>
+                <button class="nav-btn" data-tab="personalization" onclick="switchTab('personalization')">
+                    <span class="icon">🎨</span>
+                    <span class="label">شخصی‌سازی</span>
+                </button>
                 <button class="nav-btn" data-tab="adminPanel" onclick="switchTab('adminPanel')">
                     <span class="icon">🔧</span>
                     <span class="label">مدیریت</span>
@@ -902,27 +904,22 @@
                     <span class="icon">⚙️</span>
                     <span class="label">تنظیمات</span>
                 </button>
-                <!-- دکمه تغییر تم -->
                 <button class="nav-btn theme-toggle-btn" onclick="cycleTheme()">
                     <span class="icon">🎨</span>
                     <span class="label">تغییر تم</span>
                 </button>
             </div>
 
-            <!-- اعلان -->
             <div id="notificationBanner" class="notification-banner">
                 <strong>📢 اعلان</strong>
                 <p id="notificationText"></p>
             </div>
 
-            <!-- ===== تب‌ها ===== -->
-
-            <!-- خانه -->
             <div id="home" class="tab-content active">
                 <div class="card">
                     <h3>🚀 به صدرا خوش آمدی</h3>
-                    <p style="line-height:2; color:#ccc;" id="homeWelcome">سامانه مدیریت آموزشی با قابلیت‌های پیشرفته</p>
-                    <ul style="list-style:none; margin-top:15px; color:#aaa;" id="homeFeatures">
+                    <p style="line-height:2; color:var(--text-light);" id="homeWelcome">سامانه مدیریت آموزشی با قابلیت‌های پیشرفته</p>
+                    <ul style="list-style:none; margin-top:15px; color:var(--text-light);" id="homeFeatures">
                         <li style="margin:10px 0;">📊 مدیریت نمرات</li>
                         <li style="margin:10px 0;">💬 چت گروهی</li>
                         <li style="margin:10px 0;">📋 مشاهده غیبت‌ها</li>
@@ -932,12 +929,11 @@
                     </ul>
                     <div style="margin-top:20px; background:var(--bg); padding:15px; border-radius:14px; border-right:4px solid var(--gold);">
                         <span style="color:var(--gold);">★</span>
-                        <span style="color:#aaa;">«سربازان علم، آینده را می‌سازند»</span>
+                        <span style="color:var(--text-light);">«سربازان علم، آینده را می‌سازند»</span>
                     </div>
                 </div>
             </div>
 
-            <!-- نمرات -->
             <div id="grades" class="tab-content">
                 <div class="card">
                     <h3>📊 نمرات</h3>
@@ -946,7 +942,6 @@
                 </div>
             </div>
 
-            <!-- کارنامه با نمودار -->
             <div id="reports" class="tab-content">
                 <div class="card">
                     <h3>📋 کارنامه و گزارشات</h3>
@@ -958,7 +953,7 @@
                         <button onclick="downloadPDF()" class="warning" style="flex:1; min-width:120px;">📥 خروجی PDF</button>
                     </div>
                     <div id="reportContainer" style="background:var(--bg); padding:20px; border-radius:16px; min-height:200px; margin-top:15px;">
-                        <p style="color:#aaa; text-align:center;">لطفاً یک دانش‌آموز را انتخاب کنید.</p>
+                        <p style="color:var(--text-light); text-align:center;">لطفاً یک دانش‌آموز را انتخاب کنید.</p>
                     </div>
                     <div style="margin-top:25px;">
                         <canvas id="gradeChart" width="400" height="200"></canvas>
@@ -966,11 +961,10 @@
                 </div>
             </div>
 
-            <!-- زمانبندی -->
             <div id="schedule" class="tab-content">
                 <div class="card">
                     <h3>🗓️ زمانبندی هفتگی</h3>
-                    <p style="color:#aaa; font-size:0.9rem;">درس‌های هر روز را در سلول‌ها بنویس (ذخیره می‌شود).</p>
+                    <p style="color:var(--text-light); font-size:0.9rem;">درس‌های هر روز را در سلول‌ها بنویس (ذخیره می‌شود).</p>
                     <div style="overflow-x:auto; margin-top:15px;">
                         <table id="scheduleTable">
                             <thead><tr><th>روز</th><th>۸-۱۰</th><th>۱۰-۱۲</th><th>۱۴-۱۶</th><th>۱۶-۱۸</th></tr></thead>
@@ -988,10 +982,9 @@
                 </div>
             </div>
 
-            <!-- تکالیف گروهی -->
             <div id="tasks" class="tab-content">
                 <div class="card">
-                    <h3>✅ تکالیف گروهی</h3>
+                    <h3>📝 تکالیف گروهی</h3>
                     <div id="taskManagement">
                         <input type="text" id="taskTitle" placeholder="عنوان تکلیف">
                         <textarea id="taskDescription" rows="3" placeholder="توضیح تکلیف..."></textarea>
@@ -1005,7 +998,6 @@
                 </div>
             </div>
 
-            <!-- انضباطی -->
             <div id="discipline" class="tab-content">
                 <div class="card">
                     <h3>⚖️ ثبت منفی انضباطی</h3>
@@ -1019,13 +1011,12 @@
                 </div>
             </div>
 
-            <!-- چت گروهی -->
             <div id="groups" class="tab-content">
                 <div class="card">
                     <h3>💬 چت گروهی</h3>
                     <div id="groupList"></div>
                     <div id="groupChatArea" class="hidden">
-                        <h4 id="currentGroupName"></h4>
+                        <h4 id="currentGroupName" style="color:var(--gold);"></h4>
                         <div id="groupMessages" style="max-height:300px; overflow-y:auto; margin-bottom:15px;"></div>
                         <div style="display:flex; gap:10px;">
                             <input type="text" id="groupMessageText" placeholder="متن پیام..." style="flex:1;">
@@ -1042,7 +1033,6 @@
                 </div>
             </div>
 
-            <!-- نظرسنجی -->
             <div id="survey" class="tab-content">
                 <div class="card">
                     <h3>📊 نظرسنجی ناشناس</h3>
@@ -1061,21 +1051,18 @@
                     <button onclick="showForm('surveyForm')" class="success" style="width:auto; padding:6px 18px;">➕ نظرسنجی جدید</button>
                 </div>
             </div>
-
-            <!-- فایل‌ها -->
-            <div id="files" class="tab-content">
+                        <div id="files" class="tab-content">
                 <div class="card">
                     <h3>📁 فایل‌ها</h3>
                     <div class="file-upload-area" onclick="document.getElementById('fileInput').click()">
                         <p style="font-size:1.2rem;">📤 برای آپلود فایل کلیک کنید</p>
-                        <p style="color:#666; font-size:0.8rem;">فایل‌های جزوه، تکلیف و ...</p>
+                        <p style="color:var(--text-light); font-size:0.8rem;">فایل‌های جزوه، تکلیف و ...</p>
                         <input type="file" id="fileInput" style="display:none;" onchange="uploadFile(this)">
                     </div>
                     <div class="item-list" id="fileList"></div>
                 </div>
             </div>
 
-            <!-- اخبار -->
             <div id="news" class="tab-content">
                 <div class="card">
                     <h3>📰 اخبار مدرسه</h3>
@@ -1091,7 +1078,6 @@
                 </div>
             </div>
 
-            <!-- تقویم شمسی -->
             <div id="calendar" class="tab-content">
                 <div class="card">
                     <h3>📅 تقویم شمسی</h3>
@@ -1109,7 +1095,6 @@
                 </div>
             </div>
 
-            <!-- پروفایل -->
             <div id="profile" class="tab-content">
                 <div class="card">
                     <h3>👤 پروفایل کاربری</h3>
@@ -1120,7 +1105,51 @@
                 </div>
             </div>
 
-            <!-- مدیریت -->
+            <div id="personalization" class="tab-content">
+                <div class="card">
+                    <h3>🎨 شخصی‌سازی</h3>
+                    <div class="personalization-group">
+                        <div class="full-width">
+                            <label>زبان</label>
+                            <select id="userLang" onchange="savePersonalization()">
+                                <option value="fa">فارسی</option>
+                                <option value="en">English</option>
+                                <option value="ar">العربية</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>چینش منو</label>
+                            <select id="userLayout" onchange="savePersonalization()">
+                                <option value="grid">شبکه‌ای (پیش‌فرض)</option>
+                                <option value="list">لیستی</option>
+                                <option value="compact">فشرده</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>اندازه فونت</label>
+                            <select id="userFontSize" onchange="savePersonalization()">
+                                <option value="small">کوچک</option>
+                                <option value="medium">متوسط</option>
+                                <option value="large">بزرگ</option>
+                            </select>
+                        </div>
+                        <div class="full-width">
+                            <label>تم شخصی</label>
+                            <select id="userTheme" onchange="applyUserTheme(this.value)">
+                                <option value="theme-dark">تیره (پیش‌فرض)</option>
+                                <option value="theme-red">قرمز</option>
+                                <option value="theme-green">سبز</option>
+                                <option value="theme-blue">آبی</option>
+                                <option value="theme-gold">طلایی</option>
+                            </select>
+                        </div>
+                        <div class="full-width">
+                            <button onclick="resetPersonalization()" class="danger" style="width:auto; padding:6px 18px;">↺ بازنشانی به پیش‌فرض</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div id="adminPanel" class="tab-content">
                 <div class="card">
                     <h3>🔧 پنل مدیریت</h3>
@@ -1167,7 +1196,7 @@
                         </div>
                         <div id="managePermissionsSection" class="hidden card" style="border-right-color:var(--gold);">
                             <h4>مدیریت دسترسی‌ها</h4>
-                            <p style="color:#aaa;">انتخاب معاون و تنظیم دسترسی‌های او</p>
+                            <p style="color:var(--text-light);">انتخاب معاون و تنظیم دسترسی‌های او</p>
                             <select id="permissionTargetSelect" onchange="loadPermissions(this.value)"><option value="">انتخاب معاون...</option></select>
                             <div id="permissionGrid" class="permission-grid"></div>
                             <button onclick="savePermissions()" class="warning">ذخیره دسترسی‌ها</button>
@@ -1181,7 +1210,6 @@
                 </div>
             </div>
 
-            <!-- تنظیمات -->
             <div id="settings" class="tab-content">
                 <div class="card">
                     <h3>⚙️ تنظیمات سایت</h3>
@@ -1191,7 +1219,7 @@
                         <div class="full-width">
                             <label>آپلود لوگو (Favicon & PWA)</label>
                             <input type="file" id="settingLogo" accept="image/*" onchange="uploadLogo(this)">
-                            <p style="color:#666; font-size:0.8rem;">عکس با نام `sadra.png` در پوشه‌ی اصلی ذخیره خواهد شد.</p>
+                            <p style="color:var(--text-light); font-size:0.8rem;">عکس با نام `sadra.png` در پوشه‌ی اصلی ذخیره خواهد شد.</p>
                         </div>
                         <div class="full-width"><button onclick="saveSettings()" class="success">💾 ذخیره تنظیمات</button></div>
                     </div>
@@ -1202,7 +1230,6 @@
         </div>
     </div>
 
-    <!-- ===== کانتینر پیام‌های سفارشی ===== -->
     <div class="toast-container" id="toastContainer"></div>
 
     <script>
@@ -1230,6 +1257,12 @@
             slogan: 'سامانه مدیریت آموزشی • جهاد علمی',
             title: 'صدرا',
             logo: ''
+        };
+        let userPreferences = JSON.parse(localStorage.getItem('sadra_preferences')) || {
+            lang: 'fa',
+            layout: 'grid',
+            fontSize: 'medium',
+            theme: 'theme-dark'
         };
         let chartInstance = null;
         const themeList = ['theme-dark', 'theme-red', 'theme-green', 'theme-blue', 'theme-gold'];
@@ -1283,7 +1316,73 @@
         function cycleTheme() {
             currentThemeIndex = (currentThemeIndex + 1) % themeList.length;
             applyTheme(themeList[currentThemeIndex]);
-            showToast('تم به ' + themeList[currentThemeIndex].replace('theme-', '') + ' تغییر کرد', 'success', 2000);
+            showToast('تم تغییر کرد', 'success', 2000);
+        }
+
+        function applyUserTheme(theme) {
+            userPreferences.theme = theme;
+            localStorage.setItem('sadra_preferences', JSON.stringify(userPreferences));
+            applyTheme(theme);
+        }
+
+        // ===== شخصی‌سازی =====
+        function savePersonalization() {
+            userPreferences.lang = document.getElementById('userLang').value;
+            userPreferences.layout = document.getElementById('userLayout').value;
+            userPreferences.fontSize = document.getElementById('userFontSize').value;
+            localStorage.setItem('sadra_preferences', JSON.stringify(userPreferences));
+            applyUserPreferences();
+            showToast('تنظیمات شخصی‌سازی ذخیره شد', 'success');
+        }
+
+        function applyUserPreferences() {
+            const navbar = document.getElementById('mainNavbar');
+            if (userPreferences.layout === 'list') {
+                navbar.style.display = 'flex';
+                navbar.style.flexDirection = 'column';
+                navbar.style.alignItems = 'stretch';
+            } else if (userPreferences.layout === 'compact') {
+                navbar.style.display = 'grid';
+                navbar.style.gridTemplateColumns = 'repeat(auto-fit, minmax(70px, 1fr))';
+                navbar.style.gap = '5px';
+            } else {
+                navbar.style.display = 'grid';
+                navbar.style.gridTemplateColumns = 'repeat(auto-fit, minmax(90px, 1fr))';
+                navbar.style.gap = '10px';
+            }
+
+            const fontSize = userPreferences.fontSize;
+            document.querySelectorAll('.nav-btn .label').forEach(el => {
+                if (fontSize === 'small') el.style.fontSize = '0.6rem';
+                else if (fontSize === 'large') el.style.fontSize = '0.9rem';
+                else el.style.fontSize = '0.7rem';
+            });
+        }
+
+        function resetPersonalization() {
+            userPreferences = { lang: 'fa', layout: 'grid', fontSize: 'medium', theme: 'theme-dark' };
+            localStorage.setItem('sadra_preferences', JSON.stringify(userPreferences));
+            document.getElementById('userLang').value = 'fa';
+            document.getElementById('userLayout').value = 'grid';
+            document.getElementById('userFontSize').value = 'medium';
+            document.getElementById('userTheme').value = 'theme-dark';
+            applyUserPreferences();
+            applyTheme('theme-dark');
+            showToast('همه تنظیمات به حالت پیش‌فرض بازنشانی شد', 'success');
+        }
+
+        function loadPreferences() {
+            document.getElementById('userLang').value = userPreferences.lang || 'fa';
+            document.getElementById('userLayout').value = userPreferences.layout || 'grid';
+            document.getElementById('userFontSize').value = userPreferences.fontSize || 'medium';
+            document.getElementById('userTheme').value = userPreferences.theme || 'theme-dark';
+            applyUserPreferences();
+        }
+
+        // ===== صفحه خوش‌آمدگویی =====
+        function showLogin() {
+            document.getElementById('welcomePage').style.display = 'none';
+            document.getElementById('loginPage').style.display = 'block';
         }
 
         // ===== بارگذاری داده‌ها =====
@@ -1365,7 +1464,7 @@
         function enterApp() {
             document.getElementById('loginPage').style.display = 'none';
             document.getElementById('appPage').style.display = 'block';
-            applyTheme(siteSettings.theme);
+            applyTheme(userPreferences.theme || siteSettings.theme);
             document.getElementById('siteTitle').textContent = siteSettings.title;
             document.getElementById('siteSlogan').textContent = siteSettings.slogan;
             if (siteSettings.logo) {
@@ -1408,13 +1507,14 @@
             renderProfile();
             renderTasks();
             showNotification();
+            loadPreferences();
         }
 
         function logout() {
             currentUser = null;
             userRole = null;
-            document.getElementById('loginPage').style.display = 'block';
             document.getElementById('appPage').style.display = 'none';
+            document.getElementById('loginPage').style.display = 'block';
             document.getElementById('loginNationalId').value = '';
             document.getElementById('loginMobile').value = '';
             document.getElementById('loginUsername').value = '';
@@ -1492,14 +1592,8 @@
                     btn.classList.add('active');
                 }
             });
-            // اگر تب گروه‌هاست، لیست گروه‌ها رو به‌روز کن
-            if (tabId === 'groups') {
-                renderGroups();
-            }
-            // اگر تب تقویم است، تقویم رو به‌روز کن
-            if (tabId === 'calendar') {
-                renderCalendar();
-            }
+            if (tabId === 'groups') renderGroups();
+            if (tabId === 'calendar') renderCalendar();
         }
 
         function showForm(formId) {
@@ -1508,47 +1602,6 @@
 
         function hideForm(formId) {
             document.getElementById(formId).classList.add('hidden');
-        }
-
-        function showSection(sectionId) {
-            if (userRole === 'observer') {
-                if (sectionId !== 'viewAllSection') {
-                    showToast('شما به عنوان مدیر کل، فقط دسترسی مشاهده دارید.', 'warning');
-                    return;
-                }
-            }
-            document.querySelectorAll('#adminDashboard .card:not(.card:first-child)').forEach(c => {
-                if (c.id !== sectionId && !c.classList.contains('hidden')) c.classList.add('hidden');
-            });
-            const section = document.getElementById(sectionId);
-            if (section) {
-                section.classList.toggle('hidden');
-                if (sectionId === 'managePermissionsSection') { populatePermissionSelect();
-                    loadPermissions(document.getElementById('permissionTargetSelect').value); }
-                if (sectionId === 'addStaffSection') updateTeacherLessonCheckboxes();
-                if (sectionId === 'addGradeSection') populateStudentSelects();
-            }
-        }
-
-        function hideSection(sectionId) {
-            const section = document.getElementById(sectionId);
-            if (section) section.classList.add('hidden');
-        }
-
-        function updateTeacherLessonCheckboxes() {
-            const section = document.getElementById('teacherLessonSection');
-            const container = document.getElementById('teacherLessonCheckboxes');
-            const role = document.getElementById('newStaffRole').value;
-            if (role === 'teacher') {
-                section.classList.remove('hidden');
-                const lessons = ['ریاضی', 'علوم', 'فارسی', 'انگلیسی', 'تاریخ', 'جغرافیا', 'دینی', 'هنر', 'شیمی', 'فیزیک', 'زیست'];
-                let html = '';
-                lessons.forEach(lesson => {
-                    html +=
-                        `<div class="permission-item"><input type="checkbox" value="${lesson}" id="lesson_${lesson}"><label for="lesson_${lesson}">${lesson}</label></div>`;
-                });
-                container.innerHTML = html;
-            } else section.classList.add('hidden');
         }
 
         // ===== نمرات =====
@@ -1566,7 +1619,7 @@
                 }
                 const list = document.getElementById('gradeList');
                 if (filteredGrades.length === 0) {
-                    list.innerHTML = '<p style="color:#666; text-align:center;">نمره‌ای یافت نشد.</p>';
+                    list.innerHTML = '<p style="color:var(--text-light); text-align:center;">نمره‌ای یافت نشد.</p>';
                     document.getElementById('avgBox').innerHTML = 'معدل کل: ۰.۰۰';
                 } else {
                     let html = '',
@@ -1575,11 +1628,11 @@
                         sum += g.score;
                         const name = getUserName(g.student_id);
                         html +=
-                            `<div class="item-row"><div class="info"><strong>${name}</strong> — <strong>${g.lesson}</strong>: <span style="color:var(--primary, #cc0000);">${g.score}</span> <span style="color:#666; font-size:0.8rem;">(${g.date || 'بدون تاریخ'})</span></div></div>`;
+                            `<div class="item-row"><div class="info"><strong>${name}</strong> — <strong>${g.lesson}</strong>: <span style="color:var(--gold);">${g.score}</span> <span style="color:var(--text-light); font-size:0.8rem;">(${g.date || 'بدون تاریخ'})</span></div></div>`;
                     });
                     list.innerHTML = html;
                     document.getElementById('avgBox').innerHTML =
-                        `معدل کل: <strong style="color:var(--gold, #d4a017);">${(sum / filteredGrades.length).toFixed(2)}</strong> (از ${filteredGrades.length} نمره)`;
+                        `معدل کل: <strong style="color:var(--gold);">${(sum / filteredGrades.length).toFixed(2)}</strong> (از ${filteredGrades.length} نمره)`;
                 }
             }
             loadSchedule();
@@ -1590,7 +1643,7 @@
             const userGrades = gradesData.filter(g => g.student_id == currentUser.id);
             const list = document.getElementById('gradeList');
             if (userGrades.length === 0) {
-                list.innerHTML = '<p style="color:#666; text-align:center;">نمره‌ای ثبت نشده است.</p>';
+                list.innerHTML = '<p style="color:var(--text-light); text-align:center;">نمره‌ای ثبت نشده است.</p>';
                 document.getElementById('avgBox').innerHTML = 'معدل کل: ۰.۰۰';
             } else {
                 let html = '',
@@ -1598,61 +1651,11 @@
                 userGrades.forEach(g => {
                     sum += g.score;
                     html +=
-                        `<div class="item-row"><div class="info"><strong>${g.lesson}</strong> — <span style="color:var(--primary, #cc0000);">${g.score}</span> <span style="color:#666; font-size:0.8rem;">(${g.date || 'بدون تاریخ'})</span></div></div>`;
+                        `<div class="item-row"><div class="info"><strong>${g.lesson}</strong> — <span style="color:var(--gold);">${g.score}</span> <span style="color:var(--text-light); font-size:0.8rem;">(${g.date || 'بدون تاریخ'})</span></div></div>`;
                 });
                 list.innerHTML = html;
                 document.getElementById('avgBox').innerHTML =
-                    `معدل کل: <strong style="color:var(--gold, #d4a017);">${(sum / userGrades.length).toFixed(2)}</strong> (از ${userGrades.length} نمره)`;
-            }
-        }
-
-        async function addGrade() {
-            if (!hasGradePermission()) { showToast('شما مجوز افزودن نمره را ندارید.', 'warning'); return; }
-            const student_id = document.getElementById('newGradeStudentSelect').value;
-            const lesson = document.getElementById('newGradeLesson').value.trim();
-            const score = parseFloat(document.getElementById('newGradeScore').value);
-            const date = document.getElementById('newGradeDate').value || new Date().toISOString().split('T')[0];
-            if (!student_id || !lesson || isNaN(score) || score < 0 || score > 20) {
-                showToast('لطفاً اطلاعات را به درستی وارد کنید.', 'warning');
-                return;
-            }
-            if (userRole === 'teacher') {
-                const teacherLessons = currentUser.lessons || [];
-                if (!teacherLessons.includes(lesson)) {
-                    showToast('شما فقط می‌توانید برای درس‌های خود (' + teacherLessons.join(', ') + ') نمره ثبت کنید.', 'warning');
-                    return;
-                }
-            }
-            const { error } = await supabase_js.from('grades').insert([{ student_id, lesson, score, date,
-                teacher_id: currentUser.id }]);
-            if (error) { showToast('خطا در ثبت نمره: ' + error.message, 'error'); return; }
-            await loadAllData();
-            document.getElementById('newGradeLesson').value = '';
-            document.getElementById('newGradeScore').value = '';
-            document.getElementById('newGradeDate').value = '';
-            document.getElementById('newGradeStudentSelect').value = '';
-            renderUserData();
-            if (hasAdminAccess()) renderAdminPanel();
-            showToast('نمره با موفقیت ثبت شد.', 'success');
-        }
-
-        function hasGradePermission() {
-            if (userRole === 'owner' || userRole === 'manager') return true;
-            if (userRole === 'teacher') { const teacherLessons = currentUser.lessons || []; return teacherLessons.length >
-                    0; }
-            if (userRole === 'deputy') return currentUser.permissions?.manageGrades || false;
-            return false;
-        }
-
-        async function deleteGrade(id) {
-            if (!hasGradePermission()) return;
-            if (confirm('آیا از حذف این نمره اطمینان دارید؟')) {
-                const { error } = await supabase_js.from('grades').delete().eq('id', id);
-                if (error) { showToast('خطا در حذف نمره: ' + error.message, 'error'); return; }
-                await loadAllData();
-                renderUserData();
-                if (hasAdminAccess()) renderAdminPanel();
-                showToast('نمره با موفقیت حذف شد.', 'success');
+                    `معدل کل: <strong style="color:var(--gold);">${(sum / userGrades.length).toFixed(2)}</strong> (از ${userGrades.length} نمره)`;
             }
         }
 
@@ -1687,7 +1690,7 @@
         function renderDisciplineList() {
             const list = document.getElementById('disciplineList');
             if (disciplineRecords.length === 0) { list.innerHTML =
-                    '<p style="color:#666; text-align:center;">هیچ رکورد انضباطی ثبت نشده است.</p>'; return; }
+                    '<p style="color:var(--text-light); text-align:center;">هیچ رکورد انضباطی ثبت نشده است.</p>'; return; }
             let html = '';
             let filtered = disciplineRecords;
             if (userRole === 'student') filtered = disciplineRecords.filter(d => d.student_id == currentUser.id);
@@ -1695,20 +1698,9 @@
             filtered.forEach(d => {
                 const name = getUserName(d.student_id);
                 html +=
-                    `<div class="item-row"><div class="info"><strong>${name}</strong> — <span class="badge-red">-${d.value}</span> ${d.reason ? '— ' + d.reason : ''} <span style="color:#666; font-size:0.8rem;">(${d.date})</span>${userRole !== 'student' ? '<span style="color:#666; font-size:0.8rem;">ثبت: ' + getUserName(d.teacher_id) + '</span>' : ''}</div>${userRole !== 'student' && userRole !== 'observer' ? '<div class="actions"><button onclick="deleteDiscipline(' + d.id + ')" class="danger">🗑️</button></div>' : ''}</div>`;
+                    `<div class="item-row"><div class="info"><strong>${name}</strong> — <span class="badge-red">-${d.value}</span> ${d.reason ? '— ' + d.reason : ''} <span style="color:var(--text-light); font-size:0.8rem;">(${d.date})</span>${userRole !== 'student' ? '<span style="color:var(--text-light); font-size:0.8rem;">ثبت: ' + getUserName(d.teacher_id) + '</span>' : ''}</div>${userRole !== 'student' && userRole !== 'observer' ? '<div class="actions"><button onclick="deleteDiscipline(' + d.id + ')" class="danger">🗑️</button></div>' : ''}</div>`;
             });
             list.innerHTML = html;
-        }
-
-        async function deleteDiscipline(id) {
-            if (userRole === 'observer') { showToast('شما به عنوان مدیر کل، مجوز حذف ندارید.', 'warning'); return; }
-            if (confirm('آیا از حذف این رکورد انضباطی اطمینان دارید؟')) {
-                const { error } = await supabase_js.from('disciplines').delete().eq('id', id);
-                if (error) { showToast('خطا در حذف: ' + error.message, 'error'); return; }
-                await loadAllData();
-                renderDisciplineList();
-                showToast('رکورد انضباطی با موفقیت حذف شد.', 'success');
-            }
         }
 
         // ===== تکالیف گروهی =====
@@ -1746,17 +1738,15 @@
         function renderTasks() {
             const list = document.getElementById('taskList');
             if (tasksData.length === 0) {
-                list.innerHTML = '<p style="color:#666; text-align:center;">هیچ تکلیفی ثبت نشده است.</p>';
+                list.innerHTML = '<p style="color:var(--text-light); text-align:center;">هیچ تکلیفی ثبت نشده است.</p>';
                 return;
             }
             let html = '';
-            let filtered = tasksData;
-            // فیلتر بر اساس گروه‌های کاربر
             const userGroups = groupsData.filter(g => g.members && g.members.includes(currentUser.id));
             const groupIds = userGroups.map(g => g.id);
-            filtered = tasksData.filter(t => groupIds.includes(t.group_id));
+            const filtered = tasksData.filter(t => groupIds.includes(t.group_id));
             if (filtered.length === 0) {
-                list.innerHTML = '<p style="color:#666; text-align:center;">هیچ تکلیفی برای گروه‌های شما ثبت نشده است.</p>';
+                list.innerHTML = '<p style="color:var(--text-light); text-align:center;">هیچ تکلیفی برای گروه‌های شما ثبت نشده است.</p>';
                 return;
             }
             filtered.forEach(t => {
@@ -1765,22 +1755,11 @@
                 html += `<div class="task-item">
                             <div class="task-title">${t.title}</div>
                             <div class="task-meta">گروه: ${groupName} | مهلت: ${t.due || 'بدون تاریخ'} | ثبت: ${getUserName(t.creator_id)}</div>
-                            ${t.description ? '<div style="color:#aaa; margin-top:5px;">' + t.description + '</div>' : ''}
+                            ${t.description ? '<div style="color:var(--text-light); margin-top:5px;">' + t.description + '</div>' : ''}
                             ${userRole !== 'student' ? '<button onclick="deleteTask(' + t.id + ')" class="danger" style="width:auto; padding:4px 12px; margin-top:8px;">🗑️ حذف</button>' : ''}
                         </div>`;
             });
             list.innerHTML = html;
-        }
-
-        async function deleteTask(id) {
-            if (userRole === 'observer') { showToast('شما به عنوان مدیر کل، مجوز حذف ندارید.', 'warning'); return; }
-            if (confirm('آیا از حذف این تکلیف اطمینان دارید؟')) {
-                const { error } = await supabase_js.from('tasks').delete().eq('id', id);
-                if (error) { showToast('خطا در حذف: ' + error.message, 'error'); return; }
-                await loadAllData();
-                renderTasks();
-                showToast('تکلیف با موفقیت حذف شد.', 'success');
-            }
         }
 
         // ===== چت گروهی =====
@@ -1873,7 +1852,7 @@
             if (!currentGroupId) { container.innerHTML = ''; return; }
             const messages = groupMessagesData.filter(m => m.group_id === currentGroupId);
             if (messages.length === 0) {
-                container.innerHTML = '<p style="color:#666; text-align:center;">هنوز پیامی در این گروه ارسال نشده است.</p>';
+                container.innerHTML = '<p style="color:var(--text-light); text-align:center;">هنوز پیامی در این گروه ارسال نشده است.</p>';
                 return;
             }
             let html = '';
@@ -1884,7 +1863,7 @@
                 html += `<div class="group-message">
                             <div class="sender">${sender}</div>
                             <div class="time">${time}</div>
-                            <div style="margin-top:5px; color:#ccc;">${m.text}</div>
+                            <div style="margin-top:5px; color:var(--text-light);">${m.text}</div>
                         </div>`;
             });
             container.innerHTML = html;
@@ -1894,7 +1873,7 @@
         function renderGroups() {
             const list = document.getElementById('groupList');
             if (groupsData.length === 0) {
-                list.innerHTML = '<p style="color:#666; text-align:center;">هیچ گروهی ایجاد نشده است.</p>';
+                list.innerHTML = '<p style="color:var(--text-light); text-align:center;">هیچ گروهی ایجاد نشده است.</p>';
                 return;
             }
             let html = '';
@@ -1904,7 +1883,7 @@
                 html += `<div class="group-item">
                             <div>
                                 <div class="group-name">${g.name}</div>
-                                <div style="color:#666; font-size:0.8rem;">سازنده: ${getUserName(g.creator_id)} | اعضا: ${memberCount}</div>
+                                <div style="color:var(--text-light); font-size:0.8rem;">سازنده: ${getUserName(g.creator_id)} | اعضا: ${memberCount}</div>
                             </div>
                             <div>
                                 ${isMember ? 
@@ -1984,7 +1963,7 @@
         function renderSurveys() {
             const list = document.getElementById('surveyList');
             if (surveysData.length === 0) {
-                list.innerHTML = '<p style="color:#666; text-align:center;">هیچ نظرسنجی ثبت نشده است.</p>';
+                list.innerHTML = '<p style="color:var(--text-light); text-align:center;">هیچ نظرسنجی ثبت نشده است.</p>';
                 return;
             }
             let html = '';
@@ -1999,12 +1978,12 @@
                                 <div class="survey-option">
                                     <input type="radio" name="survey_${s.id}" value="${idx}" onchange="voteSurvey(${s.id}, ${idx})">
                                     <label>${opt}</label>
-                                    <span style="color:#aaa; margin-right:10px;">${s.votes[idx] || 0} رای (${percentage}%)</span>
+                                    <span style="color:var(--text-light); margin-right:10px;">${s.votes[idx] || 0} رای (${percentage}%)</span>
                                 </div>
                             `;
                 });
                 html += `</div>
-                            <div style="color:#666; font-size:0.8rem;">تعداد کل رای‌ها: ${totalVotes}</div>
+                            <div style="color:var(--text-light); font-size:0.8rem;">تعداد کل رای‌ها: ${totalVotes}</div>
                         </div>`;
             });
             list.innerHTML = html;
@@ -2036,7 +2015,7 @@
         function renderFiles() {
             const list = document.getElementById('fileList');
             if (filesData.length === 0) {
-                list.innerHTML = '<p style="color:#666; text-align:center;">هیچ فایلی آپلود نشده است.</p>';
+                list.innerHTML = '<p style="color:var(--text-light); text-align:center;">هیچ فایلی آپلود نشده است.</p>';
                 return;
             }
             let html = '';
@@ -2045,8 +2024,8 @@
                 const size = (f.size / 1024).toFixed(1) + ' KB';
                 html += `<div class="item-row">
                             <div class="info">
-                                <strong>${f.name}</strong> — ${size} — ${f.type} — <span style="color:#666; font-size:0.8rem;">${uploader}</span>
-                                <span style="color:#666; font-size:0.8rem;">${new Date(f.timestamp).toLocaleDateString('fa-IR')}</span>
+                                <strong>${f.name}</strong> — ${size} — ${f.type} — <span style="color:var(--text-light); font-size:0.8rem;">${uploader}</span>
+                                <span style="color:var(--text-light); font-size:0.8rem;">${new Date(f.timestamp).toLocaleDateString('fa-IR')}</span>
                             </div>
                             <div class="actions">
                                 <a href="${f.content}" download="${f.name}" class="nav-btn" style="padding:4px 12px; background:var(--primary, #cc0000); text-decoration:none; color:white; border-radius:8px;">📥 دانلود</a>
@@ -2099,7 +2078,7 @@
         function renderNews() {
             const list = document.getElementById('newsList');
             if (newsData.length === 0) {
-                list.innerHTML = '<p style="color:#666; text-align:center;">هیچ خبری ثبت نشده است.</p>';
+                list.innerHTML = '<p style="color:var(--text-light); text-align:center;">هیچ خبری ثبت نشده است.</p>';
                 return;
             }
             let html = '';
@@ -2132,46 +2111,37 @@
         function renderCalendar() {
             const container = document.getElementById('calendarDisplay');
             const now = new Date();
+            const monthNames = ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'];
+            const dayNames = ['شنبه', 'یک‌شنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنج‌شنبه', 'جمعه'];
+
             const year = now.getFullYear();
             const month = now.getMonth();
             const firstDay = new Date(year, month, 1).getDay();
             const daysInMonth = new Date(year, month + 1, 0).getDate();
-            const monthNames = ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'];
-            const dayNames = ['شنبه', 'یک‌شنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنج‌شنبه', 'جمعه'];
-
-            // پیدا کردن رویدادهای این ماه
-            const monthEvents = eventsData.filter(e => {
-                const date = new Date(e.date);
-                return date.getFullYear() === year && date.getMonth() === month;
-            });
 
             let html = `<h4 style="text-align:center; color:var(--gold);">${monthNames[month]} ${year}</h4>`;
             html += `<div class="calendar-grid">`;
-            // روزهای هفته
             dayNames.forEach(d => {
                 html += `<div class="day-header">${d}</div>`;
             });
-            // روزهای خالی
             for (let i = 0; i < firstDay; i++) {
-                html += `<div class="day"></div>`;
+                html += `<div class="day empty"></div>`;
             }
-            // روزهای ماه
             for (let d = 1; d <= daysInMonth; d++) {
                 const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-                const hasEvent = monthEvents.some(e => e.date === dateStr);
-                html += `<div class="day ${hasEvent ? 'event-day' : ''}" onclick="${hasEvent ? `showEvents('${dateStr}')` : ''}">${d}</div>`;
+                const hasEvent = eventsData.some(e => e.date === dateStr);
+                const isToday = d === now.getDate() && month === now.getMonth();
+                html += `<div class="day ${hasEvent ? 'event-day' : ''} ${isToday ? 'today' : ''}" onclick="${hasEvent ? `showEvents('${dateStr}')` : ''}">${d}</div>`;
             }
             html += `</div>`;
             container.innerHTML = html;
-
-            // لیست رویدادها
             renderEventsList();
         }
 
         function renderEventsList() {
             const container = document.getElementById('eventList');
             if (eventsData.length === 0) {
-                container.innerHTML = '<p style="color:#666;">هیچ رویدادی ثبت نشده است.</p>';
+                container.innerHTML = '<p style="color:var(--text-light);">هیچ رویدادی ثبت نشده است.</p>';
                 return;
             }
             let html = '<h4 style="margin-top:10px; color:var(--gold);">📋 لیست رویدادها</h4>';
@@ -2181,7 +2151,7 @@
                 html += `<div class="event-item">
                             <div class="event-title">${e.title}</div>
                             <div class="event-date">${e.date} — ثبت: ${creator}</div>
-                            ${e.description ? '<div style="color:#aaa;">' + e.description + '</div>' : ''}
+                            ${e.description ? '<div style="color:var(--text-light);">' + e.description + '</div>' : ''}
                             ${userRole !== 'student' ? '<button onclick="deleteEvent(' + e.id + ')" class="danger" style="width:auto; padding:4px 12px; margin-top:5px;">🗑️ حذف</button>' : ''}
                         </div>`;
             });
@@ -2244,7 +2214,7 @@
             if (!currentUser) return;
             const user = usersData.find(u => u.id == currentUser.id);
             if (!user) {
-                info.innerHTML = '<p style="color:#aaa;">اطلاعات پروفایل یافت نشد.</p>';
+                info.innerHTML = '<p style="color:var(--text-light);">اطلاعات پروفایل یافت نشد.</p>';
                 return;
             }
             const isVerified = user.verified || false;
@@ -2284,12 +2254,12 @@
             const studentDisciplines = disciplineRecords.filter(d => d.student_id == studentId);
 
             let html = '<div id="reportContent" style="direction:rtl;">';
-            html += '<h2 style="color:var(--gold, #d4a017); text-align:center;">★ کارنامه تحصیلی ★</h2>';
-            html += '<h3 style="text-align:center; color:#aaa;">' + student.name + ' — کد ملی: ' + student.id + '</h3>';
-            html += '<hr style="border-color:#333; margin:15px 0;">';
+            html += '<h2 style="color:var(--gold); text-align:center;">★ کارنامه تحصیلی ★</h2>';
+            html += '<h3 style="text-align:center; color:var(--text-light);">' + student.name + ' — کد ملی: ' + student.id + '</h3>';
+            html += '<hr style="border-color:var(--border); margin:15px 0;">';
 
             if (studentGrades.length > 0) {
-                html += '<h4 style="color:var(--secondary, #2a6b3c);">📊 نمرات</h4>';
+                html += '<h4 style="color:var(--secondary);">📊 نمرات</h4>';
                 html +=
                     '<table style="width:100%; margin:10px 0;"><thead><tr><th>درس</th><th>نمره</th><th>تاریخ</th></tr></thead><tbody>';
                 let sum = 0;
@@ -2299,16 +2269,16 @@
                         '</td></tr>';
                 });
                 html += '</tbody></table>';
-                html += '<div style="text-align:center; background:var(--bg, #0a0a0a); padding:10px; border-radius:10px; margin:10px 0;">';
-                html += 'معدل کل: <strong style="color:var(--gold, #d4a017);">' + (sum / studentGrades.length).toFixed(
+                html += '<div style="text-align:center; background:var(--bg); padding:10px; border-radius:10px; margin:10px 0;">';
+                html += 'معدل کل: <strong style="color:var(--gold);">' + (sum / studentGrades.length).toFixed(
                     2) + '</strong> (از ' + studentGrades.length + ' نمره)';
                 html += '</div>';
             } else {
-                html += '<p style="color:#666;">نمره‌ای ثبت نشده است.</p>';
+                html += '<p style="color:var(--text-light);">نمره‌ای ثبت نشده است.</p>';
             }
 
             if (studentDisciplines.length > 0) {
-                html += '<h4 style="color:var(--primary, #cc0000); margin-top:20px;">⚖️ سوابق انضباطی</h4>';
+                html += '<h4 style="color:var(--primary); margin-top:20px;">⚖️ سوابق انضباطی</h4>';
                 html +=
                     '<table style="width:100%; margin:10px 0;"><thead><tr><th>مقدار</th><th>توضیح</th><th>تاریخ</th><th>ثبت کننده</th></tr></thead><tbody>';
                 studentDisciplines.forEach(d => {
@@ -2318,16 +2288,15 @@
                 });
                 html += '</tbody></table>';
             } else {
-                html += '<p style="color:#666; margin-top:10px;">هیچ رکورد انضباطی ثبت نشده است.</p>';
+                html += '<p style="color:var(--text-light); margin-top:10px;">هیچ رکورد انضباطی ثبت نشده است.</p>';
             }
 
-            html += '<hr style="border-color:#333; margin:15px 0;">';
-            html += '<p style="text-align:center; color:#555; font-size:0.8rem;">تاریخ: ' + new Date().toLocaleDateString(
-                'fa-IR') + '</p>';
+            html += '<hr style="border-color:var(--border); margin:15px 0;">';
+            html += '<p style="text-align:center; color:var(--text-light); font-size:0.8rem;">تاریخ: ' + new Date()
+                .toLocaleDateString('fa-IR') + '</p>';
             html += '</div>';
             document.getElementById('reportContainer').innerHTML = html;
 
-            // نمودار
             if (studentGrades.length > 0) {
                 const ctx = document.getElementById('gradeChart').getContext('2d');
                 if (chartInstance) chartInstance.destroy();
@@ -2388,13 +2357,13 @@
             if (!hasAdminAccess()) return;
             const gradeList = document.getElementById('adminGradeList');
             if (gradesData.length === 0) {
-                gradeList.innerHTML = '<p style="color:#666;">هیچ نمره‌ای ثبت نشده است.</p>';
+                gradeList.innerHTML = '<p style="color:var(--text-light);">هیچ نمره‌ای ثبت نشده است.</p>';
             } else {
                 let html = '<h4>📋 لیست نمرات</h4>';
                 gradesData.forEach(g => {
                     const name = getUserName(g.student_id);
                     html +=
-                        `<div class="item-row"><div class="info"><strong>${name}</strong> (${g.student_id}) — <strong>${g.lesson}</strong>: <span style="color:var(--primary, #cc0000);">${g.score}</span> (${g.date || 'بدون تاریخ'})</div>${userRole !== 'observer' ? '<div class="actions"><button onclick="deleteGrade(' + g.id + ')" class="danger">🗑️</button></div>' : ''}</div>`;
+                        `<div class="item-row"><div class="info"><strong>${name}</strong> (${g.student_id}) — <strong>${g.lesson}</strong>: <span style="color:var(--gold);">${g.score}</span> (${g.date || 'بدون تاریخ'})</div>${userRole !== 'observer' ? '<div class="actions"><button onclick="deleteGrade(' + g.id + ')" class="danger">🗑️</button></div>' : ''}</div>`;
                 });
                 gradeList.innerHTML = html;
             }
@@ -2402,7 +2371,7 @@
             const userList = document.getElementById('adminUserList');
             const students = usersData.filter(u => u.role === 'student');
             if (students.length === 0) {
-                userList.innerHTML = '<p style="color:#666;">هیچ دانش‌آموزی ثبت نشده است.</p>';
+                userList.innerHTML = '<p style="color:var(--text-light);">هیچ دانش‌آموزی ثبت نشده است.</p>';
             } else {
                 let html = '<h4>📋 لیست دانش‌آموزان</h4>';
                 students.forEach(u => {
@@ -2415,7 +2384,7 @@
             const staffList = document.getElementById('adminStaffList');
             const staff = usersData.filter(u => u.role !== 'student');
             if (staff.length === 0) {
-                staffList.innerHTML = '<p style="color:#666;">هیچ کارکنی ثبت نشده است.</p>';
+                staffList.innerHTML = '<p style="color:var(--text-light);">هیچ کارکنی ثبت نشده است.</p>';
             } else {
                 let html = '<h4>👥 لیست کارکنان</h4>';
                 staff.forEach(s => {
@@ -2444,7 +2413,7 @@
 
             const disciplineList = document.getElementById('adminDisciplineList');
             if (disciplineRecords.length === 0) {
-                disciplineList.innerHTML = '<p style="color:#666;">هیچ رکورد انضباطی ثبت نشده است.</p>';
+                disciplineList.innerHTML = '<p style="color:var(--text-light);">هیچ رکورد انضباطی ثبت نشده است.</p>';
             } else {
                 let html = '<h4>⚖️ لیست انضباطی</h4>';
                 disciplineRecords.forEach(d => {
@@ -2575,7 +2544,7 @@
         function loadPermissions(id) {
             const grid = document.getElementById('permissionGrid');
             const staff = usersData.find(s => s.id === id);
-            if (!staff || staff.role !== 'deputy') { grid.innerHTML = '<p style="color:#aaa;">معاون انتخاب شده معتبر نیست.</p>'; return; }
+            if (!staff || staff.role !== 'deputy') { grid.innerHTML = '<p style="color:var(--text-light);">معاون انتخاب شده معتبر نیست.</p>'; return; }
             const perms = staff.permissions || {};
             const permLabels = { viewStudents: 'مشاهده دانش‌آموزان', viewGrades: 'مشاهده نمرات', manageGrades: 'مدیریت نمرات',
                 manageTasks: 'مدیریت تمرین‌ها', manageDiscipline: 'مدیریت انضباطی', manageUsers: 'مدیریت کاربران',
@@ -2692,7 +2661,7 @@
             const saved = localStorage.getItem(getStorageKey('notes'));
             notes = saved ? JSON.parse(saved) : [];
             const list = document.getElementById('noteList');
-            if (!notes.length) { list.innerHTML = '<p style="color:#666; text-align:center;">یادداشتی وجود ندارد.</p>'; return; }
+            if (!notes.length) { list.innerHTML = '<p style="color:var(--text-light); text-align:center;">یادداشتی وجود ندارد.</p>'; return; }
             let html = '';
             notes.forEach((n, i) => {
                 html +=
@@ -2767,7 +2736,8 @@
         (async function init() {
             await loadAllData();
             loadSettings();
-            console.log('🚀 صدرا با منوی TREKMINE، چت گروهی، تکالیف گروهی، اعلان‌ها و تقویم شمسی آماده است!');
+            loadPreferences();
+            console.log('🚀 صدرا با تمام قابلیت‌های جدید آماده است!');
             console.log('👥 کاربران:', usersData);
             console.log('📊 نمرات:', gradesData);
             console.log('⚖️ انضباطی:', disciplineRecords);
